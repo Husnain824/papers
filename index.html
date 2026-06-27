@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IlmAI — Pakistan's Smartest Study Platform</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -21,6 +22,17 @@
   --rad:  14px; --rad2: 20px; --rad3: 28px;
   --tr:   .22s cubic-bezier(.4,0,.2,1);
 }
+body.light {
+  --bg:   #f0f4f8; --bg2:  #e2e8f0; --bg3: #cbd5e1;
+  --card: #ffffff; --card2:#f8fafc;
+  --b:    #cbd5e1; --b2:   #94a3b8;
+  --p:    #059669; --pd:   rgba(5,150,105,.1);
+  --s:    #6d28d9; --sd:   rgba(109,40,217,.1);
+  --g:    #b45309; --gd:   rgba(180,83,9,.1);
+  --r:    #dc2626; --rd:   rgba(220,38,38,.1);
+  --ok:   #16a34a; --okd:  rgba(22,163,74,.1);
+  --t:    #0f172a; --t2:   #475569; --t3: #94a3b8;
+}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:var(--fn);background:var(--bg);color:var(--t);min-height:100vh;overflow-x:hidden}
@@ -32,6 +44,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 /* ── HEADER ── */
 #hdr{position:sticky;top:0;z-index:100;background:rgba(3,12,30,.92);backdrop-filter:blur(20px);
   border-bottom:1px solid var(--b)}
+body.light #hdr{background:rgba(240,244,248,.92)}
 .hdr-in{max-width:1120px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:14px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex-shrink:0;cursor:pointer}
 .logo-ic{width:34px;height:34px;background:linear-gradient(135deg,var(--p),var(--s));border-radius:10px;
@@ -377,6 +390,15 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .gp-q .likelihood{font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;
   border-radius:10px;margin-bottom:6px}
 
+/* Dark/Light toggle */
+#themeToggle {
+  background: var(--card); border: 1px solid var(--b); border-radius: 50%;
+  width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 18px; transition: var(--tr); color: var(--t2);
+  flex-shrink: 0;
+}
+#themeToggle:hover { background: var(--card2); color: var(--t); }
+
 @media(max-width:480px){
   .hdr-r .spl{display:none}
   .h1{font-size:24px}
@@ -399,6 +421,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     <div class="hdr-r">
       <div class="spl fir" id="stk">🔥 0</div>
       <div class="spl gld" id="xps">⭐ 0 XP</div>
+      <div id="themeToggle" onclick="toggleTheme()" title="Toggle dark/light mode">🌓</div>
     </div>
   </div>
   <div class="pbar"><div class="pfill" id="pf"></div></div>
@@ -526,9 +549,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <label>Timer per question</label>
       <div class="tg" id="tmrG">
         <button class="tb" onclick="setOpt('tmr',0,this)">Off</button>
+        <button class="tb on" onclick="setOpt('tmr',10,this)">10s</button>
         <button class="tb" onclick="setOpt('tmr',30,this)">30s</button>
-        <button class="tb on" onclick="setOpt('tmr',60,this)">60s</button>
-        <button class="tb" onclick="setOpt('tmr',90,this)">90s</button>
+        <button class="tb" onclick="setOpt('tmr',60,this)">60s</button>
       </div>
     </div>
     <button class="btn btn-p btn-lg btn-w" onclick="startMCQ()">🚀 Quiz Shuru Karo!</button>
@@ -642,11 +665,11 @@ const CLASSES=[
 ];
 
 const BOARDS=[
-  {id:'punjab', nm:'Punjab Board',       ds:'BISE Lahore, Multan, Faisalabad, Rawalpindi, Gujranwala, Sahiwal etc.', fl:'🟧'},
+  {id:'punjab', nm:'Punjab Board',       ds:'BISE Lahore, Multan, Faisalabad, Rawalpindi, Gujranwala, Sahiwal etc.', fl:'🏛️'},
   {id:'fbise',  nm:'Federal Board',      ds:'FBISE — Islamabad Capital Territory',                                   fl:'🇵🇰'},
-  {id:'kpk',    nm:'KPK Board',          ds:'BISE Peshawar, Mardan, Kohat, Swat, Abbottabad etc.',                  fl:'🟩'},
-  {id:'sindh',  nm:'Sindh Board',        ds:'BISE Karachi, Hyderabad, Sukkur, Mirpurkhas etc.',                     fl:'🟨'},
-  {id:'baloch', nm:'Balochistan Board',  ds:'BISE Quetta, Turbat, Khuzdar etc.',                                    fl:'🟫'},
+  {id:'kpk',    nm:'KPK Board',          ds:'BISE Peshawar, Mardan, Kohat, Swat, Abbottabad etc.',                  fl:'⛰️'},
+  {id:'sindh',  nm:'Sindh Board',        ds:'BISE Karachi, Hyderabad, Sukkur, Mirpurkhas etc.',                     fl:'🏙️'},
+  {id:'baloch', nm:'Balochistan Board',  ds:'BISE Quetta, Turbat, Khuzdar etc.',                                    fl:'🏜️'},
   {id:'ajk',    nm:'AJK Board',          ds:'Azad Jammu & Kashmir Board of Education',                              fl:'🏔️'},
 ];
 
@@ -833,8 +856,8 @@ const MODES=[
 // ═══════════════════════════════════════════════════════════
 const S={
   cls:null, brd:null, grp:null, sub:null, ch:null,
-  mcq:{cnt:10,dif:'medium',tmr:60},
-  qzData:[],qzIdx:0,qzAns:[],qzInterval:null,
+  mcq:{cnt:10,dif:'medium',tmr:10},
+  qzData:[],qzIdx:0,qzAns:[],qzInterval:null, qzTimeout:null,
   qaType:'short',qaData:[],qaIdx:0,qaEvals:[],
   chatH:[],chatOpen:false,
   prog:{streak:0,xp:0,lastDate:null,totalMCQ:0,correctMCQ:0},
@@ -843,10 +866,22 @@ const S={
 try{
   const sv=JSON.parse(localStorage.getItem('ilmai_v2')||'{}');
   if(sv.prog) S.prog={...S.prog,...sv.prog};
+  // Theme
+  if(sv.theme === 'light') document.body.classList.add('light');
   updateStreak();
 }catch(e){}
 
-function save(){ localStorage.setItem('ilmai_v2',JSON.stringify({prog:S.prog})); }
+function save(){
+  localStorage.setItem('ilmai_v2',JSON.stringify({
+    prog:S.prog,
+    theme: document.body.classList.contains('light')?'light':'dark'
+  }));
+}
+
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  save();
+}
 
 function updateStreak(){
   const today=new Date().toDateString();
@@ -868,6 +903,14 @@ function show(id){
   if(el){el.classList.add('on');}
   window.scrollTo({top:0,behavior:'instant'});
   updateHdr(id);
+  // Hide chat widget on quiz/qa/guess screens
+  const hideChatPages = ['mcq-quiz','short','long','guess'];
+  const cw = document.getElementById('cw');
+  if(hideChatPages.includes(id)){
+    cw.style.display = 'none';
+  } else {
+    cw.style.display = '';
+  }
 }
 
 function updateHdr(id){
@@ -1113,7 +1156,6 @@ function renderQ(){
   <div id="qexp"></div>
   <div class="qnav" id="qnav" style="display:none">
     <div></div>
-    <button class="btn btn-p" onclick="nextQ()">${S.qzIdx+1<tot?'Agla Sawal →':'🏆 Results Dekho'}</button>
   </div>`;
   if(S.mcq.tmr>0) runTimer();
 }
@@ -1133,6 +1175,7 @@ function runTimer(){
 
 function ansQ(sel){
   if(S.qzInterval){clearInterval(S.qzInterval);S.qzInterval=null;}
+  if(S.qzTimeout) clearTimeout(S.qzTimeout);
   const q=S.qzData[S.qzIdx];
   const cor=q.correct;
   S.qzAns[S.qzIdx]=sel;
@@ -1147,10 +1190,16 @@ function ansQ(sel){
     ${sel>=0&&!ok?` Sahi jawab: <strong style="color:var(--ok)">${L[cor]}. ${q.opts[cor]}</strong> — `:''}
     ${q.exp}
   </div>`;
-  document.getElementById('qnav').style.display='flex';
+  document.getElementById('qnav').style.display='none';
+  // Auto advance after 2 seconds
+  S.qzTimeout = setTimeout(()=>{
+    S.qzIdx++;
+    if(S.qzIdx >= S.qzData.length) renderResults();
+    else renderQ();
+  }, 2000);
 }
 
-function nextQ(){ S.qzIdx++; renderQ(); }
+function nextQ(){ /* deprecated - auto advance */ }
 
 function renderResults(){
   let cor=0;
@@ -1321,7 +1370,6 @@ Score from 0 to ${q.marks}. Be fair and encouraging.`;
     ev.userAns=ans;
     S.qaEvals[S.qaIdx]=ev;
     document.getElementById('evRes').innerHTML=renderEv(ev,q);
-    // Add next button
     const existing=document.querySelector('#evRes + div');
     if(!existing){
       document.getElementById('evRes').insertAdjacentHTML('afterend',
@@ -1648,9 +1696,6 @@ function addMsg(role,txt){
 // ═══════════════════════════════════════════════════════════
 // AI API — Groq via Cloudflare Worker (4-key failover)
 // ═══════════════════════════════════════════════════════════
-// ⚠️  APNA WORKER URL YAHAN DALEIN:
-// Cloudflare Dashboard → rabi-groq-worker → "Visit" button click karo
-// Woh URL copy karo aur WORKER_URL mein replace karo
 const WORKER_URL = 'https://rabi-groq-worker.noorhusnain791.workers.dev';
 
 async function ai(prompt, maxT=1000){
@@ -1667,7 +1712,6 @@ async function ai(prompt, maxT=1000){
     throw new Error('Worker error ' + res.status + ': ' + (err.error||''));
   }
   const d = await res.json();
-  // Groq returns OpenAI-compatible format
   return d.choices[0].message.content;
 }
 
@@ -1684,9 +1728,11 @@ function extractJ(txt){
 function loadHTML(t,s=''){
   return `<div class="ld"><div class="ldspin"></div><div><div class="ld-t">${t}</div>${s?`<div class="ld-s">${s}</div>`:''}</div></div>`;
 }
+// Fixed errHTML to use function name for retry button
 function errHTML(msg,fn){
+  const fnName = fn.name;
   return `<div class="err"><div class="err-ic">😕</div><h3>Oops!</h3><p>${msg}</p>
-    ${fn?`<button class="btn btn-p" style="margin-top:18px" onclick="(${fn.toString()})()">🔄 Dobara Try Karo</button>`:''}
+    ${fn?`<button class="btn btn-p" style="margin-top:18px" onclick="${fnName}()">🔄 Dobara Try Karo</button>`:''}
   </div>`;
 }
 
