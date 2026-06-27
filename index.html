@@ -773,7 +773,7 @@ async function ai(prompt, maxT=1000){
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'llama-3.1-70b-versatile',
+        model: 'gpt-oss-20b',
         messages: [{ role: 'user', content: prompt }],
         max_tokens: maxT
       })
