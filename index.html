@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ── Sab styles waise hi hain jaise aapne diye the ── */
 :root {
   --bg:   #030c1e; --bg2:  #061428; --bg3: #09193a;
   --card: #0b1e3d; --card2:#0e2448;
@@ -1643,8 +1642,7 @@ async function handleOCR(event) {
   try {
     const formData = new FormData();
     formData.append('image', file);
-    // ⬇️ Replace with your worker URL
-    const resp = await fetch('https://check-ai.noorhusnain791.workers.dev/ocr', {
+    const resp = await fetch('https://rabi-groq-worker.noorhusnain791.workers.dev/ocr', {
       method: 'POST',
       body: formData,
     });
@@ -1702,10 +1700,7 @@ function addMsg(role,txt){
 // ═══════════════════════════════════════════════════════════
 // ═══ AI API — Cloudflare Worker (Groq + OCR)  ═══
 // ═══════════════════════════════════════════════════════════
-//
-//  🔧 IMPORTANT: Replace with YOUR Cloudflare Worker URL
-//     e.g. 'https://your-worker-name.workers.dev'
-const WORKER_URL = 'https://check-ai.noorhusnain791.workers.dev';
+const WORKER_URL = 'https://rabi-groq-worker.noorhusnain791.workers.dev';
 
 async function ai(prompt, maxT = 1000) {
   const res = await fetch(WORKER_URL, {
@@ -1719,7 +1714,6 @@ async function ai(prompt, maxT = 1000) {
   });
   if (!res.ok) throw new Error('API ' + res.status);
   const d = await res.json();
-  // Groq response format
   return d.choices[0].message.content;
 }
 
