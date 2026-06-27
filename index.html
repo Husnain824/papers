@@ -4,12 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IlmAI — Pakistan's Smartest Study Platform</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:   #030c1e; --bg2:  #061428; --bg3: #09193a;
+  --bg:   #030c1e;
+  --bg2:  #061428; --bg3: #09193a;
   --card: #0b1e3d; --card2:#0e2448;
   --b:    #173060; --b2:   #1e3d78;
   --p:    #00D4AA; --pd:   rgba(0,212,170,.13);
@@ -22,48 +23,41 @@
   --rad:  14px; --rad2: 20px; --rad3: 28px;
   --tr:   .22s cubic-bezier(.4,0,.2,1);
 }
+
+/* Light Mode Variables */
 body.light {
-  --bg:   #f0f4f8; --bg2:  #e2e8f0; --bg3: #cbd5e1;
-  --card: #ffffff; --card2:#f8fafc;
-  --b:    #cbd5e1; --b2:   #94a3b8;
-  --p:    #059669; --pd:   rgba(5,150,105,.1);
-  --s:    #6d28d9; --sd:   rgba(109,40,217,.1);
-  --g:    #b45309; --gd:   rgba(180,83,9,.1);
-  --r:    #dc2626; --rd:   rgba(220,38,38,.1);
-  --ok:   #16a34a; --okd:  rgba(22,163,74,.1);
-  --t:    #0f172a; --t2:   #475569; --t3: #94a3b8;
+  --bg: #f8fafc; --bg2: #f1f5f9; --bg3: #e2e8f0;
+  --card: #ffffff; --card2: #f8fafc;
+  --b: #cbd5e1; --b2: #94a3b8;
+  --t: #0f172a; --t2: #475569; --t3: #94a3b8;
 }
+
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:var(--fn);background:var(--bg);color:var(--t);min-height:100vh;overflow-x:hidden}
+body{font-family:var(--fn);background:var(--bg);color:var(--t);min-height:100vh;overflow-x:hidden;transition:background 0.3s ease, color 0.3s ease;}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(0,212,170,.035) 80px),
     repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(0,212,170,.035) 80px)}
 #app{position:relative;z-index:1;min-height:100vh}
 
 /* ── HEADER ── */
-#hdr{position:sticky;top:0;z-index:100;background:rgba(3,12,30,.92);backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--b)}
-body.light #hdr{background:rgba(240,244,248,.92)}
+#hdr{position:sticky;top:0;z-index:100;background:rgba(3,12,30,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--b)}
+body.light #hdr {background:rgba(255,255,255,.92);}
 .hdr-in{max-width:1120px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:14px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex-shrink:0;cursor:pointer}
-.logo-ic{width:34px;height:34px;background:linear-gradient(135deg,var(--p),var(--s));border-radius:10px;
-  display:flex;align-items:center;justify-content:center;font-size:17px}
-.logo-nm{font-size:19px;font-weight:800;background:linear-gradient(90deg,var(--p),var(--s));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.logo-bx{font-size:10px;font-weight:700;padding:2px 8px;background:var(--sd);color:var(--s);
-  border:1px solid rgba(139,92,246,.35);border-radius:20px}
-.bc{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--t2);overflow-x:auto;flex:1;
-  scrollbar-width:none;white-space:nowrap}
+.logo-ic{width:34px;height:34px;background:linear-gradient(135deg,var(--p),var(--s));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px}
+.logo-nm{font-size:19px;font-weight:800;background:linear-gradient(90deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.logo-bx{font-size:10px;font-weight:700;padding:2px 8px;background:var(--sd);color:var(--s);border:1px solid rgba(139,92,246,.35);border-radius:20px}
+.bc{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--t2);overflow-x:auto;flex:1;scrollbar-width:none;white-space:nowrap}
 .bc::-webkit-scrollbar{display:none}
 .bc-i{padding:4px 10px;border-radius:20px;cursor:pointer;transition:var(--tr);flex-shrink:0}
 .bc-i:hover{background:var(--card);color:var(--t)}
 .bc-i.cur{color:var(--p)}
 .bc-sep{color:var(--t3)}
 .hdr-r{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.spl{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;
-  background:var(--card);border:1px solid var(--b);font-size:13px;font-weight:600;
-  color:var(--t2);white-space:nowrap}
+.theme-btn{background:none;border:none;cursor:pointer;font-size:20px;padding:4px;transition:var(--tr);}
+.theme-btn:hover{transform:scale(1.1);}
+.spl{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;background:var(--card);border:1px solid var(--b);font-size:13px;font-weight:600;color:var(--t2);white-space:nowrap}
 .spl.gld{color:var(--g);border-color:rgba(245,200,66,.3)}
 .spl.fir{color:#ff6b35;border-color:rgba(255,107,53,.3)}
 .pbar{height:2px;background:var(--b)}
@@ -77,9 +71,7 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 .pw-sm{max-width:700px;margin:0 auto;padding:36px 20px 120px}
 
 /* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:var(--rad);
-  font-family:var(--fn);font-size:15px;font-weight:600;cursor:pointer;border:none;
-  transition:var(--tr);text-decoration:none;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:var(--rad);font-family:var(--fn);font-size:15px;font-weight:600;cursor:pointer;border:none;transition:var(--tr);text-decoration:none;justify-content:center}
 .btn-p{background:var(--p);color:#000}
 .btn-p:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .btn-s{background:var(--card);color:var(--t);border:1px solid var(--b)}
@@ -112,9 +104,7 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 @media(max-width:480px){.g2,.g3{grid-template-columns:1fr}}
 
 /* ── BACK BTN ── */
-.bk{display:inline-flex;align-items:center;gap:7px;color:var(--t2);font-size:14px;font-weight:600;
-  cursor:pointer;margin-bottom:22px;padding:8px 0;transition:var(--tr);background:none;border:none;
-  font-family:var(--fn)}
+.bk{display:inline-flex;align-items:center;gap:7px;color:var(--t2);font-size:14px;font-weight:600;cursor:pointer;margin-bottom:22px;padding:8px 0;transition:var(--tr);background:none;border:none;font-family:var(--fn)}
 .bk:hover{color:var(--p)}
 
 /* ── TAGS ── */
@@ -128,17 +118,13 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 
 /* ── LANDING ── */
 .hero{text-align:center;padding:60px 20px 40px}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:40px;
-  background:var(--pd);color:var(--p);border:1px solid rgba(0,212,170,.3);
-  font-size:14px;font-weight:600;margin-bottom:24px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:40px;background:var(--pd);color:var(--p);border:1px solid rgba(0,212,170,.3);font-size:14px;font-weight:600;margin-bottom:24px}
 .hero-h{font-size:clamp(36px,7vw,68px);font-weight:800;line-height:1.1;margin-bottom:20px}
-.grad{background:linear-gradient(90deg,var(--p),var(--s),var(--g));-webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;background-clip:text}
+.grad{background:linear-gradient(90deg,var(--p),var(--s),var(--g));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-p{font-size:17px;color:var(--t2);max-width:520px;margin:0 auto 40px;line-height:1.6}
 .cls-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:800px;margin:0 auto}
 @media(max-width:640px){.cls-grid{grid-template-columns:repeat(2,1fr)}}
-.clc{border-radius:var(--rad2);padding:28px 16px;cursor:pointer;text-align:center;
-  border:1px solid transparent;transition:var(--tr);overflow:hidden;position:relative}
+.clc{border-radius:var(--rad2);padding:28px 16px;cursor:pointer;text-align:center;border:1px solid transparent;transition:var(--tr);overflow:hidden;position:relative}
 .clc:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(0,0,0,.55)}
 .clc-ic{font-size:36px;margin-bottom:10px;display:block}
 .clc-nm{font-size:20px;font-weight:800}
@@ -150,35 +136,30 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 .feat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:56px}
 @media(max-width:640px){.feat-row{grid-template-columns:1fr}}
 .feat{background:var(--card);border:1px solid var(--b);border-radius:var(--rad2);padding:26px 22px;text-align:center}
-.feat-ic{width:52px;height:52px;border-radius:15px;display:flex;align-items:center;
-  justify-content:center;font-size:22px;margin:0 auto 14px}
+.feat-ic{width:52px;height:52px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 14px}
 .feat-nm{font-size:16px;font-weight:700;margin-bottom:6px}
 .feat-ds{font-size:14px;color:var(--t2);line-height:1.5}
 .stat-row{display:flex;gap:24px;justify-content:center;margin-top:36px;flex-wrap:wrap}
 .stat-it{text-align:center}
-.stat-num{font-size:28px;font-weight:800;background:linear-gradient(90deg,var(--p),var(--s));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-num{font-size:28px;font-weight:800;background:linear-gradient(90deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .stat-lb{font-size:13px;color:var(--t2);margin-top:2px}
 
 /* ── BOARD ── */
 .boards{display:flex;flex-direction:column;gap:10px;max-width:600px}
-.brd-c{display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:var(--rad);
-  background:var(--card);border:1px solid var(--b);cursor:pointer;transition:var(--tr)}
+.brd-c{display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:var(--rad);background:var(--card);border:1px solid var(--b);cursor:pointer;transition:var(--tr)}
 .brd-c:hover{border-color:var(--p);background:var(--card2);transform:translateX(4px)}
 .brd-inf h3{font-size:17px;font-weight:700}
 .brd-inf p{font-size:13px;color:var(--t2);margin-top:2px}
 
 /* ── GROUP ── */
-.grp-c{border-radius:var(--rad2);padding:26px 20px;cursor:pointer;text-align:center;
-  background:var(--card);border:1px solid var(--b);transition:var(--tr)}
+.grp-c{border-radius:var(--rad2);padding:26px 20px;cursor:pointer;text-align:center;background:var(--card);border:1px solid var(--b);transition:var(--tr)}
 .grp-c:hover{border-color:var(--p);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
 .grp-ic{font-size:38px;margin-bottom:12px}
 .grp-nm{font-size:19px;font-weight:700;margin-bottom:6px}
 .grp-ds{font-size:13px;color:var(--t2);line-height:1.5}
 
 /* ── SUBJECT ── */
-.sub-c{border-radius:var(--rad2);padding:22px 16px;cursor:pointer;text-align:center;
-  background:var(--card);border:1px solid var(--b);transition:var(--tr);position:relative;overflow:hidden}
+.sub-c{border-radius:var(--rad2);padding:22px 16px;cursor:pointer;text-align:center;background:var(--card);border:1px solid var(--b);transition:var(--tr);position:relative;overflow:hidden}
 .sub-c::after{content:'';position:absolute;inset:0;background:var(--ac,transparent);opacity:0;transition:var(--tr)}
 .sub-c:hover{transform:translateY(-4px);border-color:var(--ab,var(--b2))}
 .sub-c:hover::after{opacity:1}
@@ -189,12 +170,9 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 
 /* ── CHAPTER ── */
 .ch-list{display:flex;flex-direction:column;gap:10px}
-.ch-it{display:flex;align-items:center;gap:14px;padding:15px 18px;border-radius:var(--rad);
-  background:var(--card);border:1px solid var(--b);cursor:pointer;transition:var(--tr)}
+.ch-it{display:flex;align-items:center;gap:14px;padding:15px 18px;border-radius:var(--rad);background:var(--card);border:1px solid var(--b);cursor:pointer;transition:var(--tr)}
 .ch-it:hover{background:var(--card2);border-color:var(--b2);transform:translateX(4px)}
-.ch-num{width:36px;height:36px;flex-shrink:0;border-radius:10px;background:var(--pd);
-  border:1px solid rgba(0,212,170,.3);display:flex;align-items:center;justify-content:center;
-  font-size:13px;font-weight:700;color:var(--p)}
+.ch-num{width:36px;height:36px;flex-shrink:0;border-radius:10px;background:var(--pd);border:1px solid rgba(0,212,170,.3);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--p)}
 .ch-inf h4{font-size:15px;font-weight:600}
 .ch-inf p{font-size:12px;color:var(--t2);margin-top:2px}
 .ch-ar{margin-left:auto;color:var(--t3);font-size:14px}
@@ -203,66 +181,50 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 .mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media(max-width:640px){.mode-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:380px){.mode-grid{grid-template-columns:1fr}}
-.mode-c{border-radius:var(--rad2);padding:26px 18px;cursor:pointer;text-align:center;
-  background:var(--card);border:1px solid var(--b);transition:var(--tr);position:relative;overflow:hidden}
-.mode-c::before{content:'';position:absolute;inset:0;border-radius:var(--rad2);
-  background:linear-gradient(135deg,var(--mc1,transparent),transparent);opacity:0;transition:var(--tr)}
+.mode-c{border-radius:var(--rad2);padding:26px 18px;cursor:pointer;text-align:center;background:var(--card);border:1px solid var(--b);transition:var(--tr);position:relative;overflow:hidden}
+.mode-c::before{content:'';position:absolute;inset:0;border-radius:var(--rad2);background:linear-gradient(135deg,var(--mc1,transparent),transparent);opacity:0;transition:var(--tr)}
 .mode-c:hover{transform:translateY(-5px);box-shadow:0 12px 40px rgba(0,0,0,.45)}
 .mode-c:hover::before{opacity:1}
 .mode-c>*{position:relative;z-index:1}
 .mode-em{font-size:38px;margin-bottom:12px}
 .mode-nm{font-size:17px;font-weight:700;margin-bottom:6px}
 .mode-ds{font-size:13px;color:var(--t2);line-height:1.5}
-.mode-bx{display:inline-block;margin-top:10px;padding:4px 12px;border-radius:20px;
-  font-size:11px;font-weight:700;background:var(--pd);color:var(--p)}
+.mode-bx{display:inline-block;margin-top:10px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;background:var(--pd);color:var(--p)}
 
 /* ── SETTINGS FORM ── */
 .sf{display:flex;flex-direction:column;gap:26px;max-width:540px}
-.fg label{display:block;font-size:12px;font-weight:700;color:var(--t2);margin-bottom:12px;
-  text-transform:uppercase;letter-spacing:1.5px}
+.fg label{display:block;font-size:12px;font-weight:700;color:var(--t2);margin-bottom:12px;text-transform:uppercase;letter-spacing:1.5px}
 .tg{display:flex;gap:10px;flex-wrap:wrap}
-.tb{padding:10px 20px;border-radius:10px;background:var(--card);border:1.5px solid var(--b);
-  color:var(--t2);cursor:pointer;font-family:var(--fn);font-size:15px;font-weight:600;
-  transition:var(--tr)}
+.tb{padding:10px 20px;border-radius:10px;background:var(--card);border:1.5px solid var(--b);color:var(--t2);cursor:pointer;font-family:var(--fn);font-size:15px;font-weight:600;transition:var(--tr)}
 .tb.on{background:var(--pd);border-color:var(--p);color:var(--p)}
 .tb:hover:not(.on){border-color:var(--b2);color:var(--t)}
 
 /* ── MCQ QUIZ ── */
 .qhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
-.qtimer{display:flex;align-items:center;gap:6px;padding:9px 18px;border-radius:12px;
-  background:var(--card);border:1px solid var(--b);font-size:19px;font-weight:700;
-  font-family:monospace;min-width:80px;justify-content:center}
+.qtimer{display:flex;align-items:center;gap:6px;padding:9px 18px;border-radius:12px;background:var(--card);border:1px solid var(--b);font-size:19px;font-weight:700;font-family:monospace;min-width:80px;justify-content:center}
 .qtimer.warn{color:var(--r);border-color:rgba(239,68,68,.4)}
 .qrail{width:100%;height:5px;background:var(--b);border-radius:3px;margin-bottom:28px;overflow:hidden}
 .qrfill{height:100%;background:linear-gradient(90deg,var(--p),var(--s));border-radius:3px;transition:width .5s}
-.qq{font-size:19px;font-weight:600;line-height:1.55;margin-bottom:26px;padding:22px;
-  background:var(--card);border:1px solid var(--b);border-radius:var(--rad2)}
+.qq{font-size:19px;font-weight:600;line-height:1.55;margin-bottom:26px;padding:22px;background:var(--card);border:1px solid var(--b);border-radius:var(--rad2)}
 .qopts{display:flex;flex-direction:column;gap:11px}
-.qopt{display:flex;align-items:center;gap:14px;padding:15px 18px;border-radius:var(--rad);
-  background:var(--card);border:1.5px solid var(--b);cursor:pointer;transition:var(--tr);text-align:left;
-  width:100%;font-family:var(--fn)}
+.qopt{display:flex;align-items:center;gap:14px;padding:15px 18px;border-radius:var(--rad);background:var(--card);border:1.5px solid var(--b);cursor:pointer;transition:var(--tr);text-align:left;width:100%;font-family:var(--fn)}
 .qopt:hover:not(.dis){border-color:var(--p);background:var(--pd)}
 .qopt.sel{border-color:var(--p);background:var(--pd)}
 .qopt.cor{border-color:var(--ok);background:var(--okd)}
 .qopt.wrg{border-color:var(--r);background:var(--rd)}
 .qopt.dis{cursor:default;pointer-events:none}
-.qltr{width:34px;height:34px;flex-shrink:0;border-radius:9px;border:1.5px solid var(--b2);
-  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;
-  color:var(--t2);transition:var(--tr)}
+.qltr{width:34px;height:34px;flex-shrink:0;border-radius:9px;border:1.5px solid var(--b2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:var(--t2);transition:var(--tr)}
 .qopt.cor .qltr{border-color:var(--ok);color:var(--ok)}
 .qopt.wrg .qltr{border-color:var(--r);color:var(--r)}
 .qopt.sel .qltr{border-color:var(--p);color:var(--p)}
 .qtxt{font-size:15px;font-weight:500;line-height:1.4;color:var(--t)}
-.qexp{margin-top:18px;padding:16px 18px;border-radius:var(--rad);
-  background:rgba(0,212,170,.07);border:1px solid rgba(0,212,170,.25);
-  font-size:14px;line-height:1.6;color:var(--t2);animation:fu .3s ease}
+.qexp{margin-top:18px;padding:16px 18px;border-radius:var(--rad);background:rgba(0,212,170,.07);border:1px solid rgba(0,212,170,.25);font-size:14px;line-height:1.6;color:var(--t2);animation:fu .3s ease}
 .qexp strong{color:var(--p)}
 .qnav{display:flex;justify-content:space-between;align-items:center;margin-top:26px;flex-wrap:wrap;gap:12px}
 
 /* ── RESULTS ── */
 .res-hero{text-align:center;padding:36px 20px 24px}
-.res-sc{font-size:76px;font-weight:800;background:linear-gradient(135deg,var(--p),var(--s));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.res-sc{font-size:76px;font-weight:800;background:linear-gradient(135deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
 .res-lb{font-size:17px;color:var(--t2);margin-top:8px}
 .res-gr{display:inline-block;padding:10px 28px;border-radius:40px;font-size:22px;font-weight:800;margin-top:14px}
 .res-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:28px 0}
@@ -273,41 +235,31 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 
 /* ── QA ── */
 .qa-q{font-size:18px;font-weight:600;line-height:1.55;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--b)}
-.qa-ta{width:100%;border-radius:var(--rad);background:var(--bg2);border:1.5px solid var(--b);
-  color:var(--t);font-family:var(--fn);font-size:15px;padding:14px;resize:vertical;
-  transition:var(--tr);min-height:110px}
+.qa-ta{width:100%;border-radius:var(--rad);background:var(--bg2);border:1.5px solid var(--b);color:var(--t);font-family:var(--fn);font-size:15px;padding:14px;resize:vertical;transition:var(--tr);min-height:110px}
 .qa-ta.lng{min-height:200px}
 .qa-ta:focus{outline:none;border-color:var(--p);background:var(--card)}
 .qa-ta::placeholder{color:var(--t3)}
 .wc{font-size:12px;color:var(--t2);margin-top:6px;text-align:right}
-.aiev{margin-top:18px;padding:20px;background:rgba(139,92,246,.08);
-  border:1px solid rgba(139,92,246,.3);border-radius:var(--rad);animation:fu .3s ease}
+.aiev{margin-top:18px;padding:20px;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.3);border-radius:var(--rad);animation:fu .3s ease}
 .aiev-hdr{display:flex;align-items:center;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid rgba(139,92,246,.2)}
-.aiev-sc{font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--s),var(--p));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.aiev-sc{font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--s),var(--p));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .evs{margin-bottom:12px}
-.evs-t{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
-  color:var(--s);margin-bottom:8px}
+.evs-t{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--s);margin-bottom:8px}
 .evl{list-style:none;display:flex;flex-direction:column;gap:5px}
-.evl li{padding:7px 14px 7px 24px;position:relative;font-size:14px;color:var(--t2);
-  line-height:1.5;background:var(--bg2);border-radius:8px;border:1px solid var(--b)}
+.evl li{padding:7px 14px 7px 24px;position:relative;font-size:14px;color:var(--t2);line-height:1.5;background:var(--bg2);border-radius:8px;border:1px solid var(--b)}
 .evl li::before{content:'→';position:absolute;left:8px;color:var(--p)}
 
 /* ── NOTES ── */
 .ntabs{display:flex;gap:6px;margin-bottom:24px;border-bottom:1px solid var(--b)}
-.ntab{padding:11px 18px;font-size:14px;font-weight:600;color:var(--t2);cursor:pointer;
-  border-bottom:2px solid transparent;transition:var(--tr);margin-bottom:-1px}
+.ntab{padding:11px 18px;font-size:14px;font-weight:600;color:var(--t2);cursor:pointer;border-bottom:2px solid transparent;transition:var(--tr);margin-bottom:-1px}
 .ntab.on{color:var(--p);border-color:var(--p)}
 .ntab:hover:not(.on){color:var(--t)}
-.rc{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:var(--rad);
-  background:var(--card);border:1px solid var(--b);cursor:pointer;transition:var(--tr);
-  text-decoration:none;color:var(--t)}
+.rc{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:var(--rad);background:var(--card);border:1px solid var(--b);cursor:pointer;transition:var(--tr);text-decoration:none;color:var(--t)}
 .rc:hover{border-color:var(--b2);background:var(--card2)}
 .rc-ic{font-size:26px;flex-shrink:0}
 .rc-inf h4{font-size:14px;font-weight:600}
 .rc-inf p{font-size:12px;color:var(--t2);margin-top:2px}
-.rc-tp{margin-left:auto;flex-shrink:0;padding:4px 10px;border-radius:20px;
-  font-size:11px;font-weight:700}
+.rc-tp{margin-left:auto;flex-shrink:0;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
 .tp-p{background:var(--rd);color:var(--r)} .tp-v{background:rgba(255,0,0,.1);color:#ff5555}
 .tp-w{background:var(--pd);color:var(--p)}
 
@@ -330,45 +282,29 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 .err p{font-size:14px;color:var(--t2)}
 
 /* ── XP POPUP ── */
-.xppop{position:fixed;top:76px;right:22px;z-index:999;background:linear-gradient(135deg,var(--p),var(--s));
-  color:white;padding:11px 20px;border-radius:40px;font-size:15px;font-weight:700;
-  animation:xpfl 2.1s forwards;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-@keyframes xpfl{0%{opacity:0;transform:translateY(20px)}20%{opacity:1;transform:translateY(0)}
-  80%{opacity:1;transform:translateY(-18px)}100%{opacity:0;transform:translateY(-36px)}}
+.xppop{position:fixed;top:76px;right:22px;z-index:999;background:linear-gradient(135deg,var(--p),var(--s));color:white;padding:11px 20px;border-radius:40px;font-size:15px;font-weight:700;animation:xpfl 2.1s forwards;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+@keyframes xpfl{0%{opacity:0;transform:translateY(20px)}20%{opacity:1;transform:translateY(0)}80%{opacity:1;transform:translateY(-18px)}100%{opacity:0;transform:translateY(-36px)}}
 
 /* ── CHAT ── */
 #cw{position:fixed;bottom:22px;right:22px;z-index:1000}
-#ctog{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--s));
-  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;
-  box-shadow:0 8px 28px rgba(0,212,170,.45);transition:var(--tr);color:white}
+#ctog{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--s));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 8px 28px rgba(0,212,170,.45);transition:var(--tr);color:white}
 #ctog:hover{transform:scale(1.1)}
-#cpanel{position:absolute;bottom:66px;right:0;width:355px;max-width:calc(100vw - 42px);
-  background:var(--bg2);border:1px solid var(--b);border-radius:20px;overflow:hidden;
-  box-shadow:0 20px 60px rgba(0,0,0,.75);display:none;flex-direction:column;max-height:510px}
+#cpanel{position:absolute;bottom:66px;right:0;width:355px;max-width:calc(100vw - 42px);background:var(--bg2);border:1px solid var(--b);border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.75);display:none;flex-direction:column;max-height:510px}
 #cpanel.open{display:flex;animation:fu .25s ease}
-.chd{padding:15px 18px;background:linear-gradient(90deg,var(--pd),var(--sd));border-bottom:1px solid var(--b);
-  display:flex;align-items:center;gap:11px}
-.chd-av{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--p),var(--s));
-  display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.chd{padding:15px 18px;background:linear-gradient(90deg,var(--pd),var(--sd));border-bottom:1px solid var(--b);display:flex;align-items:center;gap:11px}
+.chd-av{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--p),var(--s));display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 .chd-nm{font-size:14px;font-weight:700}
 .chd-st{font-size:12px;color:var(--p);margin-top:1px}
 #ccls{background:none;border:none;color:var(--t2);cursor:pointer;font-size:17px;margin-left:auto}
-.cmsgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;
-  scrollbar-width:thin;scrollbar-color:var(--b) transparent}
+.cmsgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin;scrollbar-color:var(--b) transparent}
 .cmsg{max-width:87%;padding:11px 15px;border-radius:16px;font-size:14px;line-height:1.55;animation:fu .2s ease}
-.cmsg.u{background:var(--pd);border:1px solid rgba(0,212,170,.3);color:var(--t);align-self:flex-end;
-  border-radius:16px 16px 4px 16px}
-.cmsg.a{background:var(--card);border:1px solid var(--b);color:var(--t);align-self:flex-start;
-  border-radius:16px 16px 16px 4px}
+.cmsg.u{background:var(--pd);border:1px solid rgba(0,212,170,.3);color:var(--t);align-self:flex-end;border-radius:16px 16px 4px 16px}
+.cmsg.a{background:var(--card);border:1px solid var(--b);color:var(--t);align-self:flex-start;border-radius:16px 16px 16px 4px}
 .cft{padding:11px 14px;border-top:1px solid var(--b);display:flex;gap:9px;align-items:flex-end}
-#cinp{flex:1;background:var(--card);border:1.5px solid var(--b);border-radius:11px;
-  color:var(--t);font-family:var(--fn);font-size:14px;padding:9px 13px;resize:none;
-  max-height:100px;min-height:38px;transition:var(--tr)}
+#cinp{flex:1;background:var(--card);border:1.5px solid var(--b);border-radius:11px;color:var(--t);font-family:var(--fn);font-size:14px;padding:9px 13px;resize:none;max-height:100px;min-height:38px;transition:var(--tr)}
 #cinp:focus{outline:none;border-color:var(--p)}
 #cinp::placeholder{color:var(--t3)}
-#csnd{width:38px;height:38px;border-radius:10px;flex-shrink:0;background:var(--p);
-  border:none;color:#000;cursor:pointer;font-size:16px;transition:var(--tr);
-  display:flex;align-items:center;justify-content:center}
+#csnd{width:38px;height:38px;border-radius:10px;flex-shrink:0;background:var(--p);border:none;color:#000;cursor:pointer;font-size:16px;transition:var(--tr);display:flex;align-items:center;justify-content:center}
 #csnd:hover{filter:brightness(1.1)}
 
 /* ── SCROLLBAR ── */
@@ -377,27 +313,13 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 ::-webkit-scrollbar-thumb{background:var(--b2);border-radius:3px}
 
 /* ── REVIEW ── */
-.rv-opt{padding:10px 14px;border-radius:9px;margin-bottom:6px;font-size:14px;
-  display:flex;align-items:center;gap:10px}
+.rv-opt{padding:10px 14px;border-radius:9px;margin-bottom:6px;font-size:14px;display:flex;align-items:center;gap:10px}
 
 /* ── GUESS PAPER ── */
-.gp-sec{background:var(--card);border:1px solid var(--b);border-radius:var(--rad2);
-  padding:20px;margin-bottom:18px}
-.gp-sec h3{font-size:15px;font-weight:700;color:var(--t);margin-bottom:14px;
-  display:flex;align-items:center;gap:8px}
-.gp-q{padding:12px 14px;border-radius:10px;background:var(--bg2);border:1px solid var(--b);
-  font-size:14px;line-height:1.5;margin-bottom:8px}
-.gp-q .likelihood{font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;
-  border-radius:10px;margin-bottom:6px}
-
-/* Dark/Light toggle */
-#themeToggle {
-  background: var(--card); border: 1px solid var(--b); border-radius: 50%;
-  width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
-  cursor: pointer; font-size: 18px; transition: var(--tr); color: var(--t2);
-  flex-shrink: 0;
-}
-#themeToggle:hover { background: var(--card2); color: var(--t); }
+.gp-sec{background:var(--card);border:1px solid var(--b);border-radius:var(--rad2);padding:20px;margin-bottom:18px}
+.gp-sec h3{font-size:15px;font-weight:700;color:var(--t);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.gp-q{padding:12px 14px;border-radius:10px;background:var(--bg2);border:1px solid var(--b);font-size:14px;line-height:1.5;margin-bottom:8px}
+.gp-q .likelihood{font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;border-radius:10px;margin-bottom:6px}
 
 @media(max-width:480px){
   .hdr-r .spl{display:none}
@@ -409,7 +331,6 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 <body>
 <div id="app">
 
-<!-- ══════ HEADER ══════ -->
 <header id="hdr">
   <div class="hdr-in">
     <div class="logo" onclick="goHome()">
@@ -419,9 +340,9 @@ body.light #hdr{background:rgba(240,244,248,.92)}
     </div>
     <nav class="bc" id="bc"></nav>
     <div class="hdr-r">
+      <button class="theme-btn" onclick="document.body.classList.toggle('light')" title="Toggle Theme">🌓</button>
       <div class="spl fir" id="stk">🔥 0</div>
       <div class="spl gld" id="xps">⭐ 0 XP</div>
-      <div id="themeToggle" onclick="toggleTheme()" title="Toggle dark/light mode">🌓</div>
     </div>
   </div>
   <div class="pbar"><div class="pfill" id="pf"></div></div>
@@ -429,7 +350,6 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 
 <main>
 
-<!-- ══════ LANDING ══════ -->
 <div class="sc" id="sc-landing">
 <div class="pw">
   <div class="hero">
@@ -465,7 +385,6 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 </div>
 </div>
 
-<!-- ══════ BOARD ══════ -->
 <div class="sc" id="sc-board">
 <div class="pw">
   <button class="bk" onclick="goHome()">← Wapas</button>
@@ -476,7 +395,6 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 </div>
 </div>
 
-<!-- ══════ GROUP ══════ -->
 <div class="sc" id="sc-group">
 <div class="pw">
   <button class="bk" onclick="show('board')">← Wapas</button>
@@ -487,7 +405,6 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 </div>
 </div>
 
-<!-- ══════ SUBJECT ══════ -->
 <div class="sc" id="sc-subject">
 <div class="pw">
   <button class="bk" onclick="show('group')">← Wapas</button>
@@ -498,7 +415,6 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 </div>
 </div>
 
-<!-- ══════ CHAPTER ══════ -->
 <div class="sc" id="sc-chapter">
 <div class="pw">
   <button class="bk" onclick="show('subject')">← Wapas</button>
@@ -508,7 +424,6 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 </div>
 </div>
 
-<!-- ══════ MODE ══════ -->
 <div class="sc" id="sc-mode">
 <div class="pw">
   <button class="bk" onclick="show('chapter')">← Wapas</button>
@@ -518,7 +433,6 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 </div>
 </div>
 
-<!-- ══════ MCQ SETTINGS ══════ -->
 <div class="sc" id="sc-mcq-set">
 <div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -559,17 +473,14 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 </div>
 </div>
 
-<!-- ══════ MCQ QUIZ ══════ -->
 <div class="sc" id="sc-mcq-quiz">
 <div class="pw-sm"><div id="qzCont"></div></div>
 </div>
 
-<!-- ══════ MCQ RESULTS ══════ -->
 <div class="sc" id="sc-mcq-res">
 <div class="pw-sm"><div id="resCont"></div></div>
 </div>
 
-<!-- ══════ SHORT Q ══════ -->
 <div class="sc" id="sc-short">
 <div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -579,7 +490,6 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 </div>
 </div>
 
-<!-- ══════ LONG Q ══════ -->
 <div class="sc" id="sc-long">
 <div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -589,7 +499,6 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 </div>
 </div>
 
-<!-- ══════ SUMMARY ══════ -->
 <div class="sc" id="sc-summary">
 <div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -599,7 +508,6 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 </div>
 </div>
 
-<!-- ══════ GUESS PAPER ══════ -->
 <div class="sc" id="sc-guess">
 <div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -609,7 +517,6 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 </div>
 </div>
 
-<!-- ══════ NOTES ══════ -->
 <div class="sc" id="sc-notes">
 <div class="pw">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -618,7 +525,6 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 </div>
 </div>
 
-<!-- ══════ PAST PAPERS ══════ -->
 <div class="sc" id="sc-papers">
 <div class="pw">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -628,10 +534,7 @@ body.light #hdr{background:rgba(240,244,248,.92)}
 </div>
 
 </main>
-</div><!-- #app -->
-
-<!-- ══════ CHAT WIDGET ══════ -->
-<div id="cw">
+</div><div id="cw">
   <div id="cpanel">
     <div class="chd">
       <div class="chd-av">🤖</div>
@@ -645,8 +548,7 @@ body.light #hdr{background:rgba(240,244,248,.92)}
       <div class="cmsg a">Assalam-o-Alaikum! 👋 Main hoon tumhara AI tutor. Koi bhi sawal poochho — Roman Urdu ya English mein — bilkul free! 📚</div>
     </div>
     <div class="cft">
-      <textarea id="cinp" placeholder="Apna sawal likho... (Roman Urdu ya English)" rows="1"
-        onkeydown="chatKey(event)" oninput="autoH(this)"></textarea>
+      <textarea id="cinp" placeholder="Apna sawal likho... (Roman Urdu ya English)" rows="1" onkeydown="chatKey(event)" oninput="autoH(this)"></textarea>
       <button id="csnd" onclick="sendChat()">↑</button>
     </div>
   </div>
@@ -665,12 +567,12 @@ const CLASSES=[
 ];
 
 const BOARDS=[
-  {id:'punjab', nm:'Punjab Board',       ds:'BISE Lahore, Multan, Faisalabad, Rawalpindi, Gujranwala, Sahiwal etc.', fl:'🏛️'},
-  {id:'fbise',  nm:'Federal Board',      ds:'FBISE — Islamabad Capital Territory',                                   fl:'🇵🇰'},
-  {id:'kpk',    nm:'KPK Board',          ds:'BISE Peshawar, Mardan, Kohat, Swat, Abbottabad etc.',                  fl:'⛰️'},
-  {id:'sindh',  nm:'Sindh Board',        ds:'BISE Karachi, Hyderabad, Sukkur, Mirpurkhas etc.',                     fl:'🏙️'},
-  {id:'baloch', nm:'Balochistan Board',  ds:'BISE Quetta, Turbat, Khuzdar etc.',                                    fl:'🏜️'},
-  {id:'ajk',    nm:'AJK Board',          ds:'Azad Jammu & Kashmir Board of Education',                              fl:'🏔️'},
+  {id:'punjab', nm:'Punjab Board',       ds:'BISE Lahore, Multan, Faisalabad, Rawalpindi etc.', fl:'🕌'},
+  {id:'fbise',  nm:'Federal Board',      ds:'FBISE — Islamabad Capital Territory',              fl:'🏛️'},
+  {id:'kpk',    nm:'KPK Board',          ds:'BISE Peshawar, Mardan, Swat, Abbottabad etc.',     fl:'🌲'},
+  {id:'sindh',  nm:'Sindh Board',        ds:'BISE Karachi, Hyderabad, Sukkur, Mirpurkhas etc.', fl:'🏜️'},
+  {id:'baloch', nm:'Balochistan Board',  ds:'BISE Quetta, Turbat, Khuzdar etc.',                fl:'⛰️'},
+  {id:'ajk',    nm:'AJK Board',          ds:'Azad Jammu & Kashmir Board of Education',          fl:'🏔️'},
 ];
 
 const G910=[
@@ -856,8 +758,8 @@ const MODES=[
 // ═══════════════════════════════════════════════════════════
 const S={
   cls:null, brd:null, grp:null, sub:null, ch:null,
-  mcq:{cnt:10,dif:'medium',tmr:10},
-  qzData:[],qzIdx:0,qzAns:[],qzInterval:null, qzTimeout:null,
+  mcq:{cnt:10,dif:'medium',tmr:10}, // Timer set to 10 seconds by default
+  qzData:[],qzIdx:0,qzAns:[],qzInterval:null,
   qaType:'short',qaData:[],qaIdx:0,qaEvals:[],
   chatH:[],chatOpen:false,
   prog:{streak:0,xp:0,lastDate:null,totalMCQ:0,correctMCQ:0},
@@ -866,22 +768,10 @@ const S={
 try{
   const sv=JSON.parse(localStorage.getItem('ilmai_v2')||'{}');
   if(sv.prog) S.prog={...S.prog,...sv.prog};
-  // Theme
-  if(sv.theme === 'light') document.body.classList.add('light');
   updateStreak();
 }catch(e){}
 
-function save(){
-  localStorage.setItem('ilmai_v2',JSON.stringify({
-    prog:S.prog,
-    theme: document.body.classList.contains('light')?'light':'dark'
-  }));
-}
-
-function toggleTheme(){
-  document.body.classList.toggle('light');
-  save();
-}
+function save(){ localStorage.setItem('ilmai_v2',JSON.stringify({prog:S.prog})); }
 
 function updateStreak(){
   const today=new Date().toDateString();
@@ -903,13 +793,12 @@ function show(id){
   if(el){el.classList.add('on');}
   window.scrollTo({top:0,behavior:'instant'});
   updateHdr(id);
-  // Hide chat widget on quiz/qa/guess screens
-  const hideChatPages = ['mcq-quiz','short','long','guess'];
+
+  // Auto Hide AI sidebar logic
+  const hideScreens = ['mcq-quiz', 'short', 'long'];
   const cw = document.getElementById('cw');
-  if(hideChatPages.includes(id)){
-    cw.style.display = 'none';
-  } else {
-    cw.style.display = '';
+  if(cw) {
+    cw.style.display = hideScreens.includes(id) ? 'none' : 'block';
   }
 }
 
@@ -933,12 +822,8 @@ function updateHdr(id){
   document.getElementById('xps').textContent=`⭐ ${S.prog.xp} XP`;
 }
 
-function getGrpNm(){
-  return [...G910,...G1112].find(g=>g.id===S.grp)?.nm||S.grp;
-}
-function getGrpSubs(){
-  return [...G910,...G1112].find(g=>g.id===S.grp)?.subs||[];
-}
+function getGrpNm(){ return [...G910,...G1112].find(g=>g.id===S.grp)?.nm||S.grp; }
+function getGrpSubs(){ return [...G910,...G1112].find(g=>g.id===S.grp)?.subs||[]; }
 function getChNm(){
   if(!S.ch||S.ch==='all') return 'Full Book';
   const k=`${S.sub}-${S.cls}`;
@@ -972,7 +857,6 @@ function renderLanding(){
     </div>`
   ).join('');
 }
-
 function selCls(id){ S.cls=id; renderBoards(); show('board'); }
 
 // ═══════════════════════════════════════════════════════════
@@ -995,8 +879,7 @@ function selBrd(id){ S.brd=id; renderGroups(); show('group'); }
 function renderGroups(){
   const isM=['9','10'].includes(S.cls);
   const gs=isM?G910:G1112;
-  document.getElementById('grpSub').textContent=
-    isM?`Class ${S.cls} — group chunao`:`Intermediate — program chunao`;
+  document.getElementById('grpSub').textContent=isM?`Class ${S.cls} — group chunao`:`Intermediate — program chunao`;
   document.getElementById('grpGrid').innerHTML=gs.map(g=>
     `<div class="grp-c" onclick="selGrp('${g.id}')">
       <div class="grp-ic">${g.ic}</div>
@@ -1017,8 +900,7 @@ function renderSubjects(){
     const m=SMETA[s]||{ic:'📚',co:'#64748b'};
     const k=`${s}-${S.cls}`;
     const chCnt=CH[k]?CH[k].length:'?';
-    return `<div class="sub-c" onclick="selSub('${s}')"
-      style="--ac:${m.co}1a;--ab:${m.co}55">
+    return `<div class="sub-c" onclick="selSub('${s}')" style="--ac:${m.co}1a;--ab:${m.co}55">
       <div class="sub-ic">${m.ic}</div>
       <div class="sub-nm">${s}</div>
       <div class="sub-ch">${chCnt} Chapters</div>
@@ -1033,8 +915,7 @@ function selSub(s){ S.sub=s; renderChapters(); show('chapter'); }
 function renderChapters(){
   const m=SMETA[S.sub]||{ic:'📚'};
   document.getElementById('chTit').innerHTML=`${m.ic} ${S.sub} — Class ${S.cls}`;
-  document.getElementById('chSub').textContent=
-    `${S.cls} ${(BOARDS.find(b=>b.id===S.brd)?.nm||'Board')} | ${getGrpNm()}`;
+  document.getElementById('chSub').textContent=`${S.cls} ${(BOARDS.find(b=>b.id===S.brd)?.nm||'Board')} | ${getGrpNm()}`;
   const k=`${S.sub}-${S.cls}`;
   const chs=CH[k];
   const cont=document.getElementById('chCont');
@@ -1044,8 +925,7 @@ function renderChapters(){
     <span class="ch-ar" style="color:var(--p)">›</span>
   </div>`;
   if(!chs){
-    cont.innerHTML=fullBook+`<p style="text-align:center;color:var(--t2);padding:24px;font-size:14px">
-      ✦ Specific chapters jald aa rahay hain! Abhi Full Book practice karo.</p>`;
+    cont.innerHTML=fullBook+`<p style="text-align:center;color:var(--t2);padding:24px;font-size:14px">✦ Specific chapters jald aa rahay hain! Abhi Full Book practice karo.</p>`;
     return;
   }
   cont.innerHTML=`<div class="ch-list">${fullBook}${chs.map((ch,i)=>
@@ -1109,10 +989,9 @@ async function startMCQ(){
 Class: ${S.cls} | Board: Pakistan ${brdNm} | Subject: ${S.sub}
 Chapter/Topic: ${chNm} | Difficulty: ${S.mcq.dif}
 
-Pakistan board exam pattern. Difficulty: easy=recall/definition, medium=application, hard=analysis/problem-solving, mixed=all.
-Ensure questions are relevant to ${S.cls}th class level Pakistan curriculum 2024-25.
+Pakistan board exam pattern. Difficulty: easy=recall/definition, medium=application, hard=analysis/problem-solving, mixed=all. Ensure questions are relevant to ${S.cls}th class level Pakistan curriculum 2024-25.
 
-Return ONLY a valid JSON array (no markdown, no backticks, no extra text):
+CRITICAL: Return ONLY a valid JSON array. Do not include markdown, backticks, or any other text.
 [{"q":"question text","opts":["option A","option B","option C","option D"],"correct":0,"exp":"1-2 line explanation"}]
 correct is 0-indexed (0=A,1=B,2=C,3=D).`;
   try{
@@ -1156,6 +1035,7 @@ function renderQ(){
   <div id="qexp"></div>
   <div class="qnav" id="qnav" style="display:none">
     <div></div>
+    <button class="btn btn-p" onclick="nextQ()" style="display:none">${S.qzIdx+1<tot?'Agla Sawal →':'🏆 Results Dekho'}</button>
   </div>`;
   if(S.mcq.tmr>0) runTimer();
 }
@@ -1168,20 +1048,21 @@ function runTimer(){
     const el=document.getElementById('tmrN');
     const te=document.getElementById('qtmr');
     if(el) el.textContent=rem;
-    if(rem<=10&&te) te.classList.add('warn');
+    if(rem<=3&&te) te.classList.add('warn');
     if(rem<=0){clearInterval(S.qzInterval);ansQ(-1);}
   },1000);
 }
 
 function ansQ(sel){
   if(S.qzInterval){clearInterval(S.qzInterval);S.qzInterval=null;}
-  if(S.qzTimeout) clearTimeout(S.qzTimeout);
   const q=S.qzData[S.qzIdx];
   const cor=q.correct;
   S.qzAns[S.qzIdx]=sel;
+  
   document.querySelectorAll('.qopt').forEach(o=>{o.classList.add('dis');});
   if(sel>=0) document.getElementById(`op${sel}`)?.classList.add(sel===cor?'cor':'wrg');
   document.getElementById(`op${cor}`)?.classList.add('cor');
+  
   const ok=sel===cor;
   if(ok) addXP(10);
   const L=['A','B','C','D'];
@@ -1190,16 +1071,18 @@ function ansQ(sel){
     ${sel>=0&&!ok?` Sahi jawab: <strong style="color:var(--ok)">${L[cor]}. ${q.opts[cor]}</strong> — `:''}
     ${q.exp}
   </div>`;
-  document.getElementById('qnav').style.display='none';
-  // Auto advance after 2 seconds
-  S.qzTimeout = setTimeout(()=>{
-    S.qzIdx++;
-    if(S.qzIdx >= S.qzData.length) renderResults();
-    else renderQ();
-  }, 2000);
+  
+  // Auto advance logic
+  setTimeout(()=>{
+    if(S.qzIdx+1 < S.qzData.length){
+      nextQ();
+    } else {
+      renderResults();
+    }
+  }, ok ? 1000 : 2000); // 1 sec if correct, 2 sec if wrong
 }
 
-function nextQ(){ /* deprecated - auto advance */ }
+function nextQ(){ S.qzIdx++; renderQ(); }
 
 function renderResults(){
   let cor=0;
@@ -1213,7 +1096,8 @@ function renderResults(){
   else if(pct>=60){grade='B';gc='var(--s)'}
   else if(pct>=50){grade='C';gc='var(--g)'}
   else{grade='F';gc='var(--r)'}
-  S.prog.totalMCQ+=tot; S.prog.correctMCQ+=cor; save();
+  S.prog.totalMCQ+=tot;
+  S.prog.correctMCQ+=cor; save();
   const xpE=cor*10+Math.floor(pct/10)*5;
   document.getElementById('resCont').innerHTML=`
   <div class="res-hero">
@@ -1244,16 +1128,13 @@ function reviewMCQ(){
   ${S.qzData.map((q,i)=>{
     const ua=S.qzAns[i];
     const ok=ua===q.correct;
-    return `<div style="background:var(--card);border:1px solid ${ok?'rgba(34,197,94,.3)':'rgba(239,68,68,.3)'};
-      border-radius:var(--rad2);padding:20px;margin-bottom:14px">
+    return `<div style="background:var(--card);border:1px solid ${ok?'rgba(34,197,94,.3)':'rgba(239,68,68,.3)'};border-radius:var(--rad2);padding:20px;margin-bottom:14px">
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
         <span>${ok?'✅':'❌'}</span><span style="font-size:13px;color:var(--t2)">Q${i+1}</span>
         ${ok?'<span class="tag t-gn">Sahi</span>':'<span class="tag t-rd">Ghalat</span>'}
       </div>
       <div style="font-size:15px;font-weight:600;margin-bottom:12px">${q.q}</div>
-      ${q.opts.map((o,j)=>`<div style="padding:9px 14px;border-radius:9px;margin-bottom:6px;font-size:14px;
-        background:${j===q.correct?'var(--okd)':j===ua&&ua!==q.correct?'var(--rd)':'var(--bg2)'};
-        border:1px solid ${j===q.correct?'rgba(34,197,94,.4)':j===ua&&ua!==q.correct?'rgba(239,68,68,.4)':'var(--b)'}">
+      ${q.opts.map((o,j)=>`<div style="padding:9px 14px;border-radius:9px;margin-bottom:6px;font-size:14px;background:${j===q.correct?'var(--okd)':j===ua&&ua!==q.correct?'var(--rd)':'var(--bg2)'};border:1px solid ${j===q.correct?'rgba(34,197,94,.4)':j===ua&&ua!==q.correct?'rgba(239,68,68,.4)':'var(--b)'}">
         <strong>${L[j]}.</strong> ${o}
         ${j===q.correct?' <span style="color:var(--ok)">✓ Sahi</span>':''}
         ${j===ua&&ua!==q.correct?' <span style="color:var(--r)">✗ Tumhara</span>':''}
@@ -1276,8 +1157,7 @@ async function startQA(tp){
   const titEl=document.getElementById(tp==='short'?'shTit':'lgTit');
   titEl.textContent=`${tp==='short'?'Short':'Long'} Question Practice — ${S.sub}`;
   document.getElementById(tp==='short'?'shCont':'lgCont').innerHTML=
-    loadHTML(`${tp==='short'?'Short':'Long'} questions generate ho rahe hain...`,
-      'AI Pakistan board pattern se questions bana raha hai');
+    loadHTML(`${tp==='short'?'Short':'Long'} questions generate ho rahe hain...`, 'AI Pakistan board pattern se questions bana raha hai');
   const chNm=getChNm();
   const brdNm=BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab';
   const isShort=tp==='short';
@@ -1286,14 +1166,15 @@ async function startQA(tp){
 Class: ${S.cls} | Subject: ${S.sub} | Chapter: ${chNm}
 Pattern: 2-3 line answers expected, 2 marks each. Important for exam.
 
-Return ONLY valid JSON array:
+CRITICAL: Return ONLY a strictly valid JSON array. No markdown format.
 [{"q":"question","keyPoints":["point1","point2","point3"],"marks":2}]`
     :` Generate exactly ${cnt} important long questions for Pakistan ${brdNm} board exam:
 Class: ${S.cls} | Subject: ${S.sub} | Chapter: ${chNm}
 Pattern: paragraph answers, 5 marks each. Board exam style.
 
-Return ONLY valid JSON array:
+CRITICAL: Return ONLY a strictly valid JSON array. No markdown format.
 [{"q":"question","keyPoints":["point1","point2","point3","point4","point5"],"marks":5,"guide":"~150-200 words"}]`;
+  
   try{
     const txt=await ai(prompt,1200);
     S.qaData=JSON.parse(extractJ(txt));
@@ -1301,8 +1182,7 @@ Return ONLY valid JSON array:
     S.qaEvals=new Array(S.qaData.length).fill(null);
     renderQA();
   }catch(e){
-    document.getElementById(tp==='short'?'shCont':'lgCont').innerHTML=
-      errHTML('Questions load nahi ho sake',()=>startQA(tp));
+    document.getElementById(tp==='short'?'shCont':'lgCont').innerHTML=errHTML('Questions load nahi ho sake',()=>startQA(tp));
   }
 }
 
@@ -1324,9 +1204,7 @@ function renderQA(){
   <div class="crd" style="margin-bottom:18px">
     <div class="qa-q"><span style="color:var(--t3);font-size:13px">Q${S.qaIdx+1}. </span>${q.q}</div>
     <label style="font-size:12px;font-weight:700;color:var(--t2);display:block;margin-bottom:9px;text-transform:uppercase;letter-spacing:1px">Apna jawab likho:</label>
-    <textarea class="qa-ta${isL?' lng':''}" id="qaAns"
-      placeholder="${isL?'Yahan apna detailed paragraph jawab likho...':'Yahan apna short jawab likho (2-3 lines)...'}"
-      oninput="updWC(this)">${ev?ev.userAns||'':''}</textarea>
+    <textarea class="qa-ta${isL?' lng':''}" id="qaAns" placeholder="${isL?'Yahan apna detailed paragraph jawab likho...':'Yahan apna short jawab likho (2-3 lines)...'}" oninput="updWC(this)">${ev?ev.userAns||'':''}</textarea>
     <div class="wc" id="wc">0 words</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
       <button class="btn btn-p" onclick="evalAns()">🤖 AI se Check Karo</button>
@@ -1335,11 +1213,7 @@ function renderQA(){
     </div>
   </div>
   <div id="evRes">${ev?renderEv(ev,q):''}</div>
-  ${ev?`<div style="text-align:center;margin-top:20px">
-    <button class="btn btn-p" onclick="nextQA()">
-      ${S.qaIdx+1<S.qaData.length?'Agla Sawal →':'🏆 Results Dekho'}
-    </button>
-  </div>`:''}`;
+  ${ev?`<div style="text-align:center;margin-top:20px"><button class="btn btn-p" onclick="nextQA()">${S.qaIdx+1<S.qaData.length?'Agla Sawal →':'🏆 Results Dekho'}</button></div>`:''}`;
   if(ev?.userAns) updWC(document.getElementById('qaAns'));
 }
 
@@ -1361,9 +1235,9 @@ Key Points Expected: ${q.keyPoints.join('; ')}
 Total Marks: ${q.marks}
 Student's Answer: "${ans}"
 
-Return ONLY valid JSON (no markdown):
-{"score":${q.marks},"grade":"A","correct":["specific point correct"],"missing":["specific point missed"],"suggestions":"improvement tips in simple language","sampleAnswer":"ideal answer for this question"}
-Score from 0 to ${q.marks}. Be fair and encouraging.`;
+CRITICAL: Return ONLY valid JSON format. DO NOT use markdown like \`\`\`json. The structure must be EXACTLY this:
+{"score":${q.marks},"grade":"A","correct":["specific point correct"],"missing":["specific point missed"],"suggestions":"improvement tips in simple language","sampleAnswer":"ideal answer for this question"}`;
+
   try{
     const txt=await ai(prompt,700);
     const ev=JSON.parse(extractJ(txt));
@@ -1372,12 +1246,7 @@ Score from 0 to ${q.marks}. Be fair and encouraging.`;
     document.getElementById('evRes').innerHTML=renderEv(ev,q);
     const existing=document.querySelector('#evRes + div');
     if(!existing){
-      document.getElementById('evRes').insertAdjacentHTML('afterend',
-        `<div style="text-align:center;margin-top:20px">
-          <button class="btn btn-p" onclick="nextQA()">
-            ${S.qaIdx+1<S.qaData.length?'Agla Sawal →':'🏆 Results Dekho'}
-          </button>
-        </div>`);
+      document.getElementById('evRes').insertAdjacentHTML('afterend',`<div style="text-align:center;margin-top:20px"><button class="btn btn-p" onclick="nextQA()">${S.qaIdx+1<S.qaData.length?'Agla Sawal →':'🏆 Results Dekho'}</button></div>`);
     }
     addXP(Math.max(2,Math.round((ev.score/q.marks)*15)));
   }catch(e){
@@ -1395,14 +1264,10 @@ function renderEv(ev,q){
       </div>
       <div style="margin-left:auto"><span class="tag t-vi" style="font-size:15px;padding:8px 18px">Grade: ${ev.grade||'—'}</span></div>
     </div>
-    ${ev.correct?.length?`<div class="evs"><div class="evs-t">✅ Kya Sahi Likha</div>
-      <ul class="evl">${ev.correct.map(p=>`<li>${p}</li>`).join('')}</ul></div>`:''}
-    ${ev.missing?.length?`<div class="evs"><div class="evs-t" style="color:var(--r)">❌ Kya Reh Gaya</div>
-      <ul class="evl">${ev.missing.map(p=>`<li>${p}</li>`).join('')}</ul></div>`:''}
-    ${ev.suggestions?`<div class="evs"><div class="evs-t" style="color:var(--g)">💡 Suggestions</div>
-      <div style="font-size:14px;color:var(--t2);line-height:1.6">${ev.suggestions}</div></div>`:''}
-    ${ev.sampleAnswer?`<div class="evs"><div class="evs-t" style="color:var(--p)">📖 Ideal Answer</div>
-      <div style="font-size:14px;color:var(--t2);line-height:1.7;padding:13px;background:var(--bg2);border-radius:10px;border:1px solid var(--b)">${ev.sampleAnswer}</div></div>`:''}
+    ${ev.correct?.length?`<div class="evs"><div class="evs-t">✅ Kya Sahi Likha</div><ul class="evl">${ev.correct.map(p=>`<li>${p}</li>`).join('')}</ul></div>`:''}
+    ${ev.missing?.length?`<div class="evs"><div class="evs-t" style="color:var(--r)">❌ Kya Reh Gaya</div><ul class="evl">${ev.missing.map(p=>`<li>${p}</li>`).join('')}</ul></div>`:''}
+    ${ev.suggestions?`<div class="evs"><div class="evs-t" style="color:var(--g)">💡 Suggestions</div><div style="font-size:14px;color:var(--t2);line-height:1.6">${ev.suggestions}</div></div>`:''}
+    ${ev.sampleAnswer?`<div class="evs"><div class="evs-t" style="color:var(--p)">📖 Ideal Answer</div><div style="font-size:14px;color:var(--t2);line-height:1.7;padding:13px;background:var(--bg2);border-radius:10px;border:1px solid var(--b)">${ev.sampleAnswer}</div></div>`:''}
   </div>`;
 }
 
@@ -1438,7 +1303,7 @@ async function startSummary(){
   const prompt=`Create a comprehensive study summary for Pakistan board student:
 Class: ${S.cls} | Board: ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} | Subject: ${S.sub} | Chapter: ${chNm}
 
-Return ONLY valid JSON (no markdown):
+CRITICAL: Return ONLY valid JSON format. NO markdown format, backticks or extra text.
 {"overview":"2-3 sentence chapter overview in simple language",
  "keyTopics":[{"topic":"topic name","desc":"1-2 line explanation"}],
  "formulas":["formula or key definition"],
@@ -1457,26 +1322,12 @@ Return ONLY valid JSON (no markdown):
 
 function renderSummary(d){
   document.getElementById('smCont').innerHTML=`
-  <div class="sumb"><h3>📋 Overview</h3>
-    <p style="font-size:15px;line-height:1.7;color:var(--t2)">${d.overview}</p>
-  </div>
-  ${d.keyTopics?.length?`<div class="sumb"><h3>🎯 Key Topics</h3>
-    <ul class="suml">${d.keyTopics.map(t=>`<li><strong style="color:var(--t)">${t.topic}:</strong> ${t.desc}</li>`).join('')}</ul>
-  </div>`:''}
-  ${d.formulas?.length?`<div class="sumb"><h3>🔢 Formulas & Definitions</h3>
-    <ul class="suml">${d.formulas.map(f=>`<li class="fm">${f}</li>`).join('')}</ul>
-  </div>`:''}
-  ${d.memorize?.length?`<div class="sumb"><h3>🧠 Yaad Rakhne Wali Baatein</h3>
-    <ul class="suml">${d.memorize.map(m=>`<li>⭐ ${m}</li>`).join('')}</ul>
-  </div>`:''}
-  ${d.examTips?.length?`<div class="sumb" style="border-color:rgba(0,212,170,.3);background:var(--pd)">
-    <h3>📝 Board Exam Tips</h3>
-    <ul class="suml">${d.examTips.map((t,i)=>`<li>${i+1}. ${t}</li>`).join('')}</ul>
-  </div>`:''}
-  ${d.commonMistakes?.length?`<div class="sumb" style="border-color:rgba(239,68,68,.3);background:var(--rd)">
-    <h3 style="color:var(--r)">⚠️ Common Mistakes</h3>
-    <ul class="suml">${d.commonMistakes.map(m=>`<li>${m}</li>`).join('')}</ul>
-  </div>`:''}
+  <div class="sumb"><h3>📋 Overview</h3><p style="font-size:15px;line-height:1.7;color:var(--t2)">${d.overview}</p></div>
+  ${d.keyTopics?.length?`<div class="sumb"><h3>🎯 Key Topics</h3><ul class="suml">${d.keyTopics.map(t=>`<li><strong style="color:var(--t)">${t.topic}:</strong> ${t.desc}</li>`).join('')}</ul></div>`:''}
+  ${d.formulas?.length?`<div class="sumb"><h3>🔢 Formulas & Definitions</h3><ul class="suml">${d.formulas.map(f=>`<li class="fm">${f}</li>`).join('')}</ul></div>`:''}
+  ${d.memorize?.length?`<div class="sumb"><h3>🧠 Yaad Rakhne Wali Baatein</h3><ul class="suml">${d.memorize.map(m=>`<li>⭐ ${m}</li>`).join('')}</ul></div>`:''}
+  ${d.examTips?.length?`<div class="sumb" style="border-color:rgba(0,212,170,.3);background:var(--pd)"><h3>📝 Board Exam Tips</h3><ul class="suml">${d.examTips.map((t,i)=>`<li>${i+1}. ${t}</li>`).join('')}</ul></div>`:''}
+  ${d.commonMistakes?.length?`<div class="sumb" style="border-color:rgba(239,68,68,.3);background:var(--rd)"><h3 style="color:var(--r)">⚠️ Common Mistakes</h3><ul class="suml">${d.commonMistakes.map(m=>`<li>${m}</li>`).join('')}</ul></div>`:''}
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px">
     <button class="btn btn-p" onclick="startSummary()">🔄 Refresh</button>
     <button class="btn btn-g" onclick="show('mode')">← Menu</button>
@@ -1493,20 +1344,22 @@ async function startGuess(){
   document.getElementById('gpTit').innerHTML=`${m.ic} ${S.sub} — Guess Paper`;
   document.getElementById('gpCont').innerHTML=loadHTML('AI guess paper bana raha hai...','Board exam patterns analyze ho rahe hain');
   const brdNm=BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab';
+  
   const prompt=`Create an AI guess paper for Pakistan board exam student:
 Class: ${S.cls} | Board: ${brdNm} | Subject: ${S.sub} | Chapter: ${chNm}
 
 Based on common patterns in ${brdNm} exams. Include likely questions with probability.
+CRITICAL: You MUST return ONLY a strictly valid JSON object. Do not include any markdown formatting, backticks, or intro/outro text. The response must start with { and end with }.
 
-Return ONLY valid JSON:
 {
-  "mcqs":[{"q":"MCQ question","opts":["A","B","C","D"],"likely":"high/medium","reason":"why likely"}],
-  "shortQ":[{"q":"short question","likely":"high/medium","marks":2}],
-  "longQ":[{"q":"long question","likely":"high/medium","marks":5}],
+  "mcqs":[{"q":"MCQ question","opts":["A","B","C","D"],"likely":"high","reason":"why likely"}],
+  "shortQ":[{"q":"short question","likely":"high","marks":2}],
+  "longQ":[{"q":"long question","likely":"high","marks":5}],
   "hotTopics":["topic likely to appear"],
   "tip":"exam strategy tip"
 }
 Include 5 MCQs, 5 short questions, 3 long questions.`;
+
   try{
     const txt=await ai(prompt,1800);
     const d=JSON.parse(extractJ(txt));
@@ -1521,38 +1374,12 @@ function renderGuess(d){
   const lbl=l=>`<span class="likelihood" style="background:${l==='high'?'var(--okd)':'var(--gd)'};color:${l==='high'?'var(--ok)':'var(--g)'}">${l==='high'?'🔥 High Chance':'⭐ Medium'}</span>`;
   const L=['A','B','C','D'];
   document.getElementById('gpCont').innerHTML=`
-  ${d.hotTopics?.length?`<div class="gp-sec"><h3>🎯 Hot Topics (Board mein aane ka zyada chance)</h3>
-    ${d.hotTopics.map(t=>`<div class="gp-q">🔥 ${t}</div>`).join('')}
-  </div>`:''}
-  ${d.mcqs?.length?`<div class="gp-sec"><h3>📝 Likely MCQs</h3>
-    ${d.mcqs.map((q,i)=>`<div class="gp-q">
-      ${lbl(q.likely)}
-      <div style="font-weight:600;margin:6px 0">Q${i+1}. ${q.q}</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:13px;color:var(--t2)">
-        ${q.opts.map((o,j)=>`<div>${L[j]}. ${o}</div>`).join('')}
-      </div>
-    </div>`).join('')}
-  </div>`:''}
-  ${d.shortQ?.length?`<div class="gp-sec"><h3>✍️ Likely Short Questions</h3>
-    ${d.shortQ.map((q,i)=>`<div class="gp-q">
-      ${lbl(q.likely)}<span class="tag t-gd" style="margin-left:6px">${q.marks} Marks</span>
-      <div style="margin-top:6px;font-weight:600">Q${i+1}. ${q.q}</div>
-    </div>`).join('')}
-  </div>`:''}
-  ${d.longQ?.length?`<div class="gp-sec"><h3>📖 Likely Long Questions</h3>
-    ${d.longQ.map((q,i)=>`<div class="gp-q">
-      ${lbl(q.likely)}<span class="tag t-gd" style="margin-left:6px">${q.marks} Marks</span>
-      <div style="margin-top:6px;font-weight:600">Q${i+1}. ${q.q}</div>
-    </div>`).join('')}
-  </div>`:''}
-  ${d.tip?`<div class="sumb" style="border-color:rgba(0,212,170,.3);background:var(--pd)">
-    <h3>💡 Exam Strategy</h3>
-    <p style="font-size:14px;color:var(--t2);line-height:1.6">${d.tip}</p>
-  </div>`:''}
-  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px">
-    <button class="btn btn-p" onclick="startGuess()">🔄 New Guess</button>
-    <button class="btn btn-g" onclick="show('mode')">← Menu</button>
-  </div>`;
+  ${d.hotTopics?.length?`<div class="gp-sec"><h3>🎯 Hot Topics (Board mein aane ka zyada chance)</h3>${d.hotTopics.map(t=>`<div class="gp-q">🔥 ${t}</div>`).join('')}</div>`:''}
+  ${d.mcqs?.length?`<div class="gp-sec"><h3>📝 Likely MCQs</h3>${d.mcqs.map((q,i)=>`<div class="gp-q">${lbl(q.likely)}<div style="font-weight:600;margin:6px 0">Q${i+1}. ${q.q}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:13px;color:var(--t2)">${q.opts.map((o,j)=>`<div>${L[j]}. ${o}</div>`).join('')}</div></div>`).join('')}</div>`:''}
+  ${d.shortQ?.length?`<div class="gp-sec"><h3>✍️ Likely Short Questions</h3>${d.shortQ.map((q,i)=>`<div class="gp-q">${lbl(q.likely)}<span class="tag t-gd" style="margin-left:6px">${q.marks} Marks</span><div style="margin-top:6px;font-weight:600">Q${i+1}. ${q.q}</div></div>`).join('')}</div>`:''}
+  ${d.longQ?.length?`<div class="gp-sec"><h3>📖 Likely Long Questions</h3>${d.longQ.map((q,i)=>`<div class="gp-q">${lbl(q.likely)}<span class="tag t-gd" style="margin-left:6px">${q.marks} Marks</span><div style="margin-top:6px;font-weight:600">Q${i+1}. ${q.q}</div></div>`).join('')}</div>`:''}
+  ${d.tip?`<div class="sumb" style="border-color:rgba(0,212,170,.3);background:var(--pd)"><h3>💡 Exam Strategy</h3><p style="font-size:14px;color:var(--t2);line-height:1.6">${d.tip}</p></div>`:''}
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px"><button class="btn btn-p" onclick="startGuess()">🔄 New Guess</button><button class="btn btn-g" onclick="show('mode')">← Menu</button></div>`;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1569,12 +1396,9 @@ function renderNotes(){
     {nm:`Khan Academy (Urdu)`,ds:'Free lessons in Urdu — math & science',url:'https://ur.khanacademy.org/',ic:'🎓',tp:'web'},
   ];
   const vids=[
-    {nm:`${s} Class ${c} — Pakistani YouTube Lectures`,ds:'Free lectures in Urdu on YouTube',
-     url:`https://www.youtube.com/results?search_query=${encodeURIComponent(s+' class '+c+' pakistan urdu lecture')}`,ic:'▶️'},
-    {nm:`Last Minute Revision Videos`,ds:'Quick revision before exams',
-     url:`https://www.youtube.com/results?search_query=${encodeURIComponent(s+' class '+c+' quick revision pakistan board')}`,ic:'⚡'},
-    {nm:`Concept Explanation`,ds:'Step-by-step concept videos',
-     url:`https://www.youtube.com/results?search_query=${encodeURIComponent(s+' class '+c+' explain in urdu')}`,ic:'💡'},
+    {nm:`${s} Class ${c} — Pakistani YouTube Lectures`,ds:'Free lectures in Urdu on YouTube',url:`https://www.youtube.com/results?search_query=${encodeURIComponent(s+' class '+c+' pakistan urdu lecture')}`,ic:'▶️'},
+    {nm:`Last Minute Revision Videos`,ds:'Quick revision before exams',url:`https://www.youtube.com/results?search_query=${encodeURIComponent(s+' class '+c+' quick revision pakistan board')}`,ic:'⚡'},
+    {nm:`Concept Explanation`,ds:'Step-by-step concept videos',url:`https://www.youtube.com/results?search_query=${encodeURIComponent(s+' class '+c+' explain in urdu')}`,ic:'💡'},
   ];
   const refs=[
     {nm:'FreeIlm.com',ds:"Pakistan's most popular free study site",url:'https://www.freeilm.com',ic:'🌐'},
@@ -1588,27 +1412,9 @@ function renderNotes(){
     <div class="ntab" onclick="swNTab(this,'nt-v')">🎥 Video Lectures</div>
     <div class="ntab" onclick="swNTab(this,'nt-r')">🔗 Reference Sites</div>
   </div>
-  <div id="nt-n" style="display:flex;flex-direction:column;gap:10px">
-    ${notes.map(l=>`<a href="${l.url}" target="_blank" class="rc">
-      <span class="rc-ic">${l.ic}</span>
-      <div class="rc-inf"><h4>${l.nm}</h4><p>${l.ds}</p></div>
-      <span class="rc-tp tp-${l.tp}">${l.tp.toUpperCase()}</span>
-    </a>`).join('')}
-  </div>
-  <div id="nt-v" style="display:none;flex-direction:column;gap:10px">
-    ${vids.map(l=>`<a href="${l.url}" target="_blank" class="rc">
-      <span class="rc-ic">${l.ic}</span>
-      <div class="rc-inf"><h4>${l.nm}</h4><p>${l.ds}</p></div>
-      <span class="rc-tp tp-v">VIDEO</span>
-    </a>`).join('')}
-  </div>
-  <div id="nt-r" style="display:none;flex-direction:column;gap:10px">
-    ${refs.map(l=>`<a href="${l.url}" target="_blank" class="rc">
-      <span class="rc-ic">${l.ic}</span>
-      <div class="rc-inf"><h4>${l.nm}</h4><p>${l.ds}</p></div>
-      <span class="rc-tp tp-w">SITE</span>
-    </a>`).join('')}
-  </div>`;
+  <div id="nt-n" style="display:flex;flex-direction:column;gap:10px">${notes.map(l=>`<a href="${l.url}" target="_blank" class="rc"><span class="rc-ic">${l.ic}</span><div class="rc-inf"><h4>${l.nm}</h4><p>${l.ds}</p></div><span class="rc-tp tp-${l.tp}">${l.tp.toUpperCase()}</span></a>`).join('')}</div>
+  <div id="nt-v" style="display:none;flex-direction:column;gap:10px">${vids.map(l=>`<a href="${l.url}" target="_blank" class="rc"><span class="rc-ic">${l.ic}</span><div class="rc-inf"><h4>${l.nm}</h4><p>${l.ds}</p></div><span class="rc-tp tp-v">VIDEO</span></a>`).join('')}</div>
+  <div id="nt-r" style="display:none;flex-direction:column;gap:10px">${refs.map(l=>`<a href="${l.url}" target="_blank" class="rc"><span class="rc-ic">${l.ic}</span><div class="rc-inf"><h4>${l.nm}</h4><p>${l.ds}</p></div><span class="rc-tp tp-w">SITE</span></a>`).join('')}</div>`;
 }
 
 function swNTab(el,id){
@@ -1628,22 +1434,8 @@ function renderPapers(){
   const yrs=['2024','2023','2022','2021','2020','2019','2018'];
   document.getElementById('ppCont').innerHTML=`
   <p style="font-size:14px;color:var(--t2);margin-bottom:22px">Punjab, Federal board ke previous year papers — click karo download karne ke liye:</p>
-  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
-    ${yrs.map(y=>`<a href="https://www.freeilm.com/past-papers/" target="_blank" class="rc">
-      <span class="rc-ic">📄</span>
-      <div class="rc-inf"><h4>${y} — ${S.sub} Class ${S.cls}</h4><p>Board exam paper ${y} • Punjab & Federal Board</p></div>
-      <span class="rc-tp tp-p">PDF</span>
-    </a>`).join('')}
-  </div>
-  <div class="sumb"><h3>📌 Exam Prep Tips</h3>
-    <ul class="suml">
-      <li>📝 2023 aur 2024 ke papers sabse pehle solve karo</li>
-      <li>⏱️ Timer laga ke real exam jaisi practice karo</li>
-      <li>📊 Objective aur subjective dono pe equal time do</li>
-      <li>🔄 Galtiyan review karo aur weak chapters dobara padho</li>
-      <li>✅ Pairing scheme dekho — kaunsa chapter kitna important hai</li>
-    </ul>
-  </div>`;
+  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px">${yrs.map(y=>`<a href="https://www.freeilm.com/past-papers/" target="_blank" class="rc"><span class="rc-ic">📄</span><div class="rc-inf"><h4>${y} — ${S.sub} Class ${S.cls}</h4><p>Board exam paper ${y} • Punjab & Federal Board</p></div><span class="rc-tp tp-p">PDF</span></a>`).join('')}</div>
+  <div class="sumb"><h3>📌 Exam Prep Tips</h3><ul class="suml"><li>📝 2023 aur 2024 ke papers sabse pehle solve karo</li><li>⏱️ Timer laga ke real exam jaisi practice karo</li><li>📊 Objective aur subjective dono pe equal time do</li><li>🔄 Galtiyan review karo aur weak chapters dobara padho</li><li>✅ Pairing scheme dekho — kaunsa chapter kitna important hai</li></ul></div>`;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1656,7 +1448,6 @@ function toggleChat(){
 }
 
 function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}
-
 function autoH(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
 
 async function sendChat(){
@@ -1697,7 +1488,6 @@ function addMsg(role,txt){
 // AI API — Groq via Cloudflare Worker (4-key failover)
 // ═══════════════════════════════════════════════════════════
 const WORKER_URL = 'https://rabi-groq-worker.noorhusnain791.workers.dev';
-
 async function ai(prompt, maxT=1000){
   const res = await fetch(WORKER_URL, {
     method: 'POST',
@@ -1715,11 +1505,26 @@ async function ai(prompt, maxT=1000){
   return d.choices[0].message.content;
 }
 
+// Very Robust JSON Extractor
 function extractJ(txt){
-  let c=txt.replace(/```json\s*/gi,'').replace(/```\s*/g,'').trim();
-  const am=c.match(/\[[\s\S]*\]/);
-  const om=c.match(/\{[\s\S]*\}/);
-  return am?am[0]:om?om[0]:c;
+  try{
+    let c=txt.replace(/```json\s*/gi,'').replace(/```\s*/g,'').trim();
+    let s = c.indexOf('{');
+    let a = c.indexOf('[');
+    let start = -1;
+    if(s !== -1 && a !== -1) start = Math.min(s, a);
+    else if(s !== -1) start = s;
+    else if(a !== -1) start = a;
+    
+    let e1 = c.lastIndexOf('}');
+    let e2 = c.lastIndexOf(']');
+    let end = Math.max(e1, e2);
+    
+    if(start !== -1 && end !== -1){
+      return c.substring(start, end+1);
+    }
+    return c;
+  }catch(e){ return txt; }
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1728,11 +1533,9 @@ function extractJ(txt){
 function loadHTML(t,s=''){
   return `<div class="ld"><div class="ldspin"></div><div><div class="ld-t">${t}</div>${s?`<div class="ld-s">${s}</div>`:''}</div></div>`;
 }
-// Fixed errHTML to use function name for retry button
 function errHTML(msg,fn){
-  const fnName = fn.name;
   return `<div class="err"><div class="err-ic">😕</div><h3>Oops!</h3><p>${msg}</p>
-    ${fn?`<button class="btn btn-p" style="margin-top:18px" onclick="${fnName}()">🔄 Dobara Try Karo</button>`:''}
+    ${fn?`<button class="btn btn-p" style="margin-top:18px" onclick="(${fn.toString()})()">🔄 Dobara Try Karo</button>`:''}
   </div>`;
 }
 
