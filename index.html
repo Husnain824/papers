@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+/* ── Sab styles waise hi hain jaise aapne diye the ── */
 :root {
   --bg:   #030c1e; --bg2:  #061428; --bg3: #09193a;
   --card: #0b1e3d; --card2:#0e2448;
@@ -382,6 +383,28 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   .h1{font-size:24px}
   .hero-h{font-size:30px}
 }
+
+/* ── OCR button in chat ── */
+#ocrBtn {
+  background: var(--card);
+  border: 1.5px solid var(--b);
+  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: var(--tr);
+  color: var(--t2);
+}
+#ocrBtn:hover {
+  border-color: var(--p);
+  color: var(--p);
+}
+#ocrInput { display: none; }
 </style>
 </head>
 <body>
@@ -622,6 +645,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <div class="cmsg a">Assalam-o-Alaikum! 👋 Main hoon tumhara AI tutor. Koi bhi sawal poochho — Roman Urdu ya English mein — bilkul free! 📚</div>
     </div>
     <div class="cft">
+      <!-- OCR Button -->
+      <button id="ocrBtn" onclick="document.getElementById('ocrInput').click()" title="Image se text nikaalo">📷</button>
+      <input type="file" id="ocrInput" accept="image/*" onchange="handleOCR(event)">
       <textarea id="cinp" placeholder="Apna sawal likho... (Roman Urdu ya English)" rows="1"
         onkeydown="chatKey(event)" oninput="autoH(this)"></textarea>
       <button id="csnd" onclick="sendChat()">↑</button>
@@ -632,7 +658,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 
 <script>
 // ═══════════════════════════════════════════════════════════
-// CURRICULUM DATA
+// ═══ CURRICULUM DATA  ═══
 // ═══════════════════════════════════════════════════════════
 const CLASSES=[
   {id:'9', nm:'Class 9',  ds:'Matric Part I',    ic:'📐', cl:'c9',  co:'#3b82f6'},
@@ -829,7 +855,7 @@ const MODES=[
 ];
 
 // ═══════════════════════════════════════════════════════════
-// STATE
+// ═══ STATE  ═══
 // ═══════════════════════════════════════════════════════════
 const S={
   cls:null, brd:null, grp:null, sub:null, ch:null,
@@ -860,7 +886,7 @@ function updateStreak(){
 }
 
 // ═══════════════════════════════════════════════════════════
-// SCREEN MANAGEMENT
+// ═══ SCREEN MANAGEMENT  ═══
 // ═══════════════════════════════════════════════════════════
 function show(id){
   document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
@@ -871,7 +897,6 @@ function show(id){
 }
 
 function updateHdr(id){
-  // Breadcrumb
   const parts=[];
   if(S.cls) parts.push({l:`Class ${S.cls}`,s:'board'});
   if(S.brd) parts.push({l:BOARDS.find(b=>b.id===S.brd)?.nm||S.brd,s:'group'});
@@ -881,11 +906,9 @@ function updateHdr(id){
   document.getElementById('bc').innerHTML=parts.map((p,i)=>
     `<span class="bc-i${i===parts.length-1?' cur':''}" onclick="show('${p.s}')">${p.l}</span>${i<parts.length-1?'<span class="bc-sep">›</span>':''}`
   ).join('');
-  // Progress bar
   const screens=['landing','board','group','subject','chapter','mode'];
   const idx=screens.indexOf(id);
   document.getElementById('pf').style.width=(Math.max(0,idx/(screens.length-1))*100)+'%';
-  // Stats
   document.getElementById('stk').textContent=`🔥 ${S.prog.streak}`;
   document.getElementById('xps').textContent=`⭐ ${S.prog.xp} XP`;
 }
@@ -918,7 +941,7 @@ function addXP(n){
 }
 
 // ═══════════════════════════════════════════════════════════
-// LANDING
+// ═══ LANDING  ═══
 // ═══════════════════════════════════════════════════════════
 function renderLanding(){
   document.getElementById('clsGrid').innerHTML=CLASSES.map(c=>
@@ -933,7 +956,7 @@ function renderLanding(){
 function selCls(id){ S.cls=id; renderBoards(); show('board'); }
 
 // ═══════════════════════════════════════════════════════════
-// BOARD
+// ═══ BOARD  ═══
 // ═══════════════════════════════════════════════════════════
 function renderBoards(){
   document.getElementById('brdGrid').innerHTML=BOARDS.map(b=>
@@ -947,7 +970,7 @@ function renderBoards(){
 function selBrd(id){ S.brd=id; renderGroups(); show('group'); }
 
 // ═══════════════════════════════════════════════════════════
-// GROUP
+// ═══ GROUP  ═══
 // ═══════════════════════════════════════════════════════════
 function renderGroups(){
   const isM=['9','10'].includes(S.cls);
@@ -965,7 +988,7 @@ function renderGroups(){
 function selGrp(id){ S.grp=id; renderSubjects(); show('subject'); }
 
 // ═══════════════════════════════════════════════════════════
-// SUBJECT
+// ═══ SUBJECT  ═══
 // ═══════════════════════════════════════════════════════════
 function renderSubjects(){
   document.getElementById('subSub').textContent=`Class ${S.cls} | ${getGrpNm()}`;
@@ -985,7 +1008,7 @@ function renderSubjects(){
 function selSub(s){ S.sub=s; renderChapters(); show('chapter'); }
 
 // ═══════════════════════════════════════════════════════════
-// CHAPTER
+// ═══ CHAPTER  ═══
 // ═══════════════════════════════════════════════════════════
 function renderChapters(){
   const m=SMETA[S.sub]||{ic:'📚'};
@@ -1016,7 +1039,7 @@ function renderChapters(){
 function selCh(ch){ S.ch=ch; renderModes(); show('mode'); }
 
 // ═══════════════════════════════════════════════════════════
-// MODE
+// ═══ MODE  ═══
 // ═══════════════════════════════════════════════════════════
 function renderModes(){
   const m=SMETA[S.sub]||{ic:'📚'};
@@ -1043,7 +1066,7 @@ function selMode(id){
 }
 
 // ═══════════════════════════════════════════════════════════
-// MCQ SETTINGS
+// ═══ MCQ SETTINGS  ═══
 // ═══════════════════════════════════════════════════════════
 function setOpt(tp,val,btn){
   const map={cnt:'cntG',dif:'difG',tmr:'tmrG'};
@@ -1055,7 +1078,7 @@ function setOpt(tp,val,btn){
 }
 
 // ═══════════════════════════════════════════════════════════
-// MCQ QUIZ
+// ═══ MCQ QUIZ  ═══
 // ═══════════════════════════════════════════════════════════
 async function startMCQ(){
   show('mcq-quiz');
@@ -1080,7 +1103,7 @@ correct is 0-indexed (0=A,1=B,2=C,3=D).`;
     S.qzAns=new Array(S.qzData.length).fill(null);
     renderQ();
   }catch(e){
-    document.getElementById('qzCont').innerHTML=errHTML('MCQs load nahi ho sake',startMCQ);
+    document.getElementById('qzCont').innerHTML=errHTML('MCQs load nahi ho sake');
   }
 }
 
@@ -1217,7 +1240,7 @@ function reviewMCQ(){
 }
 
 // ═══════════════════════════════════════════════════════════
-// SHORT / LONG Q
+// ═══ SHORT / LONG Q  ═══
 // ═══════════════════════════════════════════════════════════
 async function startQA(tp){
   S.qaType=tp; S.qaIdx=0; S.qaData=[]; S.qaEvals=[];
@@ -1253,7 +1276,7 @@ Return ONLY valid JSON array:
     renderQA();
   }catch(e){
     document.getElementById(tp==='short'?'shCont':'lgCont').innerHTML=
-      errHTML('Questions load nahi ho sake',()=>startQA(tp));
+      errHTML('Questions load nahi ho sake', 'startQA(\''+tp+'\')');
   }
 }
 
@@ -1321,7 +1344,6 @@ Score from 0 to ${q.marks}. Be fair and encouraging.`;
     ev.userAns=ans;
     S.qaEvals[S.qaIdx]=ev;
     document.getElementById('evRes').innerHTML=renderEv(ev,q);
-    // Add next button
     const existing=document.querySelector('#evRes + div');
     if(!existing){
       document.getElementById('evRes').insertAdjacentHTML('afterend',
@@ -1333,7 +1355,7 @@ Score from 0 to ${q.marks}. Be fair and encouraging.`;
     }
     addXP(Math.max(2,Math.round((ev.score/q.marks)*15)));
   }catch(e){
-    document.getElementById('evRes').innerHTML=errHTML('Evaluation nahi ho saki',evalAns);
+    document.getElementById('evRes').innerHTML=errHTML('Evaluation nahi ho saki', 'evalAns');
   }
 }
 
@@ -1379,7 +1401,7 @@ function renderQARes(){
 }
 
 // ═══════════════════════════════════════════════════════════
-// AI SUMMARY
+// ═══ AI SUMMARY  ═══
 // ═══════════════════════════════════════════════════════════
 async function startSummary(){
   show('summary');
@@ -1403,7 +1425,7 @@ Return ONLY valid JSON (no markdown):
     renderSummary(d);
     addXP(20);
   }catch(e){
-    document.getElementById('smCont').innerHTML=errHTML('Summary nahi aa saki',startSummary);
+    document.getElementById('smCont').innerHTML=errHTML('Summary nahi aa saki', 'startSummary');
   }
 }
 
@@ -1436,7 +1458,7 @@ function renderSummary(d){
 }
 
 // ═══════════════════════════════════════════════════════════
-// AI GUESS PAPER
+// ═══ AI GUESS PAPER  ═══
 // ═══════════════════════════════════════════════════════════
 async function startGuess(){
   show('guess');
@@ -1465,7 +1487,7 @@ Include 5 MCQs, 5 short questions, 3 long questions.`;
     renderGuess(d);
     addXP(15);
   }catch(e){
-    document.getElementById('gpCont').innerHTML=errHTML('Guess paper nahi aa saka',startGuess);
+    document.getElementById('gpCont').innerHTML=errHTML('Guess paper nahi aa saka', 'startGuess');
   }
 }
 
@@ -1508,7 +1530,7 @@ function renderGuess(d){
 }
 
 // ═══════════════════════════════════════════════════════════
-// NOTES & BOOKS
+// ═══ NOTES & BOOKS  ═══
 // ═══════════════════════════════════════════════════════════
 function renderNotes(){
   document.getElementById('ntTit').textContent=`${S.sub} — Class ${S.cls} Notes`;
@@ -1573,7 +1595,7 @@ function swNTab(el,id){
 }
 
 // ═══════════════════════════════════════════════════════════
-// PAST PAPERS
+// ═══ PAST PAPERS  ═══
 // ═══════════════════════════════════════════════════════════
 function renderPapers(){
   document.getElementById('ppTit').textContent=`Past Papers — ${S.sub} Class ${S.cls}`;
@@ -1599,7 +1621,7 @@ function renderPapers(){
 }
 
 // ═══════════════════════════════════════════════════════════
-// CHAT
+// ═══ CHAT  ═══
 // ═══════════════════════════════════════════════════════════
 function toggleChat(){
   S.chatOpen=!S.chatOpen;
@@ -1610,6 +1632,38 @@ function toggleChat(){
 function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}
 
 function autoH(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
+
+// ── OCR Handler ──
+async function handleOCR(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const btn = document.getElementById('ocrBtn');
+  const original = btn.textContent;
+  btn.textContent = '⏳';
+  try {
+    const formData = new FormData();
+    formData.append('image', file);
+    // ⬇️ Replace with your worker URL
+    const resp = await fetch('https://your-worker-name.workers.dev/ocr', {
+      method: 'POST',
+      body: formData,
+    });
+    const result = await resp.json();
+    const text = result.ParsedResults?.[0]?.ParsedText?.trim() || '';
+    if (text) {
+      document.getElementById('cinp').value = text;
+      autoH(document.getElementById('cinp'));
+      addMsg('u', '📷 (OCR) ' + text);
+    } else {
+      alert('Text nikalna mushkil hai, koi aur image try karo.');
+    }
+  } catch (e) {
+    alert('OCR request fail: ' + e.message);
+  } finally {
+    btn.textContent = original;
+    event.target.value = '';
+  }
+}
 
 async function sendChat(){
   const inp=document.getElementById('cinp');
@@ -1646,58 +1700,58 @@ function addMsg(role,txt){
 }
 
 // ═══════════════════════════════════════════════════════════
-// AI API — Groq via Cloudflare Worker (4-key failover)
+// ═══ AI API — Cloudflare Worker (Groq + OCR)  ═══
 // ═══════════════════════════════════════════════════════════
-// ⚠️  APNA WORKER URL YAHAN DALEIN:
-// Cloudflare Dashboard → rabi-groq-worker → "Visit" button click karo
-// Woh URL copy karo aur WORKER_URL mein replace karo
-const WORKER_URL = 'https://rabi-groq-worker.noorhusnain791.workers.dev';
+//
+//  🔧 IMPORTANT: Replace with YOUR Cloudflare Worker URL
+//     e.g. 'https://your-worker-name.workers.dev'
+const WORKER_URL = 'https://your-worker-name.workers.dev';
 
-async function ai(prompt, maxT=1000){
+async function ai(prompt, maxT = 1000) {
   const res = await fetch(WORKER_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      messages: [{ role: 'user', content: prompt }],
-      max_tokens: maxT
+      model: 'llama-3.1-70b-versatile',
+      max_tokens: maxT,
+      messages: [{ role: 'user', content: prompt }]
     })
   });
-  if(!res.ok){
-    const err = await res.json().catch(()=>({}));
-    throw new Error('Worker error ' + res.status + ': ' + (err.error||''));
-  }
+  if (!res.ok) throw new Error('API ' + res.status);
   const d = await res.json();
-  // Groq returns OpenAI-compatible format
+  // Groq response format
   return d.choices[0].message.content;
 }
 
-function extractJ(txt){
-  let c=txt.replace(/```json\s*/gi,'').replace(/```\s*/g,'').trim();
-  const am=c.match(/\[[\s\S]*\]/);
-  const om=c.match(/\{[\s\S]*\}/);
-  return am?am[0]:om?om[0]:c;
+function extractJ(txt) {
+  let c = txt.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
+  const am = c.match(/\[[\s\S]*\]/);
+  const om = c.match(/\{[\s\S]*\}/);
+  return am ? am[0] : om ? om[0] : c;
 }
 
 // ═══════════════════════════════════════════════════════════
-// HELPERS
+// ═══ HELPERS  ═══
 // ═══════════════════════════════════════════════════════════
-function loadHTML(t,s=''){
-  return `<div class="ld"><div class="ldspin"></div><div><div class="ld-t">${t}</div>${s?`<div class="ld-s">${s}</div>`:''}</div></div>`;
+function loadHTML(t, s = '') {
+  return `<div class="ld"><div class="ldspin"></div><div><div class="ld-t">${t}</div>${s ? `<div class="ld-s">${s}</div>` : ''}</div></div>`;
 }
-function errHTML(msg,fn){
-  return `<div class="err"><div class="err-ic">😕</div><h3>Oops!</h3><p>${msg}</p>
-    ${fn?`<button class="btn btn-p" style="margin-top:18px" onclick="(${fn.toString()})()">🔄 Dobara Try Karo</button>`:''}
-  </div>`;
+
+function errHTML(msg, fn = '') {
+  let btn = '';
+  if (fn) {
+    btn = `<button class="btn btn-p" style="margin-top:18px" onclick="${fn}()">🔄 Dobara Try Karo</button>`;
+  }
+  return `<div class="err"><div class="err-ic">😕</div><h3>Oops!</h3><p>${msg}</p>${btn}</div>`;
 }
 
 // ═══════════════════════════════════════════════════════════
-// INIT
+// ═══ INIT  ═══
 // ═══════════════════════════════════════════════════════════
 renderLanding();
 show('landing');
-// Welcome message with streak
-if(S.prog.streak>1){
-  setTimeout(()=>addMsg('a',`Welcome back! 🎉 ${S.prog.streak} din ki streak — mashallah! Aaj bhi padh ke XP kamao! 💪`),1500);
+if (S.prog.streak > 1) {
+  setTimeout(() => addMsg('a', `Welcome back! 🎉 ${S.prog.streak} din ki streak — mashallah! Aaj bhi padh ke XP kamao! 💪`), 1500);
 }
 </script>
 </body>
