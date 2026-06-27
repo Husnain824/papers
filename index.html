@@ -876,14 +876,20 @@ async function ai(prompt, maxT=1000){
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      model: 'llama-3.1-70b-versatile',
+      model: 'llama3-70b-8192', // worker default se match kare
       messages: [{ role: 'user', content: prompt }],
       max_tokens: maxT
     })
   });
   if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Worker error ${res.status}: ${err}`);
+    let errMsg = `HTTP ${res.status}`;
+    try {
+      const errData = await res.json();
+      errMsg = errData.error || errData.details || JSON.stringify(errData);
+    } catch(e) {
+      errMsg = await res.text();
+    }
+    throw new Error(`Worker error: ${errMsg}`);
   }
   const d = await res.json();
   if (!d.content || !d.content[0] || !d.content[0].text) {
