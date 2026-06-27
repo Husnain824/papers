@@ -1644,7 +1644,7 @@ async function handleOCR(event) {
     const formData = new FormData();
     formData.append('image', file);
     // ⬇️ Replace with your worker URL
-    const resp = await fetch('https://your-worker-name.workers.dev/ocr', {
+    const resp = await fetch('https://check-ai.noorhusnain791.workers.dev/ocr', {
       method: 'POST',
       body: formData,
     });
@@ -1705,7 +1705,7 @@ function addMsg(role,txt){
 //
 //  🔧 IMPORTANT: Replace with YOUR Cloudflare Worker URL
 //     e.g. 'https://your-worker-name.workers.dev'
-const WORKER_URL = 'https://your-worker-name.workers.dev';
+const WORKER_URL = 'https://check-ai.noorhusnain791.workers.dev';
 
 async function ai(prompt, maxT = 1000) {
   const res = await fetch(WORKER_URL, {
