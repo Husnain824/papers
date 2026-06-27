@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ─── All CSS exactly as before ─── */
 :root {
   --bg:   #030c1e; --bg2:  #061428; --bg3: #09193a;
   --card: #0b1e3d; --card2:#0e2448;
@@ -29,7 +28,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(0,212,170,.035) 80px),
     repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(0,212,170,.035) 80px)}
 #app{position:relative;z-index:1;min-height:100vh}
-
 #hdr{position:sticky;top:0;z-index:100;background:rgba(3,12,30,.92);backdrop-filter:blur(20px);
   border-bottom:1px solid var(--b)}
 .hdr-in{max-width:1120px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:14px}
@@ -55,13 +53,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .spl.fir{color:#ff6b35;border-color:rgba(255,107,53,.3)}
 .pbar{height:2px;background:var(--b)}
 .pfill{height:100%;background:linear-gradient(90deg,var(--p),var(--s));transition:width .5s ease;width:0%}
-
 .sc{display:none}
 .sc.on{display:block;animation:fu .3s ease}
 @keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .pw{max-width:1120px;margin:0 auto;padding:36px 20px 120px}
 .pw-sm{max-width:700px;margin:0 auto;padding:36px 20px 120px}
-
 .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:var(--rad);
   font-family:var(--fn);font-size:15px;font-weight:600;cursor:pointer;border:none;
   transition:var(--tr);text-decoration:none;justify-content:center}
@@ -76,30 +72,24 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .btn-lg{padding:15px 30px;font-size:17px;border-radius:16px}
 .btn-sm{padding:7px 14px;font-size:13px;border-radius:10px}
 .btn-w{width:100%}
-
 .crd{background:var(--card);border:1px solid var(--b);border-radius:var(--rad2);padding:24px;transition:var(--tr)}
 .crd:hover{background:var(--card2);border-color:var(--b2)}
 .ey{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--p);margin-bottom:8px}
 .h1{font-size:clamp(28px,5vw,40px);font-weight:800;line-height:1.2;margin-bottom:10px}
 .sub{font-size:16px;color:var(--t2);margin-bottom:32px}
-
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .ga{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
 @media(max-width:768px){.g3{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.g3{grid-template-columns:1fr}}
-
 .bk{display:inline-flex;align-items:center;gap:7px;color:var(--t2);font-size:14px;font-weight:600;
   cursor:pointer;margin-bottom:22px;padding:8px 0;transition:var(--tr);background:none;border:none;
   font-family:var(--fn)}
 .bk:hover{color:var(--p)}
-
 .tag{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
 .t-tl{background:var(--pd);color:var(--p)} .t-vi{background:var(--sd);color:var(--s)}
 .t-gd{background:var(--gd);color:var(--g)} .t-rd{background:var(--rd);color:var(--r)}
 .t-gn{background:var(--okd);color:var(--ok)}
-
 .dvd{height:1px;background:var(--b);margin:28px 0}
-
 .hero{text-align:center;padding:60px 20px 40px}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:40px;
   background:var(--pd);color:var(--p);border:1px solid rgba(0,212,170,.3);
@@ -132,21 +122,18 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .stat-num{font-size:28px;font-weight:800;background:linear-gradient(90deg,var(--p),var(--s));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .stat-lb{font-size:13px;color:var(--t2);margin-top:2px}
-
 .boards{display:flex;flex-direction:column;gap:10px;max-width:600px}
 .brd-c{display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:var(--rad);
   background:var(--card);border:1px solid var(--b);cursor:pointer;transition:var(--tr)}
 .brd-c:hover{border-color:var(--p);background:var(--card2);transform:translateX(4px)}
 .brd-inf h3{font-size:17px;font-weight:700}
 .brd-inf p{font-size:13px;color:var(--t2);margin-top:2px}
-
 .grp-c{border-radius:var(--rad2);padding:26px 20px;cursor:pointer;text-align:center;
   background:var(--card);border:1px solid var(--b);transition:var(--tr)}
 .grp-c:hover{border-color:var(--p);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
 .grp-ic{font-size:38px;margin-bottom:12px}
 .grp-nm{font-size:19px;font-weight:700;margin-bottom:6px}
 .grp-ds{font-size:13px;color:var(--t2);line-height:1.5}
-
 .sub-c{border-radius:var(--rad2);padding:22px 16px;cursor:pointer;text-align:center;
   background:var(--card);border:1px solid var(--b);transition:var(--tr);position:relative;overflow:hidden}
 .sub-c::after{content:'';position:absolute;inset:0;background:var(--ac,transparent);opacity:0;transition:var(--tr)}
@@ -156,7 +143,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .sub-ic{font-size:34px;margin-bottom:10px}
 .sub-nm{font-size:15px;font-weight:700}
 .sub-ch{font-size:12px;color:var(--t2);margin-top:3px}
-
 .ch-list{display:flex;flex-direction:column;gap:10px}
 .ch-it{display:flex;align-items:center;gap:14px;padding:15px 18px;border-radius:var(--rad);
   background:var(--card);border:1px solid var(--b);cursor:pointer;transition:var(--tr)}
@@ -167,7 +153,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .ch-inf h4{font-size:15px;font-weight:600}
 .ch-inf p{font-size:12px;color:var(--t2);margin-top:2px}
 .ch-ar{margin-left:auto;color:var(--t3);font-size:14px}
-
 .mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media(max-width:640px){.mode-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:380px){.mode-grid{grid-template-columns:1fr}}
@@ -183,7 +168,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .mode-ds{font-size:13px;color:var(--t2);line-height:1.5}
 .mode-bx{display:inline-block;margin-top:10px;padding:4px 12px;border-radius:20px;
   font-size:11px;font-weight:700;background:var(--pd);color:var(--p)}
-
 .sf{display:flex;flex-direction:column;gap:26px;max-width:540px}
 .fg label{display:block;font-size:12px;font-weight:700;color:var(--t2);margin-bottom:12px;
   text-transform:uppercase;letter-spacing:1.5px}
@@ -193,7 +177,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   transition:var(--tr)}
 .tb.on{background:var(--pd);border-color:var(--p);color:var(--p)}
 .tb:hover:not(.on){border-color:var(--b2);color:var(--t)}
-
 .qhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
 .qtimer{display:flex;align-items:center;gap:6px;padding:9px 18px;border-radius:12px;
   background:var(--card);border:1px solid var(--b);font-size:19px;font-weight:700;
@@ -224,7 +207,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   font-size:14px;line-height:1.6;color:var(--t2);animation:fu .3s ease}
 .qexp strong{color:var(--p)}
 .qnav{display:flex;justify-content:space-between;align-items:center;margin-top:26px;flex-wrap:wrap;gap:12px}
-
 .res-hero{text-align:center;padding:36px 20px 24px}
 .res-sc{font-size:76px;font-weight:800;background:linear-gradient(135deg,var(--p),var(--s));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
@@ -235,7 +217,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .rs-n{font-size:26px;font-weight:800}
 .rs-l{font-size:12px;color:var(--t2);margin-top:4px}
 @media(max-width:480px){.res-stats{grid-template-columns:1fr}}
-
 .qa-q{font-size:18px;font-weight:600;line-height:1.55;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--b)}
 .qa-ta{width:100%;border-radius:var(--rad);background:var(--bg2);border:1.5px solid var(--b);
   color:var(--t);font-family:var(--fn);font-size:15px;padding:14px;resize:vertical;
@@ -256,7 +237,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .evl li{padding:7px 14px 7px 24px;position:relative;font-size:14px;color:var(--t2);
   line-height:1.5;background:var(--bg2);border-radius:8px;border:1px solid var(--b)}
 .evl li::before{content:'→';position:absolute;left:8px;color:var(--p)}
-
 .ntabs{display:flex;gap:6px;margin-bottom:24px;border-bottom:1px solid var(--b)}
 .ntab{padding:11px 18px;font-size:14px;font-weight:600;color:var(--t2);cursor:pointer;
   border-bottom:2px solid transparent;transition:var(--tr);margin-bottom:-1px}
@@ -273,13 +253,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   font-size:11px;font-weight:700}
 .tp-p{background:var(--rd);color:var(--r)} .tp-v{background:rgba(255,0,0,.1);color:#ff5555}
 .tp-w{background:var(--pd);color:var(--p)}
-
 .sumb{background:var(--card);border:1px solid var(--b);border-radius:var(--rad2);padding:22px;margin-bottom:18px}
 .sumb h3{font-size:15px;font-weight:700;color:var(--p);margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .suml{list-style:none;display:flex;flex-direction:column;gap:9px}
 .suml li{padding:10px 14px;border-radius:var(--rad);background:var(--bg2);border:1px solid var(--b);font-size:14px;line-height:1.5}
 .suml li.fm{font-family:monospace;background:var(--sd);border-color:rgba(139,92,246,.35);color:var(--s);font-size:15px}
-
 .ld{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:18px}
 .ldspin{width:44px;height:44px;border-radius:50%;border:3px solid var(--b);border-top-color:var(--p);animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -289,13 +267,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .err-ic{font-size:46px;margin-bottom:14px}
 .err h3{font-size:19px;font-weight:700;margin-bottom:8px}
 .err p{font-size:14px;color:var(--t2)}
-
 .xppop{position:fixed;top:76px;right:22px;z-index:999;background:linear-gradient(135deg,var(--p),var(--s));
   color:white;padding:11px 20px;border-radius:40px;font-size:15px;font-weight:700;
   animation:xpfl 2.1s forwards;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.4)}
 @keyframes xpfl{0%{opacity:0;transform:translateY(20px)}20%{opacity:1;transform:translateY(0)}
   80%{opacity:1;transform:translateY(-18px)}100%{opacity:0;transform:translateY(-36px)}}
-
 #cw{position:fixed;bottom:22px;right:22px;z-index:1000}
 #ctog{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--s));
   border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;
@@ -329,11 +305,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   border:none;color:#000;cursor:pointer;font-size:16px;transition:var(--tr);
   display:flex;align-items:center;justify-content:center}
 #csnd:hover{filter:brightness(1.1)}
-
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--b2);border-radius:3px}
-
 .gp-sec{background:var(--card);border:1px solid var(--b);border-radius:var(--rad2);
   padding:20px;margin-bottom:18px}
 .gp-sec h3{font-size:15px;font-weight:700;color:var(--t);margin-bottom:14px;
@@ -342,50 +316,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   font-size:14px;line-height:1.5;margin-bottom:8px}
 .gp-q .likelihood{font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;
   border-radius:10px;margin-bottom:6px}
-
-/* ── OCR button in QA textarea ── */
-.ocr-qa-btn {
-  background: var(--card);
-  border: 1.5px solid var(--b);
-  border-radius: 10px;
-  width: 38px;
-  height: 38px;
-  flex-shrink: 0;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  transition: var(--tr);
-  color: var(--t2);
-}
-.ocr-qa-btn:hover {
-  border-color: var(--p);
-  color: var(--p);
-}
-.ocr-qa-input { display: none; }
-
-#ocrBtn {
-  background: var(--card);
-  border: 1.5px solid var(--b);
-  border-radius: 10px;
-  width: 38px;
-  height: 38px;
-  flex-shrink: 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  transition: var(--tr);
-  color: var(--t2);
-}
-#ocrBtn:hover {
-  border-color: var(--p);
-  color: var(--p);
-}
-#ocrInput { display: none; }
-
 @media(max-width:480px){
   .hdr-r .spl{display:none}
   .h1{font-size:24px}
@@ -395,7 +325,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 </head>
 <body>
 <div id="app">
-
 <header id="hdr">
   <div class="hdr-in">
     <div class="logo" onclick="goHome()">
@@ -411,9 +340,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   </div>
   <div class="pbar"><div class="pfill" id="pf"></div></div>
 </header>
-
 <main>
-
 <div class="sc" id="sc-landing">
 <div class="pw">
   <div class="hero">
@@ -448,7 +375,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   </div>
 </div>
 </div>
-
 <div class="sc" id="sc-board">
 <div class="pw">
   <button class="bk" onclick="goHome()">← Wapas</button>
@@ -458,7 +384,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="boards" id="brdGrid"></div>
 </div>
 </div>
-
 <div class="sc" id="sc-group">
 <div class="pw">
   <button class="bk" onclick="show('board')">← Wapas</button>
@@ -468,7 +393,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="g3" id="grpGrid"></div>
 </div>
 </div>
-
 <div class="sc" id="sc-subject">
 <div class="pw">
   <button class="bk" onclick="show('group')">← Wapas</button>
@@ -478,7 +402,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="ga" id="subGrid"></div>
 </div>
 </div>
-
 <div class="sc" id="sc-chapter">
 <div class="pw">
   <button class="bk" onclick="show('subject')">← Wapas</button>
@@ -487,7 +410,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div id="chCont"></div>
 </div>
 </div>
-
 <div class="sc" id="sc-mode">
 <div class="pw">
   <button class="bk" onclick="show('chapter')">← Wapas</button>
@@ -496,7 +418,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="mode-grid" id="modGrid"></div>
 </div>
 </div>
-
 <div class="sc" id="sc-mcq-set">
 <div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -536,15 +457,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   </div>
 </div>
 </div>
-
 <div class="sc" id="sc-mcq-quiz">
 <div class="pw-sm"><div id="qzCont"></div></div>
 </div>
-
 <div class="sc" id="sc-mcq-res">
 <div class="pw-sm"><div id="resCont"></div></div>
 </div>
-
 <div class="sc" id="sc-short">
 <div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -553,7 +471,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div id="shCont"></div>
 </div>
 </div>
-
 <div class="sc" id="sc-long">
 <div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -562,7 +479,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div id="lgCont"></div>
 </div>
 </div>
-
 <div class="sc" id="sc-summary">
 <div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -571,7 +487,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div id="smCont"></div>
 </div>
 </div>
-
 <div class="sc" id="sc-guess">
 <div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -580,7 +495,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div id="gpCont"></div>
 </div>
 </div>
-
 <div class="sc" id="sc-notes">
 <div class="pw">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -588,7 +502,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div id="ntCont"></div>
 </div>
 </div>
-
 <div class="sc" id="sc-papers">
 <div class="pw">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -596,7 +509,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div id="ppCont"></div>
 </div>
 </div>
-
 </main>
 </div>
 
@@ -614,8 +526,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <div class="cmsg a">Assalam-o-Alaikum! 👋 Main hoon tumhara AI tutor. Koi bhi sawal poochho — Roman Urdu ya English mein — bilkul free! 📚</div>
     </div>
     <div class="cft">
-      <button id="ocrBtn" onclick="document.getElementById('ocrInput').click()" title="Image se text nikaalo">📷</button>
-      <input type="file" id="ocrInput" accept="image/*" onchange="handleChatOCR(event)">
       <textarea id="cinp" placeholder="Apna sawal likho... (Roman Urdu ya English)" rows="1"
         onkeydown="chatKey(event)" oninput="autoH(this)"></textarea>
       <button id="csnd" onclick="sendChat()">↑</button>
@@ -632,7 +542,6 @@ const CLASSES=[
   {id:'11',nm:'Class 11', ds:'First Year / FSc', ic:'📚', cl:'c11'},
   {id:'12',nm:'Class 12', ds:'Second Year / FSc',ic:'🎓', cl:'c12'},
 ];
-
 const BOARDS=[
   {id:'punjab', nm:'Punjab Board', fl:'🟧'},
   {id:'fbise',  nm:'Federal Board', fl:'🇵🇰'},
@@ -641,13 +550,11 @@ const BOARDS=[
   {id:'baloch', nm:'Balochistan Board', fl:'🟫'},
   {id:'ajk',    nm:'AJK Board', fl:'🏔️'},
 ];
-
 const G910=[
   {id:'sci', nm:'Science Group',  ic:'🔬', subs:['Physics','Chemistry','Biology','Mathematics','Computer Science','English','Urdu','Islamiat','Pak Studies']},
   {id:'art', nm:'Arts Group',     ic:'📜', subs:['English','Urdu','Islamiat','Pak Studies','General Math','General Science','History','Geography','Education']},
   {id:'com', nm:'Computer Group', ic:'💻', subs:['Computer Science','Mathematics','Physics','Chemistry','English','Urdu','Islamiat','Pak Studies']},
 ];
-
 const G1112=[
   {id:'premed', nm:'Pre-Medical',     ic:'🩺', subs:['Physics','Chemistry','Biology','English','Urdu']},
   {id:'preeng', nm:'Pre-Engineering', ic:'⚙️', subs:['Physics','Chemistry','Mathematics','English','Urdu']},
@@ -655,7 +562,6 @@ const G1112=[
   {id:'icom',   nm:'ICom',            ic:'📊', subs:['Accounting','Economics','Business Mathematics','English','Urdu']},
   {id:'fa',     nm:'FA (Arts)',       ic:'📖', subs:['Urdu','English','Islamiat','Pak Studies','Education','History']},
 ];
-
 const SMETA={
   'Physics':{ic:'⚡'},'Chemistry':{ic:'🧪'},'Biology':{ic:'🌿'},'Mathematics':{ic:'📐'},
   'Computer Science':{ic:'💻'},'English':{ic:'📖'},'Urdu':{ic:'📜'},'Islamiat':{ic:'☪️'},
@@ -663,12 +569,10 @@ const SMETA={
   'History':{ic:'🏛️'},'Geography':{ic:'🌍'},'Education':{ic:'🎓'},'Accounting':{ic:'📊'},
   'Economics':{ic:'📈'},'Business Mathematics':{ic:'🔢'},
 };
-
 const CH={
   'Islamiat-9':['Chapter 1: Quran Majeed','Chapter 2: Hadith aur Sunnat','Chapter 3: Seerat-un-Nabi','Chapter 4: Islamic Aqaid','Chapter 5: Ibadat','Chapter 6: Islamic Muashrat'],
   'Islamiat-10':['Chapter 1: Quran Majeed (Surah)','Chapter 2: Ahadith','Chapter 3: Seerat Sahaba','Chapter 4: Islamic Principles','Chapter 5: Ibadat aur Muamlat','Chapter 6: Islam aur Jadid Duniya'],
 };
-
 const MODES=[
   {id:'mcq', em:'🎯', nm:'MCQ Practice', bx:'Most Popular', mc:'rgba(0,212,170,.18)'},
   {id:'short', em:'✍️', nm:'Short Questions', bx:'AI Checked', mc:'rgba(139,92,246,.18)'},
@@ -688,15 +592,12 @@ const S={
   chatH:[],chatOpen:false,
   prog:{streak:0,xp:0,lastDate:null},
 };
-
 try{
   const sv=JSON.parse(localStorage.getItem('ilmai_v2')||'{}');
   if(sv.prog) S.prog={...S.prog,...sv.prog};
   updateStreak();
 }catch(e){}
-
 function save(){ localStorage.setItem('ilmai_v2',JSON.stringify({prog:S.prog})); }
-
 function updateStreak(){
   const today=new Date().toDateString();
   if(S.prog.lastDate===today) return;
@@ -707,7 +608,6 @@ function updateStreak(){
   S.prog.lastDate=today;
   save();
 }
-
 function show(id){
   document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
   const el=document.getElementById('sc-'+id);
@@ -715,7 +615,6 @@ function show(id){
   window.scrollTo({top:0,behavior:'instant'});
   updateHdr(id);
 }
-
 function updateHdr(id){
   const parts=[];
   if(S.cls) parts.push({l:`Class ${S.cls}`,s:'board'});
@@ -732,7 +631,6 @@ function updateHdr(id){
   document.getElementById('stk').textContent=`🔥 ${S.prog.streak}`;
   document.getElementById('xps').textContent=`⭐ ${S.prog.xp} XP`;
 }
-
 function getGrpNm(){ return [...G910,...G1112].find(g=>g.id===S.grp)?.nm||S.grp; }
 function getGrpSubs(){ return [...G910,...G1112].find(g=>g.id===S.grp)?.subs||[]; }
 function getChNm(){
@@ -741,9 +639,7 @@ function getChNm(){
   const chs=CH[k];
   return chs?`Ch.${S.ch}: ${chs[S.ch-1]||''}`:`Chapter ${S.ch}`;
 }
-
 function goHome(){ S.cls=S.brd=S.grp=S.sub=S.ch=null; show('landing'); }
-
 function addXP(n){
   S.prog.xp+=n; save();
   document.getElementById('xps').textContent=`⭐ ${S.prog.xp} XP`;
@@ -846,7 +742,6 @@ function renderModes(){
     </div>`
   ).join('');
 }
-
 function selMode(id){
   S.mode=id;
   if(id==='mcq') show('mcq-set');
@@ -868,34 +763,44 @@ function setOpt(tp,val,btn){
   else if(tp==='tmr') S.mcq.tmr=val;
 }
 
-// ─── WORKER URL ─────────────────────────────────────────────
+// ─── ✅ FIX 1: CORRECT WORKER URL ───────────────────────────
 const WORKER_URL = 'https://check-ai.noorhusnain791.workers.dev';
 
+// ─── ✅ FIX 2: BETTER ERROR HANDLING IN AI FUNCTION ─────────
 async function ai(prompt, maxT=1000){
-  const res = await fetch(WORKER_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'llama3-70b-8192', // worker default se match kare
-      messages: [{ role: 'user', content: prompt }],
-      max_tokens: maxT
-    })
-  });
-  if (!res.ok) {
-    let errMsg = `HTTP ${res.status}`;
-    try {
-      const errData = await res.json();
-      errMsg = errData.error || errData.details || JSON.stringify(errData);
-    } catch(e) {
-      errMsg = await res.text();
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'llama-3.1-70b-versatile',
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: maxT
+      })
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      console.error('Worker error:', res.status, errText);
+      throw new Error(`Worker error ${res.status}: ${errText}`);
     }
-    throw new Error(`Worker error: ${errMsg}`);
+
+    const d = await res.json();
+
+    if (!d.content || !d.content[0] || !d.content[0].text) {
+      console.error('Invalid response:', d);
+      throw new Error('Worker se galat response aya: ' + JSON.stringify(d));
+    }
+
+    return d.content[0].text;
+
+  } catch (err) {
+    // ✅ Network error ko clearly batao
+    if (err.name === 'TypeError' && err.message.includes('fetch')) {
+      throw new Error('Internet connection check karo ya Worker down hai');
+    }
+    throw err;
   }
-  const d = await res.json();
-  if (!d.content || !d.content[0] || !d.content[0].text) {
-    throw new Error('Invalid response from worker');
-  }
-  return d.content[0].text;
 }
 
 function extractJ(txt){
@@ -904,27 +809,13 @@ function extractJ(txt){
   const om=c.match(/\{[\s\S]*\}/);
   return am?am[0]:om?om[0]:c;
 }
-
 function loadHTML(t,s=''){
   return `<div class="ld"><div class="ldspin"></div><div><div class="ld-t">${t}</div>${s?`<div class="ld-s">${s}</div>`:''}</div></div>`;
 }
-
 function errHTML(msg, fn=''){
   let btn='';
   if(fn) btn=`<button class="btn btn-p" style="margin-top:18px" onclick="${fn}()">🔄 Dobara Try Karo</button>`;
   return `<div class="err"><div class="err-ic">😕</div><h3>Oops!</h3><p>${msg}</p>${btn}</div>`;
-}
-
-// ─── OCR Helper (used in QA and chat) ──────────────────────
-async function performOCR(file) {
-  const formData = new FormData();
-  formData.append('image', file);
-  const resp = await fetch(WORKER_URL + '/ocr', {
-    method: 'POST',
-    body: formData,
-  });
-  const result = await resp.json();
-  return result.ParsedResults?.[0]?.ParsedText?.trim() || '';
 }
 
 // ─── START MCQ ──────────────────────────────────────────────
@@ -942,7 +833,7 @@ async function startMCQ(){
     S.qzAns=new Array(S.qzData.length).fill(null);
     renderQ();
   }catch(e){
-    document.getElementById('qzCont').innerHTML=errHTML('MCQs load nahi ho sake: '+e.message);
+    document.getElementById('qzCont').innerHTML=errHTML('MCQs load nahi ho sake: '+e.message,'startMCQ');
   }
 }
 
@@ -1008,7 +899,6 @@ function ansQ(sel){
   </div>`;
   document.getElementById('qnav').style.display='flex';
 }
-
 function nextQ(){ S.qzIdx++; renderQ(); }
 
 function renderResults(){
@@ -1110,11 +1000,7 @@ function renderQA(){
   </div>
   <div class="crd" style="margin-bottom:18px">
     <div class="qa-q"><span style="color:var(--t3);font-size:13px">Q${S.qaIdx+1}. </span>${q.q}</div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-      <label style="font-size:12px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:1px;margin:0">Apna jawab likho:</label>
-      <button class="ocr-qa-btn" onclick="document.getElementById('qaOcrInput_${S.qaIdx}').click()" title="Image se text nikaalo">📷</button>
-      <input type="file" id="qaOcrInput_${S.qaIdx}" class="ocr-qa-input" accept="image/*" onchange="handleQAOCR(event, 'qaAns', '${S.qaIdx}')">
-    </div>
+    <label style="font-size:12px;font-weight:700;color:var(--t2);display:block;margin-bottom:9px;text-transform:uppercase;letter-spacing:1px">Apna jawab likho:</label>
     <textarea class="qa-ta${isL?' lng':''}" id="qaAns" placeholder="${isL?'Yahan apna detailed paragraph jawab likho...':'Yahan apna short jawab likho (2-3 lines)...'}" oninput="updWC(this)">${ev?ev.userAns||'':''}</textarea>
     <div class="wc" id="wc">0 words</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
@@ -1126,30 +1012,6 @@ function renderQA(){
   <div id="evRes">${ev?renderEv(ev,q):''}</div>
   ${ev?`<div style="text-align:center;margin-top:20px"><button class="btn btn-p" onclick="nextQA()">${S.qaIdx+1<S.qaData.length?'Agla Sawal →':'🏆 Results Dekho'}</button></div>`:''}`;
   if(ev?.userAns) updWC(document.getElementById('qaAns'));
-}
-
-// OCR handler for QA textarea
-async function handleQAOCR(event, textareaId, qIdx) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const btn = event.target.previousElementSibling;
-  const orig = btn.textContent;
-  btn.textContent = '⏳';
-  try {
-    const text = await performOCR(file);
-    const ta = document.getElementById(textareaId);
-    if (text && ta) {
-      ta.value = text;
-      updWC(ta);
-    } else {
-      alert('Text nikalna mushkil hai, koi aur image try karo.');
-    }
-  } catch(e) {
-    alert('OCR error: ' + e.message);
-  } finally {
-    btn.textContent = orig;
-    event.target.value = '';
-  }
 }
 
 function updWC(el){
@@ -1228,7 +1090,7 @@ async function startSummary(){
     renderSummary(d);
     addXP(20);
   }catch(e){
-    document.getElementById('smCont').innerHTML=errHTML('Summary nahi aa saki: '+e.message);
+    document.getElementById('smCont').innerHTML=errHTML('Summary nahi aa saki: '+e.message,'startSummary');
   }
 }
 
@@ -1261,7 +1123,7 @@ async function startGuess(){
     renderGuess(d);
     addXP(15);
   }catch(e){
-    document.getElementById('gpCont').innerHTML=errHTML('Guess paper nahi aa saka: '+e.message);
+    document.getElementById('gpCont').innerHTML=errHTML('Guess paper nahi aa saka: '+e.message,'startGuess');
   }
 }
 
@@ -1340,33 +1202,8 @@ function toggleChat(){
   document.getElementById('cpanel').classList.toggle('open',S.chatOpen);
   document.getElementById('ctog').textContent=S.chatOpen?'✕':'💬';
 }
-
 function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}
 function autoH(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
-
-// ─── OCR handler for chat ───────────────────────────────────
-async function handleChatOCR(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const btn = document.getElementById('ocrBtn');
-  const orig = btn.textContent;
-  btn.textContent = '⏳';
-  try {
-    const text = await performOCR(file);
-    if (text) {
-      document.getElementById('cinp').value = text;
-      autoH(document.getElementById('cinp'));
-      addMsg('u', '📷 (OCR) ' + text);
-    } else {
-      alert('Text nikalna mushkil hai, koi aur image try karo.');
-    }
-  } catch(e) {
-    alert('OCR error: ' + e.message);
-  } finally {
-    btn.textContent = orig;
-    event.target.value = '';
-  }
-}
 
 async function sendChat(){
   const inp=document.getElementById('cinp');
@@ -1377,14 +1214,14 @@ async function sendChat(){
   S.chatH.push({role:'user',content:msg});
   const tyEl=addMsg('a','<span style="opacity:.6">●●●</span>');
   const ctx=S.sub?`Student is studying: Class ${S.cls} ${S.sub}, Chapter: ${getChNm()}.`:'Student is on main page.';
-  const sys=`You are IlmAI, a friendly Pakistani study assistant. ${ctx} Respond in same language as student.`;
+  const sys=`You are IlmAI, a friendly Pakistani study assistant. ${ctx} Respond in same language as student (Roman Urdu or English).`;
   try{
     const txt=await ai(`[System: ${sys}]\nStudent: ${msg}`,700);
     tyEl.innerHTML=txt.replace(/\n/g,'<br>');
     S.chatH.push({role:'assistant',content:txt});
     if(S.chatH.length>20) S.chatH=S.chatH.slice(-20);
   }catch(e){
-    tyEl.innerHTML='Maafi! Kuch masla ho gaya. 🙏';
+    tyEl.innerHTML='Maafi! Kuch masla ho gaya. Dobara try karo. 🙏';
   }
   document.getElementById('cmsgs').scrollTop=99999;
 }
@@ -1402,7 +1239,7 @@ function addMsg(role,txt){
 renderLanding();
 show('landing');
 if(S.prog.streak>1){
-  setTimeout(()=>addMsg('a',`Welcome back! 🎉 ${S.prog.streak} din ki streak!`),1500);
+  setTimeout(()=>addMsg('a',`Welcome back! 🎉 ${S.prog.streak} din ki streak chal rahi hai!`),1500);
 }
 </script>
 </body>
