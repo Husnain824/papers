@@ -28,7 +28,8 @@
 body.light {
   --bg: #f8fafc; --bg2: #f1f5f9; --bg3: #e2e8f0;
   --card: #ffffff; --card2: #f8fafc;
-  --b: #cbd5e1; --b2: #94a3b8;
+  --b: #cbd5e1;
+  --b2: #94a3b8;
   --t: #0f172a; --t2: #475569; --t3: #94a3b8;
 }
 
@@ -36,7 +37,7 @@ body.light {
 html{scroll-behavior:smooth}
 body{font-family:var(--fn);background:var(--bg);color:var(--t);min-height:100vh;overflow-x:hidden;transition:background 0.3s ease, color 0.3s ease;}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(0,212,170,.035) 80px),
+background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(0,212,170,.035) 80px),
     repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(0,212,170,.035) 80px)}
 #app{position:relative;z-index:1;min-height:100vh}
 
@@ -306,6 +307,8 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 #cinp::placeholder{color:var(--t3)}
 #csnd{width:38px;height:38px;border-radius:10px;flex-shrink:0;background:var(--p);border:none;color:#000;cursor:pointer;font-size:16px;transition:var(--tr);display:flex;align-items:center;justify-content:center}
 #csnd:hover{filter:brightness(1.1)}
+#cattach { background: none; border: none; color: var(--t2); cursor: pointer; font-size: 20px; padding: 5px; transition: var(--tr); display: flex; align-items: center; justify-content: center; }
+#cattach:hover { color: var(--p); transform: scale(1.1); }
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:5px}
@@ -463,7 +466,7 @@ body.light #hdr {background:rgba(255,255,255,.92);}
       <label>Timer per question</label>
       <div class="tg" id="tmrG">
         <button class="tb" onclick="setOpt('tmr',0,this)">Off</button>
-        <button class="tb on" onclick="setOpt('tmr',10,this)">10s</button>
+        <button class="tb on" onclick="setOpt('tmr',15,this)">15s</button>
         <button class="tb" onclick="setOpt('tmr',30,this)">30s</button>
         <button class="tb" onclick="setOpt('tmr',60,this)">60s</button>
       </div>
@@ -534,7 +537,9 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 </div>
 
 </main>
-</div><div id="cw">
+</div>
+
+<div id="cw">
   <div id="cpanel">
     <div class="chd">
       <div class="chd-av">🤖</div>
@@ -545,10 +550,13 @@ body.light #hdr {background:rgba(255,255,255,.92);}
       <button id="ccls" onclick="toggleChat()">✕</button>
     </div>
     <div class="cmsgs" id="cmsgs">
-      <div class="cmsg a">Assalam-o-Alaikum! 👋 Main hoon tumhara AI tutor. Koi bhi sawal poochho — Roman Urdu ya English mein — bilkul free! 📚</div>
+      <div class="cmsg a">Assalam-o-Alaikum! 👋 Main hoon tumhara AI tutor. Koi bhi sawal poochho ya apni book ki pic upload karo — bilkul free! 📚</div>
     </div>
     <div class="cft">
-      <textarea id="cinp" placeholder="Apna sawal likho... (Roman Urdu ya English)" rows="1" onkeydown="chatKey(event)" oninput="autoH(this)"></textarea>
+      <input type="file" id="ocrInp" accept="image/*" style="display:none" onchange="handleOCR(this)">
+      <button id="cattach" onclick="document.getElementById('ocrInp').click()" title="Upload Image for OCR">📎</button>
+      
+      <textarea id="cinp" placeholder="Apna sawal likho ya image attach karo..." rows="1" onkeydown="chatKey(event)" oninput="autoH(this)"></textarea>
       <button id="csnd" onclick="sendChat()">↑</button>
     </div>
   </div>
@@ -565,7 +573,6 @@ const CLASSES=[
   {id:'11',nm:'Class 11', ds:'First Year / FSc', ic:'📚', cl:'c11', co:'#8B5CF6'},
   {id:'12',nm:'Class 12', ds:'Second Year / FSc',ic:'🎓', cl:'c12', co:'#F5C842'},
 ];
-
 const BOARDS=[
   {id:'punjab', nm:'Punjab Board',       ds:'BISE Lahore, Multan, Faisalabad, Rawalpindi etc.', fl:'🕌'},
   {id:'fbise',  nm:'Federal Board',      ds:'FBISE — Islamabad Capital Territory',              fl:'🏛️'},
@@ -574,7 +581,6 @@ const BOARDS=[
   {id:'baloch', nm:'Balochistan Board',  ds:'BISE Quetta, Turbat, Khuzdar etc.',                fl:'⛰️'},
   {id:'ajk',    nm:'AJK Board',          ds:'Azad Jammu & Kashmir Board of Education',          fl:'🏔️'},
 ];
-
 const G910=[
   {id:'sci', nm:'Science Group',  ic:'🔬', ds:'Physics • Chemistry • Biology • Maths • Computer',
    subs:['Physics','Chemistry','Biology','Mathematics','Computer Science','English','Urdu','Islamiat','Pak Studies']},
@@ -583,7 +589,6 @@ const G910=[
   {id:'com', nm:'Computer Group', ic:'💻', ds:'Computer • Physics • Maths • Chemistry',
    subs:['Computer Science','Mathematics','Physics','Chemistry','English','Urdu','Islamiat','Pak Studies']},
 ];
-
 const G1112=[
   {id:'premed', nm:'Pre-Medical',     ic:'🩺', ds:'Physics • Chemistry • Biology • English',
    subs:['Physics','Chemistry','Biology','English','Urdu']},
@@ -596,7 +601,6 @@ const G1112=[
   {id:'fa',     nm:'FA (Arts)',        ic:'📖', ds:'Urdu • English • Islamiat • Pak Studies • History',
    subs:['Urdu','English','Islamiat','Pak Studies','Education','History']},
 ];
-
 const SMETA={
   'Physics':           {ic:'⚡',co:'#6366f1'},
   'Chemistry':         {ic:'🧪',co:'#00D4AA'},
@@ -616,7 +620,6 @@ const SMETA={
   'Economics':         {ic:'📈',co:'#f59e0b'},
   'Business Mathematics':{ic:'🔢',co:'#00D4AA'},
 };
-
 const CH={
   'Physics-9':['Physical Quantities and Measurement','Kinematics','Dynamics',
     'Turning Effect of Forces','Gravitation','Work and Energy',
@@ -742,28 +745,53 @@ const CH={
     'Trade and Commerce','Environmental Issues','Map Reading',
     'World Geography — Overview','South Asia'],
 };
-
 const MODES=[
   {id:'mcq',    em:'🎯', nm:'MCQ Practice',      ds:'AI-generated MCQs with instant feedback aur explanations',      bx:'Most Popular', mc:'rgba(0,212,170,.18)'},
   {id:'short',  em:'✍️', nm:'Short Questions',   ds:'Short answers likho — AI check kare aur marks de',             bx:'AI Checked',   mc:'rgba(139,92,246,.18)'},
   {id:'long',   em:'📝', nm:'Long Questions',    ds:'Detailed answers — AI detailed feedback aur evaluation de',     bx:'Board Pattern', mc:'rgba(245,200,66,.14)'},
-  {id:'summary',em:'🧠', nm:'AI Summary',        ds:'Chapter ka smart summary — key points, formulas, exam tips',   bx:'Smart Revision', mc:'rgba(236,72,153,.14)'},
+  {id:'summary',em:'🧠', nm:'AI Summary',      ds:'Chapter ka smart summary — key points, formulas, exam tips',   bx:'Smart Revision', mc:'rgba(236,72,153,.14)'},
   {id:'guess',  em:'🎰', nm:'AI Guess Paper',    ds:'Board exam ke liye likely questions AI generate kare',         bx:'Exam Prep',    mc:'rgba(59,130,246,.14)'},
   {id:'notes',  em:'📚', nm:'Notes & Books',     ds:'Free notes, textbooks aur reference material download karo',   bx:'Free PDF',     mc:'rgba(0,212,170,.12)'},
   {id:'papers', em:'📄', nm:'Past Papers',       ds:'Previous years ke board papers — practice karo',               bx:'Board Exam',   mc:'rgba(239,68,68,.12)'},
 ];
 
 // ═══════════════════════════════════════════════════════════
-// STATE
+// STATE & SOUND
 // ═══════════════════════════════════════════════════════════
 const S={
   cls:null, brd:null, grp:null, sub:null, ch:null,
-  mcq:{cnt:10,dif:'medium',tmr:10}, // Timer set to 10 seconds by default
+  mcq:{cnt:10,dif:'medium',tmr:15}, // Update: default 15s
   qzData:[],qzIdx:0,qzAns:[],qzInterval:null,
   qaType:'short',qaData:[],qaIdx:0,qaEvals:[],
   chatH:[],chatOpen:false,
   prog:{streak:0,xp:0,lastDate:null,totalMCQ:0,correctMCQ:0},
 };
+
+// Update: Beep Sound API for Correct/Wrong answers
+function playBeep(isCorrect) {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gainNode = ctx.createGain();
+    
+    osc.connect(gainNode);
+    gainNode.connect(ctx.destination);
+    
+    if(isCorrect) {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.1);
+        gainNode.gain.setValueAtTime(0.5, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+    } else {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(300, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.2);
+        gainNode.gain.setValueAtTime(0.5, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+    }
+    osc.start();
+    osc.stop(ctx.currentTime + 0.5);
+}
 
 try{
   const sv=JSON.parse(localStorage.getItem('ilmai_v2')||'{}');
@@ -794,7 +822,6 @@ function show(id){
   window.scrollTo({top:0,behavior:'instant'});
   updateHdr(id);
 
-  // Auto Hide AI sidebar logic
   const hideScreens = ['mcq-quiz', 'short', 'long'];
   const cw = document.getElementById('cw');
   if(cw) {
@@ -803,7 +830,6 @@ function show(id){
 }
 
 function updateHdr(id){
-  // Breadcrumb
   const parts=[];
   if(S.cls) parts.push({l:`Class ${S.cls}`,s:'board'});
   if(S.brd) parts.push({l:BOARDS.find(b=>b.id===S.brd)?.nm||S.brd,s:'group'});
@@ -813,11 +839,9 @@ function updateHdr(id){
   document.getElementById('bc').innerHTML=parts.map((p,i)=>
     `<span class="bc-i${i===parts.length-1?' cur':''}" onclick="show('${p.s}')">${p.l}</span>${i<parts.length-1?'<span class="bc-sep">›</span>':''}`
   ).join('');
-  // Progress bar
   const screens=['landing','board','group','subject','chapter','mode'];
   const idx=screens.indexOf(id);
   document.getElementById('pf').style.width=(Math.max(0,idx/(screens.length-1))*100)+'%';
-  // Stats
   document.getElementById('stk').textContent=`🔥 ${S.prog.streak}`;
   document.getElementById('xps').textContent=`⭐ ${S.prog.xp} XP`;
 }
@@ -840,13 +864,14 @@ function addXP(n){
   S.prog.xp+=n; save();
   document.getElementById('xps').textContent=`⭐ ${S.prog.xp} XP`;
   const p=document.createElement('div');
-  p.className='xppop'; p.textContent=`+${n} XP! ⭐`;
+  p.className='xppop';
+  p.textContent=`+${n} XP! ⭐`;
   document.body.appendChild(p);
   setTimeout(()=>p.remove(),2200);
 }
 
 // ═══════════════════════════════════════════════════════════
-// LANDING
+// RENDERS (Landing -> Mode)
 // ═══════════════════════════════════════════════════════════
 function renderLanding(){
   document.getElementById('clsGrid').innerHTML=CLASSES.map(c=>
@@ -859,9 +884,6 @@ function renderLanding(){
 }
 function selCls(id){ S.cls=id; renderBoards(); show('board'); }
 
-// ═══════════════════════════════════════════════════════════
-// BOARD
-// ═══════════════════════════════════════════════════════════
 function renderBoards(){
   document.getElementById('brdGrid').innerHTML=BOARDS.map(b=>
     `<div class="brd-c" onclick="selBrd('${b.id}')">
@@ -873,9 +895,6 @@ function renderBoards(){
 }
 function selBrd(id){ S.brd=id; renderGroups(); show('group'); }
 
-// ═══════════════════════════════════════════════════════════
-// GROUP
-// ═══════════════════════════════════════════════════════════
 function renderGroups(){
   const isM=['9','10'].includes(S.cls);
   const gs=isM?G910:G1112;
@@ -890,9 +909,6 @@ function renderGroups(){
 }
 function selGrp(id){ S.grp=id; renderSubjects(); show('subject'); }
 
-// ═══════════════════════════════════════════════════════════
-// SUBJECT
-// ═══════════════════════════════════════════════════════════
 function renderSubjects(){
   document.getElementById('subSub').textContent=`Class ${S.cls} | ${getGrpNm()}`;
   const subs=getGrpSubs();
@@ -909,9 +925,6 @@ function renderSubjects(){
 }
 function selSub(s){ S.sub=s; renderChapters(); show('chapter'); }
 
-// ═══════════════════════════════════════════════════════════
-// CHAPTER
-// ═══════════════════════════════════════════════════════════
 function renderChapters(){
   const m=SMETA[S.sub]||{ic:'📚'};
   document.getElementById('chTit').innerHTML=`${m.ic} ${S.sub} — Class ${S.cls}`;
@@ -938,9 +951,6 @@ function renderChapters(){
 }
 function selCh(ch){ S.ch=ch; renderModes(); show('mode'); }
 
-// ═══════════════════════════════════════════════════════════
-// MODE
-// ═══════════════════════════════════════════════════════════
 function renderModes(){
   const m=SMETA[S.sub]||{ic:'📚'};
   document.getElementById('modTit').innerHTML=`${m.ic} ${S.sub} — ${getChNm()}`;
@@ -965,9 +975,6 @@ function selMode(id){
   else if(id==='papers')  {renderPapers();show('papers');}
 }
 
-// ═══════════════════════════════════════════════════════════
-// MCQ SETTINGS
-// ═══════════════════════════════════════════════════════════
 function setOpt(tp,val,btn){
   const map={cnt:'cntG',dif:'difG',tmr:'tmrG'};
   document.querySelectorAll(`#${map[tp]} .tb`).forEach(b=>b.classList.remove('on'));
@@ -989,9 +996,11 @@ async function startMCQ(){
 Class: ${S.cls} | Board: Pakistan ${brdNm} | Subject: ${S.sub}
 Chapter/Topic: ${chNm} | Difficulty: ${S.mcq.dif}
 
-Pakistan board exam pattern. Difficulty: easy=recall/definition, medium=application, hard=analysis/problem-solving, mixed=all. Ensure questions are relevant to ${S.cls}th class level Pakistan curriculum 2024-25.
+Pakistan board exam pattern. Difficulty: easy=recall/definition, medium=application, hard=analysis/problem-solving, mixed=all.
+Ensure questions are relevant to ${S.cls}th class level Pakistan curriculum 2024-25.
 
-CRITICAL: Return ONLY a valid JSON array. Do not include markdown, backticks, or any other text.
+CRITICAL: Return ONLY a valid JSON array.
+Do not include markdown, backticks, or any other text.
 [{"q":"question text","opts":["option A","option B","option C","option D"],"correct":0,"exp":"1-2 line explanation"}]
 correct is 0-indexed (0=A,1=B,2=C,3=D).`;
   try{
@@ -1049,7 +1058,11 @@ function runTimer(){
     const te=document.getElementById('qtmr');
     if(el) el.textContent=rem;
     if(rem<=3&&te) te.classList.add('warn');
-    if(rem<=0){clearInterval(S.qzInterval);ansQ(-1);}
+    if(rem<=0){
+      clearInterval(S.qzInterval);
+      playBeep(false); // Update: Wrong sound on timeout
+      ansQ(-1);
+    }
   },1000);
 }
 
@@ -1059,11 +1072,13 @@ function ansQ(sel){
   const cor=q.correct;
   S.qzAns[S.qzIdx]=sel;
   
+  const ok=sel===cor;
+  if(sel !== -1) playBeep(ok); // Update: Sahi ya Galat ki awaaz
+  
   document.querySelectorAll('.qopt').forEach(o=>{o.classList.add('dis');});
-  if(sel>=0) document.getElementById(`op${sel}`)?.classList.add(sel===cor?'cor':'wrg');
+  if(sel>=0) document.getElementById(`op${sel}`)?.classList.add(ok?'cor':'wrg');
   document.getElementById(`op${cor}`)?.classList.add('cor');
   
-  const ok=sel===cor;
   if(ok) addXP(10);
   const L=['A','B','C','D'];
   document.getElementById('qexp').innerHTML=`<div class="qexp">
@@ -1072,14 +1087,13 @@ function ansQ(sel){
     ${q.exp}
   </div>`;
   
-  // Auto advance logic
   setTimeout(()=>{
     if(S.qzIdx+1 < S.qzData.length){
       nextQ();
     } else {
       renderResults();
     }
-  }, ok ? 1000 : 2000); // 1 sec if correct, 2 sec if wrong
+  }, ok ? 1000 : 2000);
 }
 
 function nextQ(){ S.qzIdx++; renderQ(); }
@@ -1147,7 +1161,7 @@ function reviewMCQ(){
 }
 
 // ═══════════════════════════════════════════════════════════
-// SHORT / LONG Q
+// SHORT / LONG QA, SUMMARY, GUESS PAPER, NOTES & OTHERS
 // ═══════════════════════════════════════════════════════════
 async function startQA(tp){
   S.qaType=tp; S.qaIdx=0; S.qaData=[]; S.qaEvals=[];
@@ -1165,13 +1179,11 @@ async function startQA(tp){
     ?`Generate exactly ${cnt} important short questions for Pakistan ${brdNm} board exam:
 Class: ${S.cls} | Subject: ${S.sub} | Chapter: ${chNm}
 Pattern: 2-3 line answers expected, 2 marks each. Important for exam.
-
 CRITICAL: Return ONLY a strictly valid JSON array. No markdown format.
 [{"q":"question","keyPoints":["point1","point2","point3"],"marks":2}]`
     :` Generate exactly ${cnt} important long questions for Pakistan ${brdNm} board exam:
 Class: ${S.cls} | Subject: ${S.sub} | Chapter: ${chNm}
 Pattern: paragraph answers, 5 marks each. Board exam style.
-
 CRITICAL: Return ONLY a strictly valid JSON array. No markdown format.
 [{"q":"question","keyPoints":["point1","point2","point3","point4","point5"],"marks":5,"guide":"~150-200 words"}]`;
   
@@ -1235,9 +1247,9 @@ Key Points Expected: ${q.keyPoints.join('; ')}
 Total Marks: ${q.marks}
 Student's Answer: "${ans}"
 
-CRITICAL: Return ONLY valid JSON format. DO NOT use markdown like \`\`\`json. The structure must be EXACTLY this:
+CRITICAL: Return ONLY valid JSON format.
+DO NOT use markdown like \`\`\`json. The structure must be EXACTLY this:
 {"score":${q.marks},"grade":"A","correct":["specific point correct"],"missing":["specific point missed"],"suggestions":"improvement tips in simple language","sampleAnswer":"ideal answer for this question"}`;
-
   try{
     const txt=await ai(prompt,700);
     const ev=JSON.parse(extractJ(txt));
@@ -1291,9 +1303,6 @@ function renderQARes(){
   </div>`;
 }
 
-// ═══════════════════════════════════════════════════════════
-// AI SUMMARY
-// ═══════════════════════════════════════════════════════════
 async function startSummary(){
   show('summary');
   const chNm=getChNm();
@@ -1302,7 +1311,6 @@ async function startSummary(){
   document.getElementById('smCont').innerHTML=loadHTML('AI summary bana raha hai...','Key points, formulas, aur exam tips tayyar ho rahe hain');
   const prompt=`Create a comprehensive study summary for Pakistan board student:
 Class: ${S.cls} | Board: ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} | Subject: ${S.sub} | Chapter: ${chNm}
-
 CRITICAL: Return ONLY valid JSON format. NO markdown format, backticks or extra text.
 {"overview":"2-3 sentence chapter overview in simple language",
  "keyTopics":[{"topic":"topic name","desc":"1-2 line explanation"}],
@@ -1334,9 +1342,6 @@ function renderSummary(d){
   </div>`;
 }
 
-// ═══════════════════════════════════════════════════════════
-// AI GUESS PAPER
-// ═══════════════════════════════════════════════════════════
 async function startGuess(){
   show('guess');
   const chNm=getChNm();
@@ -1344,13 +1349,11 @@ async function startGuess(){
   document.getElementById('gpTit').innerHTML=`${m.ic} ${S.sub} — Guess Paper`;
   document.getElementById('gpCont').innerHTML=loadHTML('AI guess paper bana raha hai...','Board exam patterns analyze ho rahe hain');
   const brdNm=BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab';
-  
   const prompt=`Create an AI guess paper for Pakistan board exam student:
 Class: ${S.cls} | Board: ${brdNm} | Subject: ${S.sub} | Chapter: ${chNm}
-
 Based on common patterns in ${brdNm} exams. Include likely questions with probability.
-CRITICAL: You MUST return ONLY a strictly valid JSON object. Do not include any markdown formatting, backticks, or intro/outro text. The response must start with { and end with }.
-
+CRITICAL: You MUST return ONLY a strictly valid JSON object. Do not include any markdown formatting, backticks, or intro/outro text.
+The response must start with { and end with }.
 {
   "mcqs":[{"q":"MCQ question","opts":["A","B","C","D"],"likely":"high","reason":"why likely"}],
   "shortQ":[{"q":"short question","likely":"high","marks":2}],
@@ -1359,7 +1362,6 @@ CRITICAL: You MUST return ONLY a strictly valid JSON object. Do not include any 
   "tip":"exam strategy tip"
 }
 Include 5 MCQs, 5 short questions, 3 long questions.`;
-
   try{
     const txt=await ai(prompt,1800);
     const d=JSON.parse(extractJ(txt));
@@ -1382,9 +1384,6 @@ function renderGuess(d){
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px"><button class="btn btn-p" onclick="startGuess()">🔄 New Guess</button><button class="btn btn-g" onclick="show('mode')">← Menu</button></div>`;
 }
 
-// ═══════════════════════════════════════════════════════════
-// NOTES & BOOKS
-// ═══════════════════════════════════════════════════════════
 function renderNotes(){
   document.getElementById('ntTit').textContent=`${S.sub} — Class ${S.cls} Notes`;
   const c=S.cls; const s=S.sub;
@@ -1426,9 +1425,6 @@ function swNTab(el,id){
   });
 }
 
-// ═══════════════════════════════════════════════════════════
-// PAST PAPERS
-// ═══════════════════════════════════════════════════════════
 function renderPapers(){
   document.getElementById('ppTit').textContent=`Past Papers — ${S.sub} Class ${S.cls}`;
   const yrs=['2024','2023','2022','2021','2020','2019','2018'];
@@ -1439,7 +1435,7 @@ function renderPapers(){
 }
 
 // ═══════════════════════════════════════════════════════════
-// CHAT
+// CHAT & OCR LOGIC
 // ═══════════════════════════════════════════════════════════
 function toggleChat(){
   S.chatOpen=!S.chatOpen;
@@ -1484,10 +1480,62 @@ function addMsg(role,txt){
   return d;
 }
 
+// Update: OCR Integration
+async function handleOCR(el) {
+  if (!el.files.length) return;
+  const file = el.files[0];
+  el.value = ''; // Input clear karo taake dobara same pic aa sake
+  
+  if (!S.chatOpen) toggleChat();
+  
+  addMsg('u', `📸 Image upload ki: ${file.name}`);
+  const tyEl = addMsg('a', '<span style="opacity:.6">OCR text extract kar raha hai... 🔍</span>');
+  
+  const formData = new FormData();
+  formData.append("file", file);
+  
+  try {
+    // Cloudflare Worker ke OCR endpoint par bhejna
+    const ocrRes = await fetch(WORKER_URL + '/api/ocr', {
+      method: 'POST',
+      body: formData
+    });
+    
+    const ocrData = await ocrRes.json();
+    
+    if (ocrData.error) throw new Error(ocrData.error);
+    
+    let text = "";
+    if (ocrData.ParsedResults && ocrData.ParsedResults.length > 0) {
+        text = ocrData.ParsedResults[0].ParsedText.trim();
+    }
+    
+    if (!text) throw new Error("Image mein koi text clear nahi mila.");
+    
+    tyEl.innerHTML = `✅ <b>Extracted Text:</b><br><i style="color:var(--t2)">"${text}"</i><br><br><span style="opacity:.6">AI jawab tayyar kar raha hai... 🧠</span>`;
+    
+    // AI ko extract kiya hua text bhejna
+    S.chatH.push({role:'user',content:`Maine ek note ki tasveer upload ki hai jisme likha hai:\n\n${text}\n\nIs topic ko explain karo ya iska answer do.`});
+    
+    const ctx=S.sub?`Student is studying: Class ${S.cls} ${S.sub}.`:'';
+    const sys=`You are IlmAI, a helpful Pakistani study assistant. A student uploaded an image. The extracted text is provided. Answer it directly, accurately, and concisely in Roman Urdu or English depending on context. ${ctx}`;
+    
+    const aiRes = await ai(`[System: ${sys}]\n\nExtracted Text: ${text}`, 800);
+    
+    tyEl.innerHTML = aiRes.replace(/\n/g,'<br>');
+    S.chatH.push({role:'assistant',content:aiRes});
+    
+  } catch(err) {
+    tyEl.innerHTML = `❌ Error: ${err.message}`;
+  }
+  document.getElementById('cmsgs').scrollTop=99999;
+}
+
 // ═══════════════════════════════════════════════════════════
 // AI API — Groq via Cloudflare Worker (4-key failover)
 // ═══════════════════════════════════════════════════════════
 const WORKER_URL = 'https://rabi-groq-worker.noorhusnain791.workers.dev';
+
 async function ai(prompt, maxT=1000){
   const res = await fetch(WORKER_URL, {
     method: 'POST',
@@ -1519,7 +1567,6 @@ function extractJ(txt){
     let e1 = c.lastIndexOf('}');
     let e2 = c.lastIndexOf(']');
     let end = Math.max(e1, e2);
-    
     if(start !== -1 && end !== -1){
       return c.substring(start, end+1);
     }
