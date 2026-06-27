@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+/* ─── All CSS exactly as before ─── */
 :root {
   --bg:   #030c1e; --bg2:  #061428; --bg3: #09193a;
   --card: #0b1e3d; --card2:#0e2448;
@@ -342,6 +343,49 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .gp-q .likelihood{font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;
   border-radius:10px;margin-bottom:6px}
 
+/* ── OCR button in QA textarea ── */
+.ocr-qa-btn {
+  background: var(--card);
+  border: 1.5px solid var(--b);
+  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: var(--tr);
+  color: var(--t2);
+}
+.ocr-qa-btn:hover {
+  border-color: var(--p);
+  color: var(--p);
+}
+.ocr-qa-input { display: none; }
+
+#ocrBtn {
+  background: var(--card);
+  border: 1.5px solid var(--b);
+  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: var(--tr);
+  color: var(--t2);
+}
+#ocrBtn:hover {
+  border-color: var(--p);
+  color: var(--p);
+}
+#ocrInput { display: none; }
+
 @media(max-width:480px){
   .hdr-r .spl{display:none}
   .h1{font-size:24px}
@@ -570,6 +614,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <div class="cmsg a">Assalam-o-Alaikum! 👋 Main hoon tumhara AI tutor. Koi bhi sawal poochho — Roman Urdu ya English mein — bilkul free! 📚</div>
     </div>
     <div class="cft">
+      <button id="ocrBtn" onclick="document.getElementById('ocrInput').click()" title="Image se text nikaalo">📷</button>
+      <input type="file" id="ocrInput" accept="image/*" onchange="handleChatOCR(event)">
       <textarea id="cinp" placeholder="Apna sawal likho... (Roman Urdu ya English)" rows="1"
         onkeydown="chatKey(event)" oninput="autoH(this)"></textarea>
       <button id="csnd" onclick="sendChat()">↑</button>
@@ -621,7 +667,6 @@ const SMETA={
 const CH={
   'Islamiat-9':['Chapter 1: Quran Majeed','Chapter 2: Hadith aur Sunnat','Chapter 3: Seerat-un-Nabi','Chapter 4: Islamic Aqaid','Chapter 5: Ibadat','Chapter 6: Islamic Muashrat'],
   'Islamiat-10':['Chapter 1: Quran Majeed (Surah)','Chapter 2: Ahadith','Chapter 3: Seerat Sahaba','Chapter 4: Islamic Principles','Chapter 5: Ibadat aur Muamlat','Chapter 6: Islam aur Jadid Duniya'],
-  // Add more if needed
 };
 
 const MODES=[
@@ -824,24 +869,24 @@ function setOpt(tp,val,btn){
 }
 
 // ─── WORKER URL ─────────────────────────────────────────────
-const WORKER_URL = 'https://rabi-groq-worker.noorhusnain791.workers.dev';
+const WORKER_URL = 'https://check-ai.noorhusnain791.workers.dev';
 
 async function ai(prompt, maxT=1000){
-  const res=await fetch(WORKER_URL,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      model:'llama-3.1-70b-versatile',
-      messages:[{role:'user',content:prompt}],
-      max_tokens:maxT
+  const res = await fetch(WORKER_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'llama-3.1-70b-versatile',
+      messages: [{ role: 'user', content: prompt }],
+      max_tokens: maxT
     })
   });
-  if(!res.ok){
-    const err=await res.text();
+  if (!res.ok) {
+    const err = await res.text();
     throw new Error(`Worker error ${res.status}: ${err}`);
   }
-  const d=await res.json();
-  if(!d.content || !d.content[0] || !d.content[0].text){
+  const d = await res.json();
+  if (!d.content || !d.content[0] || !d.content[0].text) {
     throw new Error('Invalid response from worker');
   }
   return d.content[0].text;
@@ -862,6 +907,18 @@ function errHTML(msg, fn=''){
   let btn='';
   if(fn) btn=`<button class="btn btn-p" style="margin-top:18px" onclick="${fn}()">🔄 Dobara Try Karo</button>`;
   return `<div class="err"><div class="err-ic">😕</div><h3>Oops!</h3><p>${msg}</p>${btn}</div>`;
+}
+
+// ─── OCR Helper (used in QA and chat) ──────────────────────
+async function performOCR(file) {
+  const formData = new FormData();
+  formData.append('image', file);
+  const resp = await fetch(WORKER_URL + '/ocr', {
+    method: 'POST',
+    body: formData,
+  });
+  const result = await resp.json();
+  return result.ParsedResults?.[0]?.ParsedText?.trim() || '';
 }
 
 // ─── START MCQ ──────────────────────────────────────────────
@@ -1047,7 +1104,11 @@ function renderQA(){
   </div>
   <div class="crd" style="margin-bottom:18px">
     <div class="qa-q"><span style="color:var(--t3);font-size:13px">Q${S.qaIdx+1}. </span>${q.q}</div>
-    <label style="font-size:12px;font-weight:700;color:var(--t2);display:block;margin-bottom:9px;text-transform:uppercase;letter-spacing:1px">Apna jawab likho:</label>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <label style="font-size:12px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:1px;margin:0">Apna jawab likho:</label>
+      <button class="ocr-qa-btn" onclick="document.getElementById('qaOcrInput_${S.qaIdx}').click()" title="Image se text nikaalo">📷</button>
+      <input type="file" id="qaOcrInput_${S.qaIdx}" class="ocr-qa-input" accept="image/*" onchange="handleQAOCR(event, 'qaAns', '${S.qaIdx}')">
+    </div>
     <textarea class="qa-ta${isL?' lng':''}" id="qaAns" placeholder="${isL?'Yahan apna detailed paragraph jawab likho...':'Yahan apna short jawab likho (2-3 lines)...'}" oninput="updWC(this)">${ev?ev.userAns||'':''}</textarea>
     <div class="wc" id="wc">0 words</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
@@ -1059,6 +1120,30 @@ function renderQA(){
   <div id="evRes">${ev?renderEv(ev,q):''}</div>
   ${ev?`<div style="text-align:center;margin-top:20px"><button class="btn btn-p" onclick="nextQA()">${S.qaIdx+1<S.qaData.length?'Agla Sawal →':'🏆 Results Dekho'}</button></div>`:''}`;
   if(ev?.userAns) updWC(document.getElementById('qaAns'));
+}
+
+// OCR handler for QA textarea
+async function handleQAOCR(event, textareaId, qIdx) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const btn = event.target.previousElementSibling;
+  const orig = btn.textContent;
+  btn.textContent = '⏳';
+  try {
+    const text = await performOCR(file);
+    const ta = document.getElementById(textareaId);
+    if (text && ta) {
+      ta.value = text;
+      updWC(ta);
+    } else {
+      alert('Text nikalna mushkil hai, koi aur image try karo.');
+    }
+  } catch(e) {
+    alert('OCR error: ' + e.message);
+  } finally {
+    btn.textContent = orig;
+    event.target.value = '';
+  }
 }
 
 function updWC(el){
@@ -1252,6 +1337,30 @@ function toggleChat(){
 
 function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}
 function autoH(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
+
+// ─── OCR handler for chat ───────────────────────────────────
+async function handleChatOCR(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const btn = document.getElementById('ocrBtn');
+  const orig = btn.textContent;
+  btn.textContent = '⏳';
+  try {
+    const text = await performOCR(file);
+    if (text) {
+      document.getElementById('cinp').value = text;
+      autoH(document.getElementById('cinp'));
+      addMsg('u', '📷 (OCR) ' + text);
+    } else {
+      alert('Text nikalna mushkil hai, koi aur image try karo.');
+    }
+  } catch(e) {
+    alert('OCR error: ' + e.message);
+  } finally {
+    btn.textContent = orig;
+    event.target.value = '';
+  }
+}
 
 async function sendChat(){
   const inp=document.getElementById('cinp');
