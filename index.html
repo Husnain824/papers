@@ -659,7 +659,8 @@ async function ai(prompt,maxT=1000){
   const res=await fetch(WORKER_URL,{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'llama-3.1-70b-versatile',messages:[{role:'user',content:prompt}],max_tokens:maxT})
+    // ✅ llama-3.1-70b-versatile deprecated — using 3.3 now
+    body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],max_tokens:maxT})
   });
   if(!res.ok){const t=await res.text();throw new Error(`Worker ${res.status}: ${t}`);}
   const d=await res.json();
