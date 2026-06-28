@@ -4,46 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IlmAI — Pakistan's Smartest Study Platform</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:   #030c1e;
-  --bg2:  #061428; --bg3: #09193a;
-  --card: #0b1e3d; --card2:#0e2448;
-  --b:    #173060; --b2:   #1e3d78;
-  --p:    #00D4AA; --pd:   rgba(0,212,170,.13);
-  --s:    #8B5CF6; --sd:   rgba(139,92,246,.13);
-  --g:    #F5C842; --gd:   rgba(245,200,66,.13);
-  --r:    #EF4444; --rd:   rgba(239,68,68,.13);
-  --ok:   #22C55E; --okd:  rgba(34,197,94,.13);
-  --t:    #DDF0FF; --t2:   #7BA8CC; --t3: #3a5a7a;
-  --fn:   'Plus Jakarta Sans', sans-serif;
-  --rad:  14px; --rad2: 20px; --rad3: 28px;
-  --tr:   .22s cubic-bezier(.4,0,.2,1);
+  --bg:#030c1e;--bg2:#061428;--bg3:#09193a;
+  --card:#0b1e3d;--card2:#0e2448;
+  --b:#173060;--b2:#1e3d78;
+  --p:#00D4AA;--pd:rgba(0,212,170,.13);
+  --s:#8B5CF6;--sd:rgba(139,92,246,.13);
+  --g:#F5C842;--gd:rgba(245,200,66,.13);
+  --r:#EF4444;--rd:rgba(239,68,68,.13);
+  --ok:#22C55E;--okd:rgba(34,197,94,.13);
+  --t:#DDF0FF;--t2:#7BA8CC;--t3:#3a5a7a;
+  --fn:'Plus Jakarta Sans',sans-serif;
+  --rad:14px;--rad2:20px;--tr:.22s cubic-bezier(.4,0,.2,1);
 }
-
-/* Light Mode Variables */
-body.light {
-  --bg: #f8fafc; --bg2: #f1f5f9; --bg3: #e2e8f0;
-  --card: #ffffff; --card2: #f8fafc;
-  --b: #cbd5e1;
-  --b2: #94a3b8;
-  --t: #0f172a; --t2: #475569; --t3: #94a3b8;
-}
-
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:var(--fn);background:var(--bg);color:var(--t);min-height:100vh;overflow-x:hidden;transition:background 0.3s ease, color 0.3s ease;}
+body{font-family:var(--fn);background:var(--bg);color:var(--t);min-height:100vh;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(0,212,170,.035) 80px),
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(0,212,170,.035) 80px),
     repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(0,212,170,.035) 80px)}
 #app{position:relative;z-index:1;min-height:100vh}
-
-/* ── HEADER ── */
 #hdr{position:sticky;top:0;z-index:100;background:rgba(3,12,30,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--b)}
-body.light #hdr {background:rgba(255,255,255,.92);}
 .hdr-in{max-width:1120px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:14px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex-shrink:0;cursor:pointer}
 .logo-ic{width:34px;height:34px;background:linear-gradient(135deg,var(--p),var(--s));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px}
@@ -56,68 +40,40 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 .bc-i.cur{color:var(--p)}
 .bc-sep{color:var(--t3)}
 .hdr-r{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.theme-btn{background:none;border:none;cursor:pointer;font-size:20px;padding:4px;transition:var(--tr);}
-.theme-btn:hover{transform:scale(1.1);}
 .spl{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;background:var(--card);border:1px solid var(--b);font-size:13px;font-weight:600;color:var(--t2);white-space:nowrap}
 .spl.gld{color:var(--g);border-color:rgba(245,200,66,.3)}
 .spl.fir{color:#ff6b35;border-color:rgba(255,107,53,.3)}
 .pbar{height:2px;background:var(--b)}
 .pfill{height:100%;background:linear-gradient(90deg,var(--p),var(--s));transition:width .5s ease;width:0%}
-
-/* ── SCREENS ── */
 .sc{display:none}
 .sc.on{display:block;animation:fu .3s ease}
 @keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .pw{max-width:1120px;margin:0 auto;padding:36px 20px 120px}
 .pw-sm{max-width:700px;margin:0 auto;padding:36px 20px 120px}
-
-/* ── BUTTONS ── */
 .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:var(--rad);font-family:var(--fn);font-size:15px;font-weight:600;cursor:pointer;border:none;transition:var(--tr);text-decoration:none;justify-content:center}
 .btn-p{background:var(--p);color:#000}
 .btn-p:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .btn-s{background:var(--card);color:var(--t);border:1px solid var(--b)}
 .btn-s:hover{background:var(--card2);border-color:var(--b2)}
-.btn-o{background:transparent;color:var(--p);border:1.5px solid var(--p)}
-.btn-o:hover{background:var(--pd)}
 .btn-g{background:transparent;color:var(--t2);border:none;padding:10px 16px}
 .btn-g:hover{color:var(--t);background:var(--card)}
 .btn-lg{padding:15px 30px;font-size:17px;border-radius:16px}
-.btn-sm{padding:7px 14px;font-size:13px;border-radius:10px}
 .btn-w{width:100%}
-
-/* ── CARDS ── */
 .crd{background:var(--card);border:1px solid var(--b);border-radius:var(--rad2);padding:24px;transition:var(--tr)}
-.crd:hover{background:var(--card2);border-color:var(--b2)}
-.crd-c{cursor:pointer}
-.crd-c:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.45)}
-
-/* ── TYPOGRAPHY ── */
 .ey{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--p);margin-bottom:8px}
 .h1{font-size:clamp(28px,5vw,40px);font-weight:800;line-height:1.2;margin-bottom:10px}
 .sub{font-size:16px;color:var(--t2);margin-bottom:32px}
-
-/* ── GRIDS ── */
-.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .ga{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
-@media(max-width:768px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.g2,.g3{grid-template-columns:1fr}}
-
-/* ── BACK BTN ── */
+@media(max-width:768px){.g3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.g3{grid-template-columns:1fr}}
 .bk{display:inline-flex;align-items:center;gap:7px;color:var(--t2);font-size:14px;font-weight:600;cursor:pointer;margin-bottom:22px;padding:8px 0;transition:var(--tr);background:none;border:none;font-family:var(--fn)}
 .bk:hover{color:var(--p)}
-
-/* ── TAGS ── */
 .tag{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
-.t-tl{background:var(--pd);color:var(--p)} .t-vi{background:var(--sd);color:var(--s)}
-.t-gd{background:var(--gd);color:var(--g)} .t-rd{background:var(--rd);color:var(--r)}
+.t-tl{background:var(--pd);color:var(--p)}.t-vi{background:var(--sd);color:var(--s)}
+.t-gd{background:var(--gd);color:var(--g)}.t-rd{background:var(--rd);color:var(--r)}
 .t-gn{background:var(--okd);color:var(--ok)}
-
-/* ── DIVIDER ── */
 .dvd{height:1px;background:var(--b);margin:28px 0}
-
-/* ── LANDING ── */
 .hero{text-align:center;padding:60px 20px 40px}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:40px;background:var(--pd);color:var(--p);border:1px solid rgba(0,212,170,.3);font-size:14px;font-weight:600;margin-bottom:24px}
 .hero-h{font-size:clamp(36px,7vw,68px);font-weight:800;line-height:1.1;margin-bottom:20px}
@@ -144,22 +100,16 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 .stat-it{text-align:center}
 .stat-num{font-size:28px;font-weight:800;background:linear-gradient(90deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .stat-lb{font-size:13px;color:var(--t2);margin-top:2px}
-
-/* ── BOARD ── */
 .boards{display:flex;flex-direction:column;gap:10px;max-width:600px}
 .brd-c{display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:var(--rad);background:var(--card);border:1px solid var(--b);cursor:pointer;transition:var(--tr)}
 .brd-c:hover{border-color:var(--p);background:var(--card2);transform:translateX(4px)}
 .brd-inf h3{font-size:17px;font-weight:700}
 .brd-inf p{font-size:13px;color:var(--t2);margin-top:2px}
-
-/* ── GROUP ── */
 .grp-c{border-radius:var(--rad2);padding:26px 20px;cursor:pointer;text-align:center;background:var(--card);border:1px solid var(--b);transition:var(--tr)}
 .grp-c:hover{border-color:var(--p);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
 .grp-ic{font-size:38px;margin-bottom:12px}
 .grp-nm{font-size:19px;font-weight:700;margin-bottom:6px}
 .grp-ds{font-size:13px;color:var(--t2);line-height:1.5}
-
-/* ── SUBJECT ── */
 .sub-c{border-radius:var(--rad2);padding:22px 16px;cursor:pointer;text-align:center;background:var(--card);border:1px solid var(--b);transition:var(--tr);position:relative;overflow:hidden}
 .sub-c::after{content:'';position:absolute;inset:0;background:var(--ac,transparent);opacity:0;transition:var(--tr)}
 .sub-c:hover{transform:translateY(-4px);border-color:var(--ab,var(--b2))}
@@ -167,9 +117,6 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 .sub-c>*{position:relative;z-index:1}
 .sub-ic{font-size:34px;margin-bottom:10px}
 .sub-nm{font-size:15px;font-weight:700}
-.sub-ch{font-size:12px;color:var(--t2);margin-top:3px}
-
-/* ── CHAPTER ── */
 .ch-list{display:flex;flex-direction:column;gap:10px}
 .ch-it{display:flex;align-items:center;gap:14px;padding:15px 18px;border-radius:var(--rad);background:var(--card);border:1px solid var(--b);cursor:pointer;transition:var(--tr)}
 .ch-it:hover{background:var(--card2);border-color:var(--b2);transform:translateX(4px)}
@@ -177,8 +124,6 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 .ch-inf h4{font-size:15px;font-weight:600}
 .ch-inf p{font-size:12px;color:var(--t2);margin-top:2px}
 .ch-ar{margin-left:auto;color:var(--t3);font-size:14px}
-
-/* ── MODE ── */
 .mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media(max-width:640px){.mode-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:380px){.mode-grid{grid-template-columns:1fr}}
@@ -191,16 +136,12 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 .mode-nm{font-size:17px;font-weight:700;margin-bottom:6px}
 .mode-ds{font-size:13px;color:var(--t2);line-height:1.5}
 .mode-bx{display:inline-block;margin-top:10px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;background:var(--pd);color:var(--p)}
-
-/* ── SETTINGS FORM ── */
 .sf{display:flex;flex-direction:column;gap:26px;max-width:540px}
 .fg label{display:block;font-size:12px;font-weight:700;color:var(--t2);margin-bottom:12px;text-transform:uppercase;letter-spacing:1.5px}
 .tg{display:flex;gap:10px;flex-wrap:wrap}
 .tb{padding:10px 20px;border-radius:10px;background:var(--card);border:1.5px solid var(--b);color:var(--t2);cursor:pointer;font-family:var(--fn);font-size:15px;font-weight:600;transition:var(--tr)}
 .tb.on{background:var(--pd);border-color:var(--p);color:var(--p)}
 .tb:hover:not(.on){border-color:var(--b2);color:var(--t)}
-
-/* ── MCQ QUIZ ── */
 .qhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
 .qtimer{display:flex;align-items:center;gap:6px;padding:9px 18px;border-radius:12px;background:var(--card);border:1px solid var(--b);font-size:19px;font-weight:700;font-family:monospace;min-width:80px;justify-content:center}
 .qtimer.warn{color:var(--r);border-color:rgba(239,68,68,.4)}
@@ -222,8 +163,6 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 .qexp{margin-top:18px;padding:16px 18px;border-radius:var(--rad);background:rgba(0,212,170,.07);border:1px solid rgba(0,212,170,.25);font-size:14px;line-height:1.6;color:var(--t2);animation:fu .3s ease}
 .qexp strong{color:var(--p)}
 .qnav{display:flex;justify-content:space-between;align-items:center;margin-top:26px;flex-wrap:wrap;gap:12px}
-
-/* ── RESULTS ── */
 .res-hero{text-align:center;padding:36px 20px 24px}
 .res-sc{font-size:76px;font-weight:800;background:linear-gradient(135deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
 .res-lb{font-size:17px;color:var(--t2);margin-top:8px}
@@ -233,8 +172,6 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 .rs-n{font-size:26px;font-weight:800}
 .rs-l{font-size:12px;color:var(--t2);margin-top:4px}
 @media(max-width:480px){.res-stats{grid-template-columns:1fr}}
-
-/* ── QA ── */
 .qa-q{font-size:18px;font-weight:600;line-height:1.55;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--b)}
 .qa-ta{width:100%;border-radius:var(--rad);background:var(--bg2);border:1.5px solid var(--b);color:var(--t);font-family:var(--fn);font-size:15px;padding:14px;resize:vertical;transition:var(--tr);min-height:110px}
 .qa-ta.lng{min-height:200px}
@@ -249,8 +186,6 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 .evl{list-style:none;display:flex;flex-direction:column;gap:5px}
 .evl li{padding:7px 14px 7px 24px;position:relative;font-size:14px;color:var(--t2);line-height:1.5;background:var(--bg2);border-radius:8px;border:1px solid var(--b)}
 .evl li::before{content:'→';position:absolute;left:8px;color:var(--p)}
-
-/* ── NOTES ── */
 .ntabs{display:flex;gap:6px;margin-bottom:24px;border-bottom:1px solid var(--b)}
 .ntab{padding:11px 18px;font-size:14px;font-weight:600;color:var(--t2);cursor:pointer;border-bottom:2px solid transparent;transition:var(--tr);margin-bottom:-1px}
 .ntab.on{color:var(--p);border-color:var(--p)}
@@ -261,17 +196,12 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 .rc-inf h4{font-size:14px;font-weight:600}
 .rc-inf p{font-size:12px;color:var(--t2);margin-top:2px}
 .rc-tp{margin-left:auto;flex-shrink:0;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
-.tp-p{background:var(--rd);color:var(--r)} .tp-v{background:rgba(255,0,0,.1);color:#ff5555}
-.tp-w{background:var(--pd);color:var(--p)}
-
-/* ── SUMMARY ── */
+.tp-p{background:var(--rd);color:var(--r)}.tp-v{background:rgba(255,0,0,.1);color:#ff5555}.tp-w{background:var(--pd);color:var(--p)}
 .sumb{background:var(--card);border:1px solid var(--b);border-radius:var(--rad2);padding:22px;margin-bottom:18px}
 .sumb h3{font-size:15px;font-weight:700;color:var(--p);margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .suml{list-style:none;display:flex;flex-direction:column;gap:9px}
 .suml li{padding:10px 14px;border-radius:var(--rad);background:var(--bg2);border:1px solid var(--b);font-size:14px;line-height:1.5}
 .suml li.fm{font-family:monospace;background:var(--sd);border-color:rgba(139,92,246,.35);color:var(--s);font-size:15px}
-
-/* ── LOADING ── */
 .ld{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:18px}
 .ldspin{width:44px;height:44px;border-radius:50%;border:3px solid var(--b);border-top-color:var(--p);animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -280,17 +210,14 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 .err{text-align:center;padding:50px 20px}
 .err-ic{font-size:46px;margin-bottom:14px}
 .err h3{font-size:19px;font-weight:700;margin-bottom:8px}
-.err p{font-size:14px;color:var(--t2)}
-
-/* ── XP POPUP ── */
+.err p{font-size:14px;color:var(--t2);line-height:1.6}
 .xppop{position:fixed;top:76px;right:22px;z-index:999;background:linear-gradient(135deg,var(--p),var(--s));color:white;padding:11px 20px;border-radius:40px;font-size:15px;font-weight:700;animation:xpfl 2.1s forwards;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.4)}
 @keyframes xpfl{0%{opacity:0;transform:translateY(20px)}20%{opacity:1;transform:translateY(0)}80%{opacity:1;transform:translateY(-18px)}100%{opacity:0;transform:translateY(-36px)}}
-
 /* ── CHAT ── */
 #cw{position:fixed;bottom:22px;right:22px;z-index:1000}
 #ctog{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--s));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 8px 28px rgba(0,212,170,.45);transition:var(--tr);color:white}
 #ctog:hover{transform:scale(1.1)}
-#cpanel{position:absolute;bottom:66px;right:0;width:355px;max-width:calc(100vw - 42px);background:var(--bg2);border:1px solid var(--b);border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.75);display:none;flex-direction:column;max-height:510px}
+#cpanel{position:absolute;bottom:66px;right:0;width:360px;max-width:calc(100vw - 42px);background:var(--bg2);border:1px solid var(--b);border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.75);display:none;flex-direction:column;max-height:520px}
 #cpanel.open{display:flex;animation:fu .25s ease}
 .chd{padding:15px 18px;background:linear-gradient(90deg,var(--pd),var(--sd));border-bottom:1px solid var(--b);display:flex;align-items:center;gap:11px}
 .chd-av{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--p),var(--s));display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
@@ -298,37 +225,45 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 .chd-st{font-size:12px;color:var(--p);margin-top:1px}
 #ccls{background:none;border:none;color:var(--t2);cursor:pointer;font-size:17px;margin-left:auto}
 .cmsgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin;scrollbar-color:var(--b) transparent}
-.cmsg{max-width:87%;padding:11px 15px;border-radius:16px;font-size:14px;line-height:1.55;animation:fu .2s ease}
+.cmsg{max-width:88%;padding:11px 15px;border-radius:16px;font-size:14px;line-height:1.55;animation:fu .2s ease;word-break:break-word}
 .cmsg.u{background:var(--pd);border:1px solid rgba(0,212,170,.3);color:var(--t);align-self:flex-end;border-radius:16px 16px 4px 16px}
 .cmsg.a{background:var(--card);border:1px solid var(--b);color:var(--t);align-self:flex-start;border-radius:16px 16px 16px 4px}
+/* ── Image preview inside chat msg ── */
+.cmsg-img{max-width:100%;border-radius:10px;display:block;margin-bottom:8px;max-height:160px;object-fit:cover}
+/* ── Chat footer ── */
 .cft{padding:11px 14px;border-top:1px solid var(--b);display:flex;gap:9px;align-items:flex-end}
 #cinp{flex:1;background:var(--card);border:1.5px solid var(--b);border-radius:11px;color:var(--t);font-family:var(--fn);font-size:14px;padding:9px 13px;resize:none;max-height:100px;min-height:38px;transition:var(--tr)}
 #cinp:focus{outline:none;border-color:var(--p)}
 #cinp::placeholder{color:var(--t3)}
+#cimg-btn{width:38px;height:38px;border-radius:10px;flex-shrink:0;background:var(--sd);border:none;color:var(--s);cursor:pointer;font-size:17px;transition:var(--tr);display:flex;align-items:center;justify-content:center}
+#cimg-btn:hover{background:var(--s);color:#fff;transform:scale(1.08)}
 #csnd{width:38px;height:38px;border-radius:10px;flex-shrink:0;background:var(--p);border:none;color:#000;cursor:pointer;font-size:16px;transition:var(--tr);display:flex;align-items:center;justify-content:center}
 #csnd:hover{filter:brightness(1.1)}
-#cattach { background: none; border: none; color: var(--t2); cursor: pointer; font-size: 20px; padding: 5px; transition: var(--tr); display: flex; align-items: center; justify-content: center; }
-#cattach:hover { color: var(--p); transform: scale(1.1); }
-
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--b2);border-radius:3px}
-
-/* ── REVIEW ── */
-.rv-opt{padding:10px 14px;border-radius:9px;margin-bottom:6px;font-size:14px;display:flex;align-items:center;gap:10px}
-
-/* ── GUESS PAPER ── */
+/* ── OCR modal ── */
+#ocr-modal{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
+#ocr-modal.open{display:flex;animation:fu .2s ease}
+.ocr-box{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rad2);padding:26px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto}
+.ocr-box h3{font-size:17px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+#ocr-preview{width:100%;max-height:220px;object-fit:contain;border-radius:12px;display:block;margin-bottom:16px;border:1px solid var(--b);background:var(--bg)}
+.ocr-text-box{width:100%;background:var(--card);border:1.5px solid var(--b);border-radius:12px;padding:14px;color:var(--t);font-family:var(--fn);font-size:14px;min-height:100px;resize:vertical;margin-bottom:16px;line-height:1.6}
+.ocr-text-box:focus{outline:none;border-color:var(--p)}
+.ocr-actions{display:flex;gap:10px;flex-wrap:wrap}
+/* ── Scan page ── */
+.scan-drop{border:2.5px dashed var(--b2);border-radius:var(--rad2);padding:48px 24px;text-align:center;cursor:pointer;transition:var(--tr);background:var(--bg2)}
+.scan-drop:hover,.scan-drop.drag{border-color:var(--p);background:var(--pd)}
+.scan-drop-ic{font-size:52px;margin-bottom:14px}
+.scan-drop-t{font-size:16px;font-weight:600;margin-bottom:6px}
+.scan-drop-s{font-size:13px;color:var(--t2)}
+.scan-result{background:var(--card);border:1px solid var(--b);border-radius:var(--rad2);padding:20px;margin-top:20px}
+/* ── Guess paper ── */
 .gp-sec{background:var(--card);border:1px solid var(--b);border-radius:var(--rad2);padding:20px;margin-bottom:18px}
 .gp-sec h3{font-size:15px;font-weight:700;color:var(--t);margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .gp-q{padding:12px 14px;border-radius:10px;background:var(--bg2);border:1px solid var(--b);font-size:14px;line-height:1.5;margin-bottom:8px}
-.gp-q .likelihood{font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;border-radius:10px;margin-bottom:6px}
-
-@media(max-width:480px){
-  .hdr-r .spl{display:none}
-  .h1{font-size:24px}
-  .hero-h{font-size:30px}
-}
+.likelihood{font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;border-radius:10px;margin-bottom:6px}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--b2);border-radius:3px}
+@media(max-width:480px){.hdr-r .spl{display:none}.h1{font-size:24px}.hero-h{font-size:30px}}
 </style>
 </head>
 <body>
@@ -343,7 +278,6 @@ body.light #hdr {background:rgba(255,255,255,.92);}
     </div>
     <nav class="bc" id="bc"></nav>
     <div class="hdr-r">
-      <button class="theme-btn" onclick="document.body.classList.toggle('light')" title="Toggle Theme">🌓</button>
       <div class="spl fir" id="stk">🔥 0</div>
       <div class="spl gld" id="xps">⭐ 0 XP</div>
     </div>
@@ -358,26 +292,14 @@ body.light #hdr {background:rgba(255,255,255,.92);}
   <div class="hero">
     <div class="hero-badge">🇵🇰 Pakistan's #1 AI Study Platform</div>
     <h1 class="hero-h">Padhai ho <span class="grad">Smart Way</span> se</h1>
-    <p class="hero-p">AI-powered MCQs, instant answer checking, aur Roman Urdu chat — Pakistan ke latest curriculum ke saath. Bilkul free!</p>
+    <p class="hero-p">AI-powered MCQs, instant answer checking, Roman Urdu chat, aur ab 📷 Image Scan — Pakistan ke latest curriculum ke saath. Bilkul free!</p>
   </div>
   <p class="ey" style="text-align:center">Apni class select karo</p>
   <div class="cls-grid" id="clsGrid"></div>
   <div class="feat-row">
-    <div class="feat">
-      <div class="feat-ic" style="background:var(--pd)">🎯</div>
-      <div class="feat-nm">AI MCQ Generator</div>
-      <div class="feat-ds">Instant AI-generated MCQs — difficulty aur count khud set karo. Pakistan board pattern pe.</div>
-    </div>
-    <div class="feat">
-      <div class="feat-ic" style="background:var(--sd)">✅</div>
-      <div class="feat-nm">AI Answer Checker</div>
-      <div class="feat-ds">Short/long answers likho, AI check kare aur detailed feedback aur marks de.</div>
-    </div>
-    <div class="feat">
-      <div class="feat-ic" style="background:var(--gd)">💬</div>
-      <div class="feat-nm">Roman Urdu Tutor</div>
-      <div class="feat-ds">Koi bhi sawal Roman Urdu ya English mein poochho — AI tutor jawab dega har page pe.</div>
-    </div>
+    <div class="feat"><div class="feat-ic" style="background:var(--pd)">🎯</div><div class="feat-nm">AI MCQ Generator</div><div class="feat-ds">Instant AI-generated MCQs — difficulty aur count khud set karo.</div></div>
+    <div class="feat"><div class="feat-ic" style="background:var(--sd)">✅</div><div class="feat-nm">AI Answer Checker</div><div class="feat-ds">Short/long answers likho, AI check kare aur detailed feedback de.</div></div>
+    <div class="feat"><div class="feat-ic" style="background:var(--gd)">📷</div><div class="feat-nm">Image Scanner (OCR)</div><div class="feat-ds">Textbook ya question ki photo lo — AI scan kar ke jawab dega!</div></div>
   </div>
   <div class="stat-row">
     <div class="stat-it"><div class="stat-num">9–12</div><div class="stat-lb">Classes Covered</div></div>
@@ -388,175 +310,157 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 </div>
 </div>
 
-<div class="sc" id="sc-board">
-<div class="pw">
+<div class="sc" id="sc-board"><div class="pw">
   <button class="bk" onclick="goHome()">← Wapas</button>
-  <div class="ey">Step 1 of 3</div>
-  <h2 class="h1">Board select karo</h2>
-  <p class="sub">Apna education board chunao</p>
+  <div class="ey">Step 1 of 3</div><h2 class="h1">Board select karo</h2><p class="sub">Apna education board chunao</p>
   <div class="boards" id="brdGrid"></div>
-</div>
-</div>
+</div></div>
 
-<div class="sc" id="sc-group">
-<div class="pw">
+<div class="sc" id="sc-group"><div class="pw">
   <button class="bk" onclick="show('board')">← Wapas</button>
-  <div class="ey">Step 2 of 3</div>
-  <h2 class="h1">Group select karo</h2>
-  <p class="sub" id="grpSub">Apna study group chunao</p>
+  <div class="ey">Step 2 of 3</div><h2 class="h1">Group select karo</h2><p class="sub" id="grpSub">Apna study group chunao</p>
   <div class="g3" id="grpGrid"></div>
-</div>
-</div>
+</div></div>
 
-<div class="sc" id="sc-subject">
-<div class="pw">
+<div class="sc" id="sc-subject"><div class="pw">
   <button class="bk" onclick="show('group')">← Wapas</button>
-  <div class="ey">Step 3 of 3</div>
-  <h2 class="h1">Subject select karo</h2>
-  <p class="sub" id="subSub">Kaunsa subject?</p>
+  <div class="ey">Step 3 of 3</div><h2 class="h1">Subject select karo</h2><p class="sub" id="subSub">Kaunsa subject?</p>
   <div class="ga" id="subGrid"></div>
-</div>
-</div>
+</div></div>
 
-<div class="sc" id="sc-chapter">
-<div class="pw">
+<div class="sc" id="sc-chapter"><div class="pw">
   <button class="bk" onclick="show('subject')">← Wapas</button>
-  <h2 class="h1" id="chTit">Chapters</h2>
-  <p class="sub" id="chSub">Chapter chunao</p>
+  <h2 class="h1" id="chTit">Chapters</h2><p class="sub" id="chSub">Chapter chunao</p>
   <div id="chCont"></div>
-</div>
-</div>
+</div></div>
 
-<div class="sc" id="sc-mode">
-<div class="pw">
+<div class="sc" id="sc-mode"><div class="pw">
   <button class="bk" onclick="show('chapter')">← Wapas</button>
-  <h2 class="h1" id="modTit">Study Mode</h2>
-  <p class="sub">Kya karna chahte ho?</p>
+  <h2 class="h1" id="modTit">Study Mode</h2><p class="sub">Kya karna chahte ho?</p>
   <div class="mode-grid" id="modGrid"></div>
-</div>
-</div>
+</div></div>
 
-<div class="sc" id="sc-mcq-set">
-<div class="pw-sm">
+<div class="sc" id="sc-mcq-set"><div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
-  <div class="ey">MCQ Practice</div>
-  <h2 class="h1">Quiz settings</h2>
-  <p class="sub">Apne hisaab se customize karo</p>
+  <div class="ey">MCQ Practice</div><h2 class="h1">Quiz settings</h2><p class="sub">Apne hisaab se customize karo</p>
   <div class="sf">
-    <div class="fg">
-      <label>Kitne MCQs?</label>
-      <div class="tg" id="cntG">
-        <button class="tb" data-v="5" onclick="setOpt('cnt',5,this)">5</button>
-        <button class="tb on" data-v="10" onclick="setOpt('cnt',10,this)">10</button>
-        <button class="tb" data-v="15" onclick="setOpt('cnt',15,this)">15</button>
-        <button class="tb" data-v="20" onclick="setOpt('cnt',20,this)">20</button>
-        <button class="tb" data-v="30" onclick="setOpt('cnt',30,this)">30</button>
-      </div>
-    </div>
-    <div class="fg">
-      <label>Difficulty level</label>
-      <div class="tg" id="difG">
-        <button class="tb" onclick="setOpt('dif','easy',this)">🟢 Easy</button>
-        <button class="tb on" onclick="setOpt('dif','medium',this)">🟡 Medium</button>
-        <button class="tb" onclick="setOpt('dif','hard',this)">🔴 Hard</button>
-        <button class="tb" onclick="setOpt('dif','mixed',this)">🎲 Mixed</button>
-      </div>
-    </div>
-    <div class="fg">
-      <label>Timer per question</label>
-      <div class="tg" id="tmrG">
-        <button class="tb" onclick="setOpt('tmr',0,this)">Off</button>
-        <button class="tb on" onclick="setOpt('tmr',15,this)">15s</button>
-        <button class="tb" onclick="setOpt('tmr',30,this)">30s</button>
-        <button class="tb" onclick="setOpt('tmr',60,this)">60s</button>
-      </div>
-    </div>
+    <div class="fg"><label>Kitne MCQs?</label><div class="tg" id="cntG">
+      <button class="tb" onclick="setOpt('cnt',5,this)">5</button>
+      <button class="tb on" onclick="setOpt('cnt',10,this)">10</button>
+      <button class="tb" onclick="setOpt('cnt',15,this)">15</button>
+      <button class="tb" onclick="setOpt('cnt',20,this)">20</button>
+      <button class="tb" onclick="setOpt('cnt',30,this)">30</button>
+    </div></div>
+    <div class="fg"><label>Difficulty level</label><div class="tg" id="difG">
+      <button class="tb" onclick="setOpt('dif','easy',this)">🟢 Easy</button>
+      <button class="tb on" onclick="setOpt('dif','medium',this)">🟡 Medium</button>
+      <button class="tb" onclick="setOpt('dif','hard',this)">🔴 Hard</button>
+      <button class="tb" onclick="setOpt('dif','mixed',this)">🎲 Mixed</button>
+    </div></div>
+    <div class="fg"><label>Timer per question</label><div class="tg" id="tmrG">
+      <button class="tb" onclick="setOpt('tmr',0,this)">Off</button>
+      <button class="tb" onclick="setOpt('tmr',30,this)">30s</button>
+      <button class="tb on" onclick="setOpt('tmr',60,this)">60s</button>
+      <button class="tb" onclick="setOpt('tmr',90,this)">90s</button>
+    </div></div>
     <button class="btn btn-p btn-lg btn-w" onclick="startMCQ()">🚀 Quiz Shuru Karo!</button>
   </div>
-</div>
-</div>
+</div></div>
 
-<div class="sc" id="sc-mcq-quiz">
-<div class="pw-sm"><div id="qzCont"></div></div>
-</div>
+<div class="sc" id="sc-mcq-quiz"><div class="pw-sm"><div id="qzCont"></div></div></div>
+<div class="sc" id="sc-mcq-res"><div class="pw-sm"><div id="resCont"></div></div></div>
 
-<div class="sc" id="sc-mcq-res">
-<div class="pw-sm"><div id="resCont"></div></div>
-</div>
-
-<div class="sc" id="sc-short">
-<div class="pw-sm">
+<div class="sc" id="sc-short"><div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
-  <div class="ey">Short Questions</div>
-  <h2 class="h1" id="shTit">Short Question Practice</h2>
+  <div class="ey">Short Questions</div><h2 class="h1" id="shTit">Short Question Practice</h2>
   <div id="shCont"></div>
-</div>
-</div>
+</div></div>
 
-<div class="sc" id="sc-long">
-<div class="pw-sm">
+<div class="sc" id="sc-long"><div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
-  <div class="ey">Long Questions</div>
-  <h2 class="h1" id="lgTit">Long Question Practice</h2>
+  <div class="ey">Long Questions</div><h2 class="h1" id="lgTit">Long Question Practice</h2>
   <div id="lgCont"></div>
-</div>
-</div>
+</div></div>
 
-<div class="sc" id="sc-summary">
-<div class="pw-sm">
+<div class="sc" id="sc-summary"><div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
-  <div class="ey">AI Chapter Summary</div>
-  <h2 class="h1" id="smTit">Chapter Summary</h2>
+  <div class="ey">AI Chapter Summary</div><h2 class="h1" id="smTit">Chapter Summary</h2>
   <div id="smCont"></div>
-</div>
-</div>
+</div></div>
 
-<div class="sc" id="sc-guess">
-<div class="pw-sm">
+<div class="sc" id="sc-guess"><div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
-  <div class="ey">AI Guess Paper</div>
-  <h2 class="h1" id="gpTit">AI Guess Paper</h2>
+  <div class="ey">AI Guess Paper</div><h2 class="h1" id="gpTit">AI Guess Paper</h2>
   <div id="gpCont"></div>
-</div>
-</div>
+</div></div>
 
-<div class="sc" id="sc-notes">
-<div class="pw">
+<div class="sc" id="sc-notes"><div class="pw">
   <button class="bk" onclick="show('mode')">← Wapas</button>
-  <h2 class="h1" id="ntTit">Notes & Books</h2>
-  <div id="ntCont"></div>
-</div>
-</div>
+  <h2 class="h1" id="ntTit">Notes & Books</h2><div id="ntCont"></div>
+</div></div>
 
-<div class="sc" id="sc-papers">
-<div class="pw">
+<div class="sc" id="sc-papers"><div class="pw">
   <button class="bk" onclick="show('mode')">← Wapas</button>
-  <h2 class="h1" id="ppTit">Past Papers</h2>
-  <div id="ppCont"></div>
-</div>
-</div>
+  <h2 class="h1" id="ppTit">Past Papers</h2><div id="ppCont"></div>
+</div></div>
+
+<!-- ── IMAGE SCAN PAGE ────────────────────────────────── -->
+<div class="sc" id="sc-scan"><div class="pw-sm">
+  <button class="bk" onclick="show('mode')">← Wapas</button>
+  <div class="ey">📷 Image Scanner</div>
+  <h2 class="h1" id="scanTit">Textbook Image Scan</h2>
+  <p class="sub">Photo lo ya upload karo — AI scan kar ke MCQs / Summary banayega</p>
+
+  <!-- Drop zone -->
+  <div class="scan-drop" id="scanDrop" onclick="document.getElementById('scanFileIn').click()"
+       ondragover="scanDrag(event,true)" ondragleave="scanDrag(event,false)" ondrop="scanDropFile(event)">
+    <div class="scan-drop-ic">📷</div>
+    <div class="scan-drop-t">Image yahan drop karo ya click karo</div>
+    <div class="scan-drop-s">JPG, PNG, WEBP — max 5MB</div>
+  </div>
+  <input type="file" id="scanFileIn" accept="image/*" style="display:none" onchange="handleScanFile(event)">
+
+  <!-- Result area -->
+  <div id="scanResult"></div>
+</div></div>
 
 </main>
 </div>
 
+<!-- ── OCR MODAL (chat pe image) ───────────────────────── -->
+<div id="ocr-modal">
+  <div class="ocr-box">
+    <h3>📷 Image Scan</h3>
+    <img id="ocr-preview" src="" alt="Preview">
+    <div style="font-size:12px;color:var(--t2);margin-bottom:10px" id="ocr-status">Scan ho raha hai...</div>
+    <textarea class="ocr-text-box" id="ocr-text" placeholder="Scanned text yahan aayega..."></textarea>
+    <div class="ocr-actions">
+      <button class="btn btn-p" onclick="sendOcrToChat()">💬 AI se Poochho</button>
+      <button class="btn btn-s" onclick="copyOcrText()">📋 Copy Text</button>
+      <button class="btn btn-g" onclick="closeOcrModal()">✕ Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── CHAT WIDGET ──────────────────────────────────────── -->
 <div id="cw">
   <div id="cpanel">
     <div class="chd">
       <div class="chd-av">🤖</div>
       <div>
         <div class="chd-nm">IlmAI Tutor</div>
-        <div class="chd-st">● Online — Roman Urdu / English</div>
+        <div class="chd-st">● Online — Roman Urdu / English / 📷 Image</div>
       </div>
       <button id="ccls" onclick="toggleChat()">✕</button>
     </div>
     <div class="cmsgs" id="cmsgs">
-      <div class="cmsg a">Assalam-o-Alaikum! 👋 Main hoon tumhara AI tutor. Koi bhi sawal poochho ya apni book ki pic upload karo — bilkul free! 📚</div>
+      <div class="cmsg a">Assalam-o-Alaikum! 👋 Main hoon tumhara AI tutor.<br>📷 <strong>Nayi feature:</strong> Camera icon se textbook ki photo upload karo — main scan kar ke jawab dunga! 📚</div>
     </div>
     <div class="cft">
-      <input type="file" id="ocrInp" accept="image/*" style="display:none" onchange="handleOCR(this)">
-      <button id="cattach" onclick="document.getElementById('ocrInp').click()" title="Upload Image for OCR">📎</button>
-      
-      <textarea id="cinp" placeholder="Apna sawal likho ya image attach karo..." rows="1" onkeydown="chatKey(event)" oninput="autoH(this)"></textarea>
+      <input type="file" id="chatImgIn" accept="image/*" style="display:none" onchange="handleChatImg(event)">
+      <textarea id="cinp" placeholder="Sawal likho ya 📷 se image upload karo..." rows="1"
+        onkeydown="chatKey(event)" oninput="autoH(this)"></textarea>
+      <button id="cimg-btn" onclick="document.getElementById('chatImgIn').click()" title="Image scan karo">📷</button>
       <button id="csnd" onclick="sendChat()">↑</button>
     </div>
   </div>
@@ -564,271 +468,84 @@ body.light #hdr {background:rgba(255,255,255,.92);}
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// CURRICULUM DATA
-// ═══════════════════════════════════════════════════════════
+// ─── DATA ─────────────────────────────────────────────────────────
 const CLASSES=[
-  {id:'9', nm:'Class 9',  ds:'Matric Part I',    ic:'📐', cl:'c9',  co:'#3b82f6'},
-  {id:'10',nm:'Class 10', ds:'Matric Part II',   ic:'🔬', cl:'c10', co:'#00D4AA'},
-  {id:'11',nm:'Class 11', ds:'First Year / FSc', ic:'📚', cl:'c11', co:'#8B5CF6'},
-  {id:'12',nm:'Class 12', ds:'Second Year / FSc',ic:'🎓', cl:'c12', co:'#F5C842'},
+  {id:'9', nm:'Class 9',  ds:'Matric Part I',    ic:'📐',cl:'c9'},
+  {id:'10',nm:'Class 10', ds:'Matric Part II',   ic:'🔬',cl:'c10'},
+  {id:'11',nm:'Class 11', ds:'First Year / FSc', ic:'📚',cl:'c11'},
+  {id:'12',nm:'Class 12', ds:'Second Year / FSc',ic:'🎓',cl:'c12'},
 ];
 const BOARDS=[
-  {id:'punjab', nm:'Punjab Board',       ds:'BISE Lahore, Multan, Faisalabad, Rawalpindi etc.', fl:'🕌'},
-  {id:'fbise',  nm:'Federal Board',      ds:'FBISE — Islamabad Capital Territory',              fl:'🏛️'},
-  {id:'kpk',    nm:'KPK Board',          ds:'BISE Peshawar, Mardan, Swat, Abbottabad etc.',     fl:'🌲'},
-  {id:'sindh',  nm:'Sindh Board',        ds:'BISE Karachi, Hyderabad, Sukkur, Mirpurkhas etc.', fl:'🏜️'},
-  {id:'baloch', nm:'Balochistan Board',  ds:'BISE Quetta, Turbat, Khuzdar etc.',                fl:'⛰️'},
-  {id:'ajk',    nm:'AJK Board',          ds:'Azad Jammu & Kashmir Board of Education',          fl:'🏔️'},
+  {id:'punjab',nm:'Punjab Board',fl:'🟧'},
+  {id:'fbise', nm:'Federal Board',fl:'🇵🇰'},
+  {id:'kpk',   nm:'KPK Board',   fl:'🟩'},
+  {id:'sindh', nm:'Sindh Board', fl:'🟨'},
+  {id:'baloch',nm:'Balochistan Board',fl:'🟫'},
+  {id:'ajk',   nm:'AJK Board',   fl:'🏔️'},
 ];
 const G910=[
-  {id:'sci', nm:'Science Group',  ic:'🔬', ds:'Physics • Chemistry • Biology • Maths • Computer',
-   subs:['Physics','Chemistry','Biology','Mathematics','Computer Science','English','Urdu','Islamiat','Pak Studies']},
-  {id:'art', nm:'Arts Group',     ic:'📜', ds:'History • Geography • Pak Studies • General Math',
-   subs:['English','Urdu','Islamiat','Pak Studies','General Math','General Science','History','Geography','Education']},
-  {id:'com', nm:'Computer Group', ic:'💻', ds:'Computer • Physics • Maths • Chemistry',
-   subs:['Computer Science','Mathematics','Physics','Chemistry','English','Urdu','Islamiat','Pak Studies']},
+  {id:'sci',nm:'Science Group', ic:'🔬',subs:['Physics','Chemistry','Biology','Mathematics','Computer Science','English','Urdu','Islamiat','Pak Studies']},
+  {id:'art',nm:'Arts Group',    ic:'📜',subs:['English','Urdu','Islamiat','Pak Studies','General Math','General Science','History','Geography','Education']},
+  {id:'com',nm:'Computer Group',ic:'💻',subs:['Computer Science','Mathematics','Physics','Chemistry','English','Urdu','Islamiat','Pak Studies']},
 ];
 const G1112=[
-  {id:'premed', nm:'Pre-Medical',     ic:'🩺', ds:'Physics • Chemistry • Biology • English',
-   subs:['Physics','Chemistry','Biology','English','Urdu']},
-  {id:'preeng', nm:'Pre-Engineering', ic:'⚙️', ds:'Physics • Chemistry • Mathematics • English',
-   subs:['Physics','Chemistry','Mathematics','English','Urdu']},
-  {id:'ics',    nm:'ICS',             ic:'💻', ds:'Physics • Maths • Computer Science • English',
-   subs:['Physics','Mathematics','Computer Science','English','Urdu']},
-  {id:'icom',   nm:'ICom',            ic:'📊', ds:'Accounting • Economics • Business Math • English',
-   subs:['Accounting','Economics','Business Mathematics','English','Urdu']},
-  {id:'fa',     nm:'FA (Arts)',        ic:'📖', ds:'Urdu • English • Islamiat • Pak Studies • History',
-   subs:['Urdu','English','Islamiat','Pak Studies','Education','History']},
+  {id:'premed',nm:'Pre-Medical',    ic:'🩺',subs:['Physics','Chemistry','Biology','English','Urdu']},
+  {id:'preeng',nm:'Pre-Engineering',ic:'⚙️',subs:['Physics','Chemistry','Mathematics','English','Urdu']},
+  {id:'ics',   nm:'ICS',            ic:'💻',subs:['Physics','Mathematics','Computer Science','English','Urdu']},
+  {id:'icom',  nm:'ICom',           ic:'📊',subs:['Accounting','Economics','Business Mathematics','English','Urdu']},
+  {id:'fa',    nm:'FA (Arts)',      ic:'📖',subs:['Urdu','English','Islamiat','Pak Studies','Education','History']},
 ];
 const SMETA={
-  'Physics':           {ic:'⚡',co:'#6366f1'},
-  'Chemistry':         {ic:'🧪',co:'#00D4AA'},
-  'Biology':           {ic:'🌿',co:'#22c55e'},
-  'Mathematics':       {ic:'📐',co:'#3b82f6'},
-  'Computer Science':  {ic:'💻',co:'#8B5CF6'},
-  'English':           {ic:'📖',co:'#ec4899'},
-  'Urdu':              {ic:'📜',co:'#f59e0b'},
-  'Islamiat':          {ic:'☪️', co:'#00D4AA'},
-  'Pak Studies':       {ic:'🏔️',co:'#22c55e'},
-  'General Math':      {ic:'➗',co:'#3b82f6'},
-  'General Science':   {ic:'🔬',co:'#00D4AA'},
-  'History':           {ic:'🏛️',co:'#f59e0b'},
-  'Geography':         {ic:'🌍',co:'#22c55e'},
-  'Education':         {ic:'🎓',co:'#8B5CF6'},
-  'Accounting':        {ic:'📊',co:'#3b82f6'},
-  'Economics':         {ic:'📈',co:'#f59e0b'},
-  'Business Mathematics':{ic:'🔢',co:'#00D4AA'},
+  'Physics':{ic:'⚡'},'Chemistry':{ic:'🧪'},'Biology':{ic:'🌿'},'Mathematics':{ic:'📐'},
+  'Computer Science':{ic:'💻'},'English':{ic:'📖'},'Urdu':{ic:'📜'},'Islamiat':{ic:'☪️'},
+  'Pak Studies':{ic:'🏔️'},'General Math':{ic:'➗'},'General Science':{ic:'🔬'},
+  'History':{ic:'🏛️'},'Geography':{ic:'🌍'},'Education':{ic:'🎓'},'Accounting':{ic:'📊'},
+  'Economics':{ic:'📈'},'Business Mathematics':{ic:'🔢'},
 };
 const CH={
-  'Physics-9':['Physical Quantities and Measurement','Kinematics','Dynamics',
-    'Turning Effect of Forces','Gravitation','Work and Energy',
-    'Properties of Matter','Thermal Properties of Matter','Transfer of Heat'],
-  'Physics-10':['Simple Harmonic Motion and Waves','Sound','Geometrical Optics',
-    'Electrostatics','Current Electricity','Electromagnetism',
-    'Basic Electronics','Information and Communication Technology','Atomic and Nuclear Physics'],
-  'Physics-11':['Measurements','Scalars and Vectors','Motion and Force','Work, Energy and Power',
-    'Circular Motion','Fluid Dynamics','Oscillations','Waves','Physical Optics',
-    'Optical Instruments','Heat and Thermodynamics'],
-  'Physics-12':['Electrostatics','Current Electricity','Electromagnetism','Electromagnetic Induction',
-    'Alternating Current','Physics of Solids','Electronics',
-    'Dawn of Modern Physics','Atomic Spectra','Nuclear Physics'],
-  'Chemistry-9':['Fundamentals of Chemistry','Structure of Atoms',
-    'Periodic Table and Periodicity of Properties','Structure of Molecules',
-    'Physical States of Matter','Solutions','Electrochemistry','Chemical Reactivity'],
-  'Chemistry-10':['Chemical Equilibrium','Acids, Bases and Salts','Organic Chemistry',
-    'Hydrocarbons','Biochemistry','Atmosphere','Water','Chemical Industries in Pakistan'],
-  'Chemistry-11':['Basic Concepts','Experimental Techniques in Chemistry','Gases',
-    'Liquids and Solids','Atomic Structure','Chemical Bonding','Thermochemistry',
-    'Electrochemistry','Reaction Kinetics','Periodic Classification and Periodicity'],
-  'Chemistry-12':['Periodic Classification II','Group IA and IIA Elements','Group IIIA and IVA',
-    'Group VA, VIA and VIIA Elements','Transition Elements',
-    'Fundamental Principles of Organic Chemistry','Chemistry of Hydrocarbons',
-    'Alkyl Halides','Alcohols, Phenols and Ethers','Aldehydes and Ketones',
-    'Carboxylic Acids','Macromolecules','Common Chemical Industries in Pakistan'],
-  'Biology-9':['Introduction to Biology','Solving a Biological Problem','Biodiversity',
-    'Cells and Cell Organelles','Cell Cycle','Enzymes','Bioenergetics','Nutrition','Transport'],
-  'Biology-10':['Gaseous Exchange','Homeostasis','Coordination and Control',
-    'Support and Movement','Reproduction','Man and His Environment',
-    'Inheritance','Evolution','Biotechnology'],
-  'Biology-11':['The Cell','Biological Molecules','Enzymes','The Living World',
-    'Kingdom Prokaryotae','Kingdom Protoctista and Fungi','Kingdom Plantae',
-    'Kingdom Animalia','Nutrition','Gaseous Exchange','Transport'],
-  'Biology-12':['Homeostasis','Support and Movement','Coordination and Control',
-    'Reproduction','Inheritance','Variation and Genetics',
-    'Evolution','Ecosystem','Man and His Environment','Pharmacology'],
-  'Mathematics-9':['Matrices and Determinants','Real and Complex Numbers','Logarithms',
-    'Algebraic Expressions and Algebraic Formulas','Factorization','Algebraic Manipulation',
-    'Linear Equations and Inequalities','Linear Graphs and Their Applications',
-    'Introduction to Coordinate Geometry','Congruent Triangles','Parallelograms and Triangles',
-    'Line Bisectors and Angle Bisectors','Sides and Angles of a Triangle',
-    'Practical Geometry — Triangles'],
-  'Mathematics-10':['Quadratic Equations','Theory of Quadratic Equations','Variations',
-    'Partial Fractions','Sets and Functions','Basic Statistics',
-    'Introduction to Trigonometry','Projection of a Side of a Triangle',
-    'Chords of a Circle','Tangent to a Circle','Chords and Arcs',
-    'Angle in a Segment of a Circle','Practical Geometry — Circles'],
-  'Mathematics-11':['Number Systems','Sets, Functions and Groups','Matrices and Determinants',
-    'Quadratic Equations','Partial Fractions','Sequences and Series',
-    'Permutation, Combination and Probability','Mathematical Induction',
-    'Fundamentals of Trigonometry','Trigonometric Identities',
-    'Trigonometric Functions and Their Graphs','Application of Trigonometry',
-    'Inverse Trigonometric Functions','Solutions of Triangles'],
-  'Mathematics-12':['Functions and Limits','Differentiation','Integration',
-    'Introduction to Analytic Geometry','Linear Inequalities and Linear Programming',
-    'Conic Sections','Vectors'],
-  'Computer Science-9':['Introduction to Computer','Information Networks',
-    'Windows Operating System','Using Internet and Email',
-    'Microsoft Word — Word Processing','Microsoft Excel — Spreadsheet',
-    'Microsoft PowerPoint — Presentation','Introduction to Programming','Introduction to HTML'],
-  'Computer Science-10':['Problem Solving','Programming Logic and Algorithms',
-    'Programming in QBasic','Introduction to Databases','Database (MS Access)',
-    'Microsoft Publisher','Introduction to C++','IT Ethics and Cyber Laws','IT in Daily Life'],
-  'Computer Science-11':['Introduction to Problem Solving','Computer Programming',
-    'Basic Programming Constructs','Functions','Arrays and Strings',
-    'Introduction to OOP','File Handling','Data Structures Overview'],
-  'Computer Science-12':['Object Oriented Programming','Database Management',
-    'Web Development Basics','Networking Fundamentals',
-    'Software Engineering','Artificial Intelligence Basics',
-    'Cyber Security','ICT and Society'],
-  'English-9':['Unit 1: Good Manners','Unit 2: A Game of Polo with a Headless Goat',
-    'Unit 3: A Mild Attack of Locust','Unit 4: Media and Its Impact',
-    'Unit 5: Drug Addiction — A Serious Problem','Unit 6: Population Explosion',
-    'Unit 7: Humour — Make Them Laugh','Grammar and Writing Skills'],
-  'English-10':['Unit 1: Hazrat Muhammad (SAW) as a Diplomat','Unit 2: Clearing in the Sky',
-    'Unit 3: First Year at Harrow','Unit 4: My Financial Career',
-    'Unit 5: China\'s Way to Progress','Unit 6: The Jewel of the World',
-    'Unit 7: Three Days to See','Unit 8: I Have a Dream',
-    'Unit 9: The Piece of String','Grammar and Writing Skills'],
-  'Urdu-9':['نثر (Prose)','نظم (Poetry)','قواعد (Grammar)','تحریری مہارتیں (Writing)','خطوط','درخواستیں','مکالمہ','خلاصہ'],
-  'Urdu-10':['نثر (Prose)','نظم (Poetry)','قواعد (Grammar)','تحریری مہارتیں (Writing)','مضامین','غزل','افسانہ','خلاصہ'],
-  'Islamiat-9':['Quran Majeed and Tafseer','Hadith aur Sunnat','Seerat-un-Nabi (SAW)',
-    'Islamic Aqaid (Beliefs)','Ibadat (Worship)','Islamic Muashrat (Social Life)',
-    'Islamic Akhlaq (Ethics)','Khulfa-e-Rashideen'],
-  'Islamiat-10':['Quran Majeed (Surah and Tafseer)','Ahadith','Seerat Sahaba Karam',
-    'Islamic Principles','Ibadat aur Muamlat','Islam aur Jadid Duniya',
-    'Shan-e-Islam','Human Rights in Islam'],
-  'Pak Studies-9':['Pakistan — Land and Environment','Pakistan — History',
-    'Pakistan — Economy','Pakistan — Society and Culture',
-    'Pakistan — Government and Politics','Pakistan — Foreign Relations'],
-  'Pak Studies-10':['Quaid-e-Azam and Pakistan Movement','Liaquat Ali Khan and Early Years',
-    'Constitutional Development','Economic Development of Pakistan',
-    'Society and Culture','Pakistan in World Affairs','Natural Resources'],
-  'Accounting-11':['Introduction to Accounting','Accounting Equation','Source Documents',
-    'Journal','Ledger','Trial Balance','Bank Reconciliation','Rectification of Errors',
-    'Financial Statements — Sole Proprietorship','Depreciation'],
-  'Accounting-12':['Partnership Accounts','Company Accounts','Cash Flow Statements',
-    'Analysis of Financial Statements','Income Tax','Auditing Basics',
-    'Computerized Accounting','Cost Accounting'],
-  'Economics-11':['Introduction to Economics','Basic Economic Problems',
-    'Demand and Supply','Market Equilibrium','Theory of Consumer Behavior',
-    'Production Theory','Theory of Cost','Market Structures'],
-  'Economics-12':['National Income','Money and Banking','Public Finance',
-    'International Trade','Economic Development','Pakistan\'s Economy',
-    'Monetary Policy','Fiscal Policy'],
-  'General Math-9':['Sets','Real Numbers','Number Systems','Financial Arithmetic',
-    'Algebra','Linear Equations','Geometry — Basic Concepts','Practical Geometry',
-    'Mensuration','Statistics'],
-  'General Math-10':['Algebra — Quadratics','Matrices','Introduction to Trigonometry',
-    'Circle Geometry','Coordinate Geometry','Statistics and Probability',
-    'Mensuration','Financial Mathematics'],
-  'History-9':['Ancient Civilizations of Pakistan','Mauryan and Gupta Empires',
-    'Arab Conquest of Sind','Delhi Sultanate','Mughal Empire — Rise',
-    'Mughal Empire — Fall'],
-  'History-10':['Decline of Mughals','British Rule in the Subcontinent',
-    'War of Independence 1857','Aligarh Movement','Khilafat Movement',
-    'Pakistan Movement','Creation of Pakistan'],
-  'Geography-9':['Pakistan — Physical Features','Rivers and Irrigation','Climate of Pakistan',
-    'Natural Vegetation and Wildlife','Population of Pakistan',
-    'Agriculture','Minerals and Energy Resources'],
-  'Geography-10':['Industries of Pakistan','Transport and Communication',
-    'Trade and Commerce','Environmental Issues','Map Reading',
-    'World Geography — Overview','South Asia'],
+  'Islamiat-9':['Chapter 1: Quran Majeed','Chapter 2: Hadith aur Sunnat','Chapter 3: Seerat-un-Nabi','Chapter 4: Islamic Aqaid','Chapter 5: Ibadat','Chapter 6: Islamic Muashrat'],
+  'Islamiat-10':['Chapter 1: Quran Majeed (Surah)','Chapter 2: Ahadith','Chapter 3: Seerat Sahaba','Chapter 4: Islamic Principles','Chapter 5: Ibadat aur Muamlat','Chapter 6: Islam aur Jadid Duniya'],
 };
 const MODES=[
-  {id:'mcq',    em:'🎯', nm:'MCQ Practice',      ds:'AI-generated MCQs with instant feedback aur explanations',      bx:'Most Popular', mc:'rgba(0,212,170,.18)'},
-  {id:'short',  em:'✍️', nm:'Short Questions',   ds:'Short answers likho — AI check kare aur marks de',             bx:'AI Checked',   mc:'rgba(139,92,246,.18)'},
-  {id:'long',   em:'📝', nm:'Long Questions',    ds:'Detailed answers — AI detailed feedback aur evaluation de',     bx:'Board Pattern', mc:'rgba(245,200,66,.14)'},
-  {id:'summary',em:'🧠', nm:'AI Summary',      ds:'Chapter ka smart summary — key points, formulas, exam tips',   bx:'Smart Revision', mc:'rgba(236,72,153,.14)'},
-  {id:'guess',  em:'🎰', nm:'AI Guess Paper',    ds:'Board exam ke liye likely questions AI generate kare',         bx:'Exam Prep',    mc:'rgba(59,130,246,.14)'},
-  {id:'notes',  em:'📚', nm:'Notes & Books',     ds:'Free notes, textbooks aur reference material download karo',   bx:'Free PDF',     mc:'rgba(0,212,170,.12)'},
-  {id:'papers', em:'📄', nm:'Past Papers',       ds:'Previous years ke board papers — practice karo',               bx:'Board Exam',   mc:'rgba(239,68,68,.12)'},
+  {id:'mcq',  em:'🎯',nm:'MCQ Practice',    bx:'Most Popular',mc:'rgba(0,212,170,.18)'},
+  {id:'short',em:'✍️', nm:'Short Questions', bx:'AI Checked',  mc:'rgba(139,92,246,.18)'},
+  {id:'long', em:'📝',nm:'Long Questions',  bx:'Board Pattern',mc:'rgba(245,200,66,.14)'},
+  {id:'summary',em:'🧠',nm:'AI Summary',    bx:'Smart Revision',mc:'rgba(236,72,153,.14)'},
+  {id:'guess',em:'🎰',nm:'AI Guess Paper',  bx:'Exam Prep',   mc:'rgba(59,130,246,.14)'},
+  {id:'scan', em:'📷',nm:'Image Scanner',   bx:'OCR + AI',    mc:'rgba(0,212,170,.14)'},
+  {id:'notes',em:'📚',nm:'Notes & Books',   bx:'Free PDF',    mc:'rgba(0,212,170,.12)'},
+  {id:'papers',em:'📄',nm:'Past Papers',    bx:'Board Exam',  mc:'rgba(239,68,68,.12)'},
 ];
 
-// ═══════════════════════════════════════════════════════════
-// STATE & SOUND
-// ═══════════════════════════════════════════════════════════
+// ─── STATE ────────────────────────────────────────────────────────
 const S={
-  cls:null, brd:null, grp:null, sub:null, ch:null,
-  mcq:{cnt:10,dif:'medium',tmr:15}, // Update: default 15s
+  cls:null,brd:null,grp:null,sub:null,ch:null,mode:null,
+  mcq:{cnt:10,dif:'medium',tmr:60},
   qzData:[],qzIdx:0,qzAns:[],qzInterval:null,
   qaType:'short',qaData:[],qaIdx:0,qaEvals:[],
   chatH:[],chatOpen:false,
-  prog:{streak:0,xp:0,lastDate:null,totalMCQ:0,correctMCQ:0},
+  prog:{streak:0,xp:0,lastDate:null},
 };
-
-// Update: Beep Sound API for Correct/Wrong answers
-function playBeep(isCorrect) {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gainNode = ctx.createGain();
-    
-    osc.connect(gainNode);
-    gainNode.connect(ctx.destination);
-    
-    if(isCorrect) {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(800, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.1);
-        gainNode.gain.setValueAtTime(0.5, ctx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-    } else {
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(300, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.2);
-        gainNode.gain.setValueAtTime(0.5, ctx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
-    }
-    osc.start();
-    osc.stop(ctx.currentTime + 0.5);
-}
-
 try{
-  const sv=JSON.parse(localStorage.getItem('ilmai_v2')||'{}');
+  const sv=JSON.parse(localStorage.getItem('ilmai_v3')||'{}');
   if(sv.prog) S.prog={...S.prog,...sv.prog};
   updateStreak();
 }catch(e){}
-
-function save(){ localStorage.setItem('ilmai_v2',JSON.stringify({prog:S.prog})); }
-
+function save(){localStorage.setItem('ilmai_v3',JSON.stringify({prog:S.prog}));}
 function updateStreak(){
   const today=new Date().toDateString();
   if(S.prog.lastDate===today) return;
-  if(S.prog.lastDate){
-    const d=(Date.now()-new Date(S.prog.lastDate))/86400000;
-    S.prog.streak=d<2?S.prog.streak+1:1;
-  }else S.prog.streak=1;
-  S.prog.lastDate=today;
-  save();
+  if(S.prog.lastDate){const d=(Date.now()-new Date(S.prog.lastDate))/86400000;S.prog.streak=d<2?S.prog.streak+1:1;}
+  else S.prog.streak=1;
+  S.prog.lastDate=today;save();
 }
-
-// ═══════════════════════════════════════════════════════════
-// SCREEN MANAGEMENT
-// ═══════════════════════════════════════════════════════════
 function show(id){
   document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
   const el=document.getElementById('sc-'+id);
-  if(el){el.classList.add('on');}
+  if(el) el.classList.add('on');
   window.scrollTo({top:0,behavior:'instant'});
   updateHdr(id);
-
-  const hideScreens = ['mcq-quiz', 'short', 'long'];
-  const cw = document.getElementById('cw');
-  if(cw) {
-    cw.style.display = hideScreens.includes(id) ? 'none' : 'block';
-  }
 }
-
 function updateHdr(id){
   const parts=[];
   if(S.cls) parts.push({l:`Class ${S.cls}`,s:'board'});
@@ -845,281 +562,308 @@ function updateHdr(id){
   document.getElementById('stk').textContent=`🔥 ${S.prog.streak}`;
   document.getElementById('xps').textContent=`⭐ ${S.prog.xp} XP`;
 }
-
-function getGrpNm(){ return [...G910,...G1112].find(g=>g.id===S.grp)?.nm||S.grp; }
-function getGrpSubs(){ return [...G910,...G1112].find(g=>g.id===S.grp)?.subs||[]; }
+function getGrpNm(){return [...G910,...G1112].find(g=>g.id===S.grp)?.nm||S.grp;}
+function getGrpSubs(){return [...G910,...G1112].find(g=>g.id===S.grp)?.subs||[];}
 function getChNm(){
   if(!S.ch||S.ch==='all') return 'Full Book';
   const k=`${S.sub}-${S.cls}`;
   const chs=CH[k];
   return chs?`Ch.${S.ch}: ${chs[S.ch-1]||''}`:`Chapter ${S.ch}`;
 }
-
-function goHome(){
-  S.cls=S.brd=S.grp=S.sub=S.ch=null;
-  show('landing');
-}
-
+function goHome(){S.cls=S.brd=S.grp=S.sub=S.ch=null;show('landing');}
 function addXP(n){
-  S.prog.xp+=n; save();
+  S.prog.xp+=n;save();
   document.getElementById('xps').textContent=`⭐ ${S.prog.xp} XP`;
-  const p=document.createElement('div');
-  p.className='xppop';
-  p.textContent=`+${n} XP! ⭐`;
-  document.body.appendChild(p);
-  setTimeout(()=>p.remove(),2200);
+  const p=document.createElement('div');p.className='xppop';p.textContent=`+${n} XP! ⭐`;
+  document.body.appendChild(p);setTimeout(()=>p.remove(),2200);
 }
 
-// ═══════════════════════════════════════════════════════════
-// RENDERS (Landing -> Mode)
-// ═══════════════════════════════════════════════════════════
+// ─── LANDING ──────────────────────────────────────────────────────
 function renderLanding(){
   document.getElementById('clsGrid').innerHTML=CLASSES.map(c=>
-    `<div class="clc ${c.cl}" onclick="selCls('${c.id}')">
-      <span class="clc-ic">${c.ic}</span>
-      <div class="clc-nm">${c.nm}</div>
-      <div class="clc-ds">${c.ds}</div>
-    </div>`
+    `<div class="clc ${c.cl}" onclick="selCls('${c.id}')"><span class="clc-ic">${c.ic}</span><div class="clc-nm">${c.nm}</div><div class="clc-ds">${c.ds}</div></div>`
   ).join('');
 }
-function selCls(id){ S.cls=id; renderBoards(); show('board'); }
-
+function selCls(id){S.cls=id;renderBoards();show('board');}
 function renderBoards(){
   document.getElementById('brdGrid').innerHTML=BOARDS.map(b=>
-    `<div class="brd-c" onclick="selBrd('${b.id}')">
-      <span style="font-size:30px">${b.fl}</span>
-      <div class="brd-inf"><h3>${b.nm}</h3><p>${b.ds}</p></div>
-      <span style="margin-left:auto;color:var(--t3)">›</span>
-    </div>`
+    `<div class="brd-c" onclick="selBrd('${b.id}')"><span style="font-size:30px">${b.fl}</span><div class="brd-inf"><h3>${b.nm}</h3><p>BISE Pakistan</p></div><span style="margin-left:auto;color:var(--t3)">›</span></div>`
   ).join('');
 }
-function selBrd(id){ S.brd=id; renderGroups(); show('group'); }
-
+function selBrd(id){S.brd=id;renderGroups();show('group');}
 function renderGroups(){
   const isM=['9','10'].includes(S.cls);
   const gs=isM?G910:G1112;
   document.getElementById('grpSub').textContent=isM?`Class ${S.cls} — group chunao`:`Intermediate — program chunao`;
   document.getElementById('grpGrid').innerHTML=gs.map(g=>
-    `<div class="grp-c" onclick="selGrp('${g.id}')">
-      <div class="grp-ic">${g.ic}</div>
-      <div class="grp-nm">${g.nm}</div>
-      <div class="grp-ds">${g.ds}</div>
-    </div>`
+    `<div class="grp-c" onclick="selGrp('${g.id}')"><div class="grp-ic">${g.ic}</div><div class="grp-nm">${g.nm}</div><div class="grp-ds">${g.subs.join(' • ')}</div></div>`
   ).join('');
 }
-function selGrp(id){ S.grp=id; renderSubjects(); show('subject'); }
-
+function selGrp(id){S.grp=id;renderSubjects();show('subject');}
 function renderSubjects(){
   document.getElementById('subSub').textContent=`Class ${S.cls} | ${getGrpNm()}`;
-  const subs=getGrpSubs();
-  document.getElementById('subGrid').innerHTML=subs.map(s=>{
-    const m=SMETA[s]||{ic:'📚',co:'#64748b'};
-    const k=`${s}-${S.cls}`;
-    const chCnt=CH[k]?CH[k].length:'?';
-    return `<div class="sub-c" onclick="selSub('${s}')" style="--ac:${m.co}1a;--ab:${m.co}55">
-      <div class="sub-ic">${m.ic}</div>
-      <div class="sub-nm">${s}</div>
-      <div class="sub-ch">${chCnt} Chapters</div>
-    </div>`;
+  document.getElementById('subGrid').innerHTML=getGrpSubs().map(s=>{
+    const m=SMETA[s]||{ic:'📚'};
+    return `<div class="sub-c" onclick="selSub('${s}')" style="--ac:#00D4AA1a;--ab:#00D4AA55"><div class="sub-ic">${m.ic}</div><div class="sub-nm">${s}</div></div>`;
   }).join('');
 }
-function selSub(s){ S.sub=s; renderChapters(); show('chapter'); }
-
+function selSub(s){S.sub=s;renderChapters();show('chapter');}
 function renderChapters(){
   const m=SMETA[S.sub]||{ic:'📚'};
   document.getElementById('chTit').innerHTML=`${m.ic} ${S.sub} — Class ${S.cls}`;
-  document.getElementById('chSub').textContent=`${S.cls} ${(BOARDS.find(b=>b.id===S.brd)?.nm||'Board')} | ${getGrpNm()}`;
-  const k=`${S.sub}-${S.cls}`;
-  const chs=CH[k];
+  document.getElementById('chSub').textContent=`${S.cls} ${BOARDS.find(b=>b.id===S.brd)?.nm||'Board'} | ${getGrpNm()}`;
+  const k=`${S.sub}-${S.cls}`;const chs=CH[k];
   const cont=document.getElementById('chCont');
   const fullBook=`<div class="ch-it" onclick="selCh('all')" style="border-color:var(--p);background:var(--pd);margin-bottom:10px">
     <div class="ch-num" style="background:var(--p);color:#000;border:none;font-size:18px">📖</div>
     <div class="ch-inf"><h4>Full Book Practice</h4><p>Saare chapters se AI questions</p></div>
-    <span class="ch-ar" style="color:var(--p)">›</span>
-  </div>`;
-  if(!chs){
-    cont.innerHTML=fullBook+`<p style="text-align:center;color:var(--t2);padding:24px;font-size:14px">✦ Specific chapters jald aa rahay hain! Abhi Full Book practice karo.</p>`;
-    return;
-  }
+    <span class="ch-ar" style="color:var(--p)">›</span></div>`;
+  if(!chs){cont.innerHTML=fullBook+`<p style="text-align:center;color:var(--t2);padding:24px;font-size:14px">✦ Specific chapters jald aa rahay hain!</p>`;return;}
   cont.innerHTML=`<div class="ch-list">${fullBook}${chs.map((ch,i)=>
-    `<div class="ch-it" onclick="selCh(${i+1})">
-      <div class="ch-num">${i+1}</div>
-      <div class="ch-inf"><h4>${ch}</h4><p>Chapter ${i+1}</p></div>
-      <span class="ch-ar">›</span>
-    </div>`
+    `<div class="ch-it" onclick="selCh(${i+1})"><div class="ch-num">${i+1}</div><div class="ch-inf"><h4>${ch}</h4><p>Chapter ${i+1}</p></div><span class="ch-ar">›</span></div>`
   ).join('')}</div>`;
 }
-function selCh(ch){ S.ch=ch; renderModes(); show('mode'); }
-
+function selCh(ch){S.ch=ch;renderModes();show('mode');}
 function renderModes(){
   const m=SMETA[S.sub]||{ic:'📚'};
   document.getElementById('modTit').innerHTML=`${m.ic} ${S.sub} — ${getChNm()}`;
   document.getElementById('modGrid').innerHTML=MODES.map(m=>
-    `<div class="mode-c" onclick="selMode('${m.id}')" style="--mc1:${m.mc}">
-      <div class="mode-em">${m.em}</div>
-      <div class="mode-nm">${m.nm}</div>
-      <div class="mode-ds">${m.ds}</div>
-      <div class="mode-bx">${m.bx}</div>
-    </div>`
+    `<div class="mode-c" onclick="selMode('${m.id}')" style="--mc1:${m.mc}"><div class="mode-em">${m.em}</div><div class="mode-nm">${m.nm}</div><div class="mode-bx">${m.bx}</div></div>`
   ).join('');
 }
-
 function selMode(id){
   S.mode=id;
-  if(id==='mcq')     show('mcq-set');
+  if(id==='mcq') show('mcq-set');
   else if(id==='short') startQA('short');
   else if(id==='long')  startQA('long');
   else if(id==='summary') startSummary();
-  else if(id==='guess')   startGuess();
-  else if(id==='notes')   {renderNotes();show('notes');}
-  else if(id==='papers')  {renderPapers();show('papers');}
+  else if(id==='guess') startGuess();
+  else if(id==='scan')  {renderScanPage();show('scan');}
+  else if(id==='notes') {renderNotes();show('notes');}
+  else if(id==='papers'){renderPapers();show('papers');}
 }
 
+// ─── MCQ ──────────────────────────────────────────────────────────
 function setOpt(tp,val,btn){
   const map={cnt:'cntG',dif:'difG',tmr:'tmrG'};
   document.querySelectorAll(`#${map[tp]} .tb`).forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
-  if(tp==='cnt') S.mcq.cnt=val;
-  else if(tp==='dif') S.mcq.dif=val;
-  else if(tp==='tmr') S.mcq.tmr=val;
+  S.mcq[tp]=val;
 }
 
-// ═══════════════════════════════════════════════════════════
-// MCQ QUIZ
-// ═══════════════════════════════════════════════════════════
+// ── WORKER URL ── ✅ FIXED
+const WORKER_URL='https://check-ai.noorhusnain791.workers.dev';
+
+// ── AI helper ──────────────────────────────────────────────────────
+async function ai(prompt,maxT=1000){
+  const res=await fetch(WORKER_URL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'llama-3.1-70b-versatile',messages:[{role:'user',content:prompt}],max_tokens:maxT})
+  });
+  if(!res.ok){const t=await res.text();throw new Error(`Worker ${res.status}: ${t}`);}
+  const d=await res.json();
+  if(!d.content?.[0]?.text) throw new Error('Invalid response: '+JSON.stringify(d));
+  return d.content[0].text;
+}
+
+// ── OCR helper ──────────────────────────────────────────────────────
+async function compressImg(file){
+  return new Promise(res=>{
+    const img=new Image();
+    const url=URL.createObjectURL(file);
+    img.onload=()=>{
+      const MAX=1400;
+      const r=Math.min(MAX/Math.max(img.width,img.height),1);
+      const c=document.createElement('canvas');
+      c.width=Math.round(img.width*r);
+      c.height=Math.round(img.height*r);
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      c.toBlob(blob=>{
+        URL.revokeObjectURL(url);
+        const rd=new FileReader();
+        rd.onload=()=>res({base64:rd.result.split(',')[1],mimeType:'image/jpeg',size:blob.size});
+        rd.readAsDataURL(blob);
+      },'image/jpeg',0.85);
+    };
+    img.onerror=()=>{URL.revokeObjectURL(url);res(null);};
+    img.src=url;
+  });
+}
+
+async function ocrFile(file){
+  const comp=await compressImg(file);
+  if(!comp) throw new Error('Image compress nahi hua');
+  if(comp.size>4*1024*1024) throw new Error('Image bari hai — 4MB se choti honi chahiye');
+  const res=await fetch(WORKER_URL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({action:'ocr',imageBase64:comp.base64,mimeType:comp.mimeType})
+  });
+  if(!res.ok){const t=await res.text();throw new Error(`OCR error ${res.status}: ${t}`);}
+  const d=await res.json();
+  if(d.error) throw new Error(d.error);
+  return d.text||'';
+}
+
+function extractJ(txt){
+  let c=txt.replace(/```json\s*/gi,'').replace(/```\s*/g,'').trim();
+  const am=c.match(/\[[\s\S]*\]/);const om=c.match(/\{[\s\S]*\}/);
+  return am?am[0]:om?om[0]:c;
+}
+function loadHTML(t,s=''){
+  return `<div class="ld"><div class="ldspin"></div><div><div class="ld-t">${t}</div>${s?`<div class="ld-s">${s}</div>`:''}</div></div>`;
+}
+function errHTML(msg,fn=''){
+  return `<div class="err"><div class="err-ic">😕</div><h3>Oops!</h3><p>${msg}</p>${fn?`<button class="btn btn-p" style="margin-top:18px" onclick="${fn}()">🔄 Dobara Try Karo</button>`:''}</div>`;
+}
+
+// ─── IMAGE SCAN MODE (sc-scan) ────────────────────────────────────
+function renderScanPage(){
+  const m=SMETA[S.sub]||{ic:'📷'};
+  document.getElementById('scanTit').textContent=`📷 ${S.sub} — Image Scanner`;
+  document.getElementById('scanResult').innerHTML='';
+}
+function scanDrag(e,on){e.preventDefault();document.getElementById('scanDrop').classList.toggle('drag',on);}
+function scanDropFile(e){
+  e.preventDefault();
+  document.getElementById('scanDrop').classList.remove('drag');
+  const f=e.dataTransfer.files[0];
+  if(f&&f.type.startsWith('image/')) processScanFile(f);
+}
+function handleScanFile(e){const f=e.target.files[0];if(f) processScanFile(f);}
+
+async function processScanFile(file){
+  const res=document.getElementById('scanResult');
+  res.innerHTML=loadHTML('📷 Image scan ho rahi hai...','OCR engine text extract kar raha hai');
+  try{
+    const text=await ocrFile(file);
+    if(!text||text.length<10){
+      res.innerHTML=errHTML('Image mein clear text nahi mila. Saaf photo lo aur dobara try karo.');
+      return;
+    }
+    const imgUrl=URL.createObjectURL(file);
+    res.innerHTML=`
+    <div class="scan-result">
+      <img src="${imgUrl}" style="width:100%;max-height:200px;object-fit:contain;border-radius:10px;margin-bottom:16px;border:1px solid var(--b)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span style="font-size:13px;font-weight:700;color:var(--p)">📝 Scanned Text (${text.split(/\s+/).filter(Boolean).length} words)</span>
+        <button class="btn btn-s" style="padding:6px 14px;font-size:13px" onclick="navigator.clipboard.writeText(document.getElementById('scannedTxt').value)">📋 Copy</button>
+      </div>
+      <textarea id="scannedTxt" class="ocr-text-box" style="height:160px">${text}</textarea>
+      <div style="margin-top:16px">
+        <div style="font-size:13px;font-weight:700;color:var(--t2);margin-bottom:10px">Is text se kya karna chahte ho?</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-p" onclick="scanAI('mcq')">🎯 MCQs Banao</button>
+          <button class="btn btn-s" onclick="scanAI('summary')">🧠 Summary</button>
+          <button class="btn btn-s" onclick="scanAI('short')">✍️ Short Questions</button>
+          <button class="btn btn-g" onclick="renderScanPage()">🔄 Nai Image</button>
+        </div>
+      </div>
+      <div id="scanAiRes" style="margin-top:20px"></div>
+    </div>`;
+  }catch(e){
+    res.innerHTML=errHTML('Scan fail: '+e.message);
+  }
+}
+
+async function scanAI(type){
+  const text=document.getElementById('scannedTxt')?.value;
+  if(!text){return;}
+  const aiRes=document.getElementById('scanAiRes');
+  aiRes.innerHTML=loadHTML('AI process kar raha hai...','Thora intezaar karo');
+  let prompt='';
+  if(type==='mcq')
+    prompt=`From this text extracted from a Pakistan ${S.cls} class ${S.sub} textbook, generate 5 MCQs. Return ONLY JSON: [{"q":"...","opts":["A","B","C","D"],"correct":0,"exp":"..."}]\n\nText:\n${text.substring(0,2000)}`;
+  else if(type==='summary')
+    prompt=`Create a concise study summary from this Pakistan ${S.cls} class ${S.sub} textbook text. Return JSON: {"overview":"...","keyTopics":[{"topic":"...","desc":"..."}],"formulas":["..."],"memorize":["..."]}\n\nText:\n${text.substring(0,2000)}`;
+  else if(type==='short')
+    prompt=`From this text, generate 4 important short questions (board exam style) for Pakistan Class ${S.cls} ${S.sub}. Return JSON: [{"q":"...","keyPoints":["..."],"marks":2}]\n\nText:\n${text.substring(0,2000)}`;
+  try{
+    const resp=await ai(prompt,1500);
+    const d=JSON.parse(extractJ(resp));
+    if(type==='mcq'){S.qzData=d;S.qzIdx=0;S.qzAns=new Array(d.length).fill(null);show('mcq-quiz');renderQ();}
+    else if(type==='summary') renderSummaryDirect(d,aiRes);
+    else{S.qaData=d;S.qaType='short';S.qaIdx=0;S.qaEvals=new Array(d.length).fill(null);show('short');renderQA();}
+  }catch(e){
+    aiRes.innerHTML=errHTML('AI response mein masla: '+e.message);
+  }
+}
+
+function renderSummaryDirect(d,el){
+  el.innerHTML=`
+  <div class="sumb"><h3>📋 Overview</h3><p style="font-size:14px;line-height:1.7;color:var(--t2)">${d.overview}</p></div>
+  ${d.keyTopics?.length?`<div class="sumb"><h3>🎯 Key Topics</h3><ul class="suml">${d.keyTopics.map(t=>`<li><strong>${t.topic}:</strong> ${t.desc}</li>`).join('')}</ul></div>`:''}
+  ${d.formulas?.length?`<div class="sumb"><h3>🔢 Formulas</h3><ul class="suml">${d.formulas.map(f=>`<li class="fm">${f}</li>`).join('')}</ul></div>`:''}
+  ${d.memorize?.length?`<div class="sumb"><h3>🧠 Yaad Rakho</h3><ul class="suml">${d.memorize.map(m=>`<li>⭐ ${m}</li>`).join('')}</ul></div>`:''}`;
+  addXP(20);
+}
+
+// ─── MCQ QUIZ ─────────────────────────────────────────────────────
 async function startMCQ(){
   show('mcq-quiz');
-  document.getElementById('qzCont').innerHTML=loadHTML('MCQs generate ho rahe hain...','AI Pakistan curriculum se '+(S.mcq.cnt)+' questions bana raha hai');
-  const chNm=getChNm();
-  const brdNm=BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab';
-  const prompt=`You are an expert Pakistani curriculum teacher. Generate exactly ${S.mcq.cnt} MCQs for:
-Class: ${S.cls} | Board: Pakistan ${brdNm} | Subject: ${S.sub}
-Chapter/Topic: ${chNm} | Difficulty: ${S.mcq.dif}
-
-Pakistan board exam pattern. Difficulty: easy=recall/definition, medium=application, hard=analysis/problem-solving, mixed=all.
-Ensure questions are relevant to ${S.cls}th class level Pakistan curriculum 2024-25.
-
-CRITICAL: Return ONLY a valid JSON array.
-Do not include markdown, backticks, or any other text.
-[{"q":"question text","opts":["option A","option B","option C","option D"],"correct":0,"exp":"1-2 line explanation"}]
-correct is 0-indexed (0=A,1=B,2=C,3=D).`;
+  document.getElementById('qzCont').innerHTML=loadHTML('MCQs generate ho rahe hain...','AI Pakistan curriculum se questions bana raha hai');
+  const prompt=`Generate exactly ${S.mcq.cnt} MCQs for Class ${S.cls}, ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} Board, Subject ${S.sub}, Chapter ${getChNm()}. Difficulty: ${S.mcq.dif}. Return ONLY JSON: [{"q":"question","opts":["A","B","C","D"],"correct":0,"exp":"explanation"}]`;
   try{
     const txt=await ai(prompt,Math.min(4000,S.mcq.cnt*120));
     S.qzData=JSON.parse(extractJ(txt));
-    if(!Array.isArray(S.qzData)||S.qzData.length===0) throw new Error('Bad data');
-    S.qzIdx=0;
-    S.qzAns=new Array(S.qzData.length).fill(null);
+    if(!Array.isArray(S.qzData)||!S.qzData.length) throw new Error('Bad data');
+    S.qzIdx=0;S.qzAns=new Array(S.qzData.length).fill(null);
     renderQ();
-  }catch(e){
-    document.getElementById('qzCont').innerHTML=errHTML('MCQs load nahi ho sake',startMCQ);
-  }
+  }catch(e){document.getElementById('qzCont').innerHTML=errHTML('MCQs load nahi ho sake: '+e.message,'startMCQ');}
 }
 
 function renderQ(){
   if(S.qzIdx>=S.qzData.length){renderResults();return;}
-  const q=S.qzData[S.qzIdx];
-  const tot=S.qzData.length;
-  const cur=S.qzIdx+1;
-  const pct=((S.qzIdx/tot)*100).toFixed(1);
+  const q=S.qzData[S.qzIdx];const tot=S.qzData.length;const cur=S.qzIdx+1;
   const L=['A','B','C','D'];
   document.getElementById('qzCont').innerHTML=`
   <div class="qhdr">
-    <div>
-      <div style="font-size:13px;color:var(--t2)">Question</div>
-      <div style="font-size:22px;font-weight:800">${cur}<span style="font-size:15px;color:var(--t2)"> / ${tot}</span></div>
-    </div>
+    <div><div style="font-size:13px;color:var(--t2)">Question</div><div style="font-size:22px;font-weight:800">${cur}<span style="font-size:15px;color:var(--t2)"> / ${tot}</span></div></div>
     <div style="display:flex;gap:10px;align-items:center">
       ${S.mcq.tmr?`<div class="qtimer" id="qtmr">⏱ <span id="tmrN">${S.mcq.tmr}</span>s</div>`:''}
       <span class="tag t-tl">${S.mcq.dif}</span>
     </div>
   </div>
-  <div class="qrail"><div class="qrfill" id="qrf" style="width:${pct}%"></div></div>
+  <div class="qrail"><div class="qrfill" style="width:${((S.qzIdx/tot)*100).toFixed(1)}%"></div></div>
   <div class="qq"><span style="color:var(--t3);font-size:14px">Q${cur}. </span>${q.q}</div>
-  <div class="qopts" id="qopts">
-    ${q.opts.map((o,i)=>`<button class="qopt" id="op${i}" onclick="ansQ(${i})">
-      <div class="qltr">${L[i]}</div>
-      <div class="qtxt">${o}</div>
-    </button>`).join('')}
-  </div>
+  <div class="qopts">${q.opts.map((o,i)=>`<button class="qopt" id="op${i}" onclick="ansQ(${i})"><div class="qltr">${L[i]}</div><div class="qtxt">${o}</div></button>`).join('')}</div>
   <div id="qexp"></div>
-  <div class="qnav" id="qnav" style="display:none">
-    <div></div>
-    <button class="btn btn-p" onclick="nextQ()" style="display:none">${S.qzIdx+1<tot?'Agla Sawal →':'🏆 Results Dekho'}</button>
-  </div>`;
+  <div class="qnav" id="qnav" style="display:none"><div></div><button class="btn btn-p" onclick="nextQ()">${cur<tot?'Agla Sawal →':'🏆 Results Dekho'}</button></div>`;
   if(S.mcq.tmr>0) runTimer();
 }
-
 function runTimer(){
-  let rem=S.mcq.tmr;
-  if(S.qzInterval) clearInterval(S.qzInterval);
-  S.qzInterval=setInterval(()=>{
-    rem--;
-    const el=document.getElementById('tmrN');
-    const te=document.getElementById('qtmr');
-    if(el) el.textContent=rem;
-    if(rem<=3&&te) te.classList.add('warn');
-    if(rem<=0){
-      clearInterval(S.qzInterval);
-      playBeep(false); // Update: Wrong sound on timeout
-      ansQ(-1);
-    }
+  let rem=S.mcq.tmr;if(S.qzInterval) clearInterval(S.qzInterval);
+  S.qzInterval=setInterval(()=>{rem--;
+    const el=document.getElementById('tmrN');const te=document.getElementById('qtmr');
+    if(el) el.textContent=rem;if(rem<=10&&te) te.classList.add('warn');
+    if(rem<=0){clearInterval(S.qzInterval);ansQ(-1);}
   },1000);
 }
-
 function ansQ(sel){
   if(S.qzInterval){clearInterval(S.qzInterval);S.qzInterval=null;}
-  const q=S.qzData[S.qzIdx];
-  const cor=q.correct;
-  S.qzAns[S.qzIdx]=sel;
-  
-  const ok=sel===cor;
-  if(sel !== -1) playBeep(ok); // Update: Sahi ya Galat ki awaaz
-  
-  document.querySelectorAll('.qopt').forEach(o=>{o.classList.add('dis');});
-  if(sel>=0) document.getElementById(`op${sel}`)?.classList.add(ok?'cor':'wrg');
-  document.getElementById(`op${cor}`)?.classList.add('cor');
-  
-  if(ok) addXP(10);
+  const q=S.qzData[S.qzIdx];const cor=q.correct;S.qzAns[S.qzIdx]=sel;
   const L=['A','B','C','D'];
-  document.getElementById('qexp').innerHTML=`<div class="qexp">
-    ${ok?'✅':(sel===-1?'⏰':'❌')} <strong>${ok?'Bilkul Sahi!':(sel===-1?'Waqt khatam!':'Ghalat!')}</strong>
-    ${sel>=0&&!ok?` Sahi jawab: <strong style="color:var(--ok)">${L[cor]}. ${q.opts[cor]}</strong> — `:''}
-    ${q.exp}
-  </div>`;
-  
-  setTimeout(()=>{
-    if(S.qzIdx+1 < S.qzData.length){
-      nextQ();
-    } else {
-      renderResults();
-    }
-  }, ok ? 1000 : 2000);
+  document.querySelectorAll('.qopt').forEach(o=>o.classList.add('dis'));
+  if(sel>=0) document.getElementById(`op${sel}`)?.classList.add(sel===cor?'cor':'wrg');
+  document.getElementById(`op${cor}`)?.classList.add('cor');
+  const ok=sel===cor;if(ok) addXP(10);
+  document.getElementById('qexp').innerHTML=`<div class="qexp">${ok?'✅':(sel===-1?'⏰':'❌')} <strong>${ok?'Bilkul Sahi!':(sel===-1?'Waqt khatam!':'Ghalat!')}</strong>${sel>=0&&!ok?` Sahi: <strong style="color:var(--ok)">${L[cor]}. ${q.opts[cor]}</strong> — `:''}${q.exp}</div>`;
+  document.getElementById('qnav').style.display='flex';
 }
-
-function nextQ(){ S.qzIdx++; renderQ(); }
-
+function nextQ(){S.qzIdx++;renderQ();}
 function renderResults(){
-  let cor=0;
-  S.qzAns.forEach((a,i)=>{if(a===S.qzData[i].correct)cor++;});
-  const tot=S.qzData.length;
-  const pct=Math.round((cor/tot)*100);
+  let cor=0;S.qzAns.forEach((a,i)=>{if(a===S.qzData[i].correct)cor++;});
+  const tot=S.qzData.length;const pct=Math.round((cor/tot)*100);
   let grade,gc;
-  if(pct>=90){grade='A+';gc='var(--p)'}
-  else if(pct>=80){grade='A';gc='var(--p)'}
-  else if(pct>=70){grade='B+';gc='var(--s)'}
-  else if(pct>=60){grade='B';gc='var(--s)'}
-  else if(pct>=50){grade='C';gc='var(--g)'}
-  else{grade='F';gc='var(--r)'}
-  S.prog.totalMCQ+=tot;
-  S.prog.correctMCQ+=cor; save();
+  if(pct>=90){grade='A+';gc='var(--p)'}else if(pct>=80){grade='A';gc='var(--p)'}
+  else if(pct>=70){grade='B+';gc='var(--s)'}else if(pct>=60){grade='B';gc='var(--s)'}
+  else if(pct>=50){grade='C';gc='var(--g)'}else{grade='F';gc='var(--r)'}
   const xpE=cor*10+Math.floor(pct/10)*5;
   document.getElementById('resCont').innerHTML=`
-  <div class="res-hero">
-    <div class="res-sc">${pct}%</div>
-    <div class="res-lb">${cor} out of ${tot} correct</div>
+  <div class="res-hero"><div class="res-sc">${pct}%</div><div class="res-lb">${cor} out of ${tot} correct</div>
     <div class="res-gr" style="background:${gc}22;color:${gc};border:1.5px solid ${gc}55">Grade: ${grade}</div>
-    <div style="margin-top:12px;font-size:14px;color:var(--t2)">+${xpE} XP earned! 🎉</div>
-  </div>
+    <div style="margin-top:12px;font-size:14px;color:var(--t2)">+${xpE} XP earned! 🎉</div></div>
   <div class="res-stats">
     <div class="rs"><div class="rs-n" style="color:var(--ok)">${cor}</div><div class="rs-l">✅ Sahi</div></div>
     <div class="rs"><div class="rs-n" style="color:var(--r)">${tot-cor}</div><div class="rs-l">❌ Ghalat</div></div>
@@ -1127,96 +871,44 @@ function renderResults(){
   </div>
   <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:28px">
     <button class="btn btn-p" onclick="startMCQ()">🔄 Naye MCQs</button>
-    <button class="btn btn-s" onclick="reviewMCQ()">📋 Review</button>
     <button class="btn btn-g" onclick="show('mode')">← Menu</button>
-  </div>
-  <div id="rvSec"></div>`;
-  show('mcq-res');
-  addXP(xpE);
+  </div>`;
+  show('mcq-res');addXP(xpE);
 }
 
-function reviewMCQ(){
-  const L=['A','B','C','D'];
-  document.getElementById('rvSec').innerHTML=`<div class="dvd"></div>
-  <h3 style="font-size:17px;font-weight:700;margin-bottom:18px">📋 Tamam Questions Review</h3>
-  ${S.qzData.map((q,i)=>{
-    const ua=S.qzAns[i];
-    const ok=ua===q.correct;
-    return `<div style="background:var(--card);border:1px solid ${ok?'rgba(34,197,94,.3)':'rgba(239,68,68,.3)'};border-radius:var(--rad2);padding:20px;margin-bottom:14px">
-      <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
-        <span>${ok?'✅':'❌'}</span><span style="font-size:13px;color:var(--t2)">Q${i+1}</span>
-        ${ok?'<span class="tag t-gn">Sahi</span>':'<span class="tag t-rd">Ghalat</span>'}
-      </div>
-      <div style="font-size:15px;font-weight:600;margin-bottom:12px">${q.q}</div>
-      ${q.opts.map((o,j)=>`<div style="padding:9px 14px;border-radius:9px;margin-bottom:6px;font-size:14px;background:${j===q.correct?'var(--okd)':j===ua&&ua!==q.correct?'var(--rd)':'var(--bg2)'};border:1px solid ${j===q.correct?'rgba(34,197,94,.4)':j===ua&&ua!==q.correct?'rgba(239,68,68,.4)':'var(--b)'}">
-        <strong>${L[j]}.</strong> ${o}
-        ${j===q.correct?' <span style="color:var(--ok)">✓ Sahi</span>':''}
-        ${j===ua&&ua!==q.correct?' <span style="color:var(--r)">✗ Tumhara</span>':''}
-      </div>`).join('')}
-      <div style="margin-top:10px;padding:11px;background:var(--bg2);border-radius:9px;font-size:13px;color:var(--t2);border:1px solid var(--b)">
-        💡 ${q.exp}
-      </div>
-    </div>`;
-  }).join('')}`;
-}
-
-// ═══════════════════════════════════════════════════════════
-// SHORT / LONG QA, SUMMARY, GUESS PAPER, NOTES & OTHERS
-// ═══════════════════════════════════════════════════════════
+// ─── SHORT / LONG ─────────────────────────────────────────────────
 async function startQA(tp){
-  S.qaType=tp; S.qaIdx=0; S.qaData=[]; S.qaEvals=[];
-  const sid=tp==='short'?'short':'long';
+  S.qaType=tp;S.qaIdx=0;S.qaData=[];S.qaEvals=[];
   const cnt=tp==='short'?5:3;
-  show(sid);
-  const titEl=document.getElementById(tp==='short'?'shTit':'lgTit');
-  titEl.textContent=`${tp==='short'?'Short':'Long'} Question Practice — ${S.sub}`;
-  document.getElementById(tp==='short'?'shCont':'lgCont').innerHTML=
-    loadHTML(`${tp==='short'?'Short':'Long'} questions generate ho rahe hain...`, 'AI Pakistan board pattern se questions bana raha hai');
-  const chNm=getChNm();
-  const brdNm=BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab';
-  const isShort=tp==='short';
-  const prompt=isShort
-    ?`Generate exactly ${cnt} important short questions for Pakistan ${brdNm} board exam:
-Class: ${S.cls} | Subject: ${S.sub} | Chapter: ${chNm}
-Pattern: 2-3 line answers expected, 2 marks each. Important for exam.
-CRITICAL: Return ONLY a strictly valid JSON array. No markdown format.
-[{"q":"question","keyPoints":["point1","point2","point3"],"marks":2}]`
-    :` Generate exactly ${cnt} important long questions for Pakistan ${brdNm} board exam:
-Class: ${S.cls} | Subject: ${S.sub} | Chapter: ${chNm}
-Pattern: paragraph answers, 5 marks each. Board exam style.
-CRITICAL: Return ONLY a strictly valid JSON array. No markdown format.
-[{"q":"question","keyPoints":["point1","point2","point3","point4","point5"],"marks":5,"guide":"~150-200 words"}]`;
-  
+  show(tp);
+  document.getElementById(tp==='short'?'shTit':'lgTit').textContent=`${tp==='short'?'Short':'Long'} Question Practice — ${S.sub}`;
+  document.getElementById(tp==='short'?'shCont':'lgCont').innerHTML=loadHTML(`${tp==='short'?'Short':'Long'} questions generate ho rahe hain...`);
+  const prompt=tp==='short'
+    ?`Generate ${cnt} important short questions for Pakistan ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} board, Class ${S.cls}, Subject ${S.sub}, Chapter ${getChNm()}. Return JSON: [{"q":"question","keyPoints":["point1","point2","point3"],"marks":2}]`
+    :`Generate ${cnt} important long questions for Pakistan ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} board, Class ${S.cls}, Subject ${S.sub}, Chapter ${getChNm()}. Return JSON: [{"q":"question","keyPoints":["point1","point2","point3","point4","point5"],"marks":5,"guide":"~150-200 words"}]`;
   try{
     const txt=await ai(prompt,1200);
     S.qaData=JSON.parse(extractJ(txt));
-    if(!Array.isArray(S.qaData)||S.qaData.length===0) throw new Error();
+    if(!Array.isArray(S.qaData)||!S.qaData.length) throw new Error();
     S.qaEvals=new Array(S.qaData.length).fill(null);
     renderQA();
   }catch(e){
-    document.getElementById(tp==='short'?'shCont':'lgCont').innerHTML=errHTML('Questions load nahi ho sake',()=>startQA(tp));
+    document.getElementById(tp==='short'?'shCont':'lgCont').innerHTML=errHTML('Questions load nahi ho sake: '+e.message);
   }
 }
-
 function renderQA(){
-  const tp=S.qaType;
-  const cont=document.getElementById(tp==='short'?'shCont':'lgCont');
+  const tp=S.qaType;const cont=document.getElementById(tp==='short'?'shCont':'lgCont');
   if(S.qaIdx>=S.qaData.length){renderQARes();return;}
-  const q=S.qaData[S.qaIdx];
-  const ev=S.qaEvals[S.qaIdx];
-  const isL=tp==='long';
+  const q=S.qaData[S.qaIdx];const ev=S.qaEvals[S.qaIdx];const isL=tp==='long';
   cont.innerHTML=`
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
     <span style="font-size:14px;color:var(--t2)">Question ${S.qaIdx+1} of ${S.qaData.length}</span>
-    <div style="display:flex;gap:8px">
-      <span class="tag t-gd">${q.marks} Marks</span>
-      ${q.guide?`<span class="tag t-vi">${q.guide}</span>`:''}
-    </div>
+    <div style="display:flex;gap:8px"><span class="tag t-gd">${q.marks} Marks</span>${q.guide?`<span class="tag t-vi">${q.guide}</span>`:''}</div>
   </div>
   <div class="crd" style="margin-bottom:18px">
     <div class="qa-q"><span style="color:var(--t3);font-size:13px">Q${S.qaIdx+1}. </span>${q.q}</div>
     <label style="font-size:12px;font-weight:700;color:var(--t2);display:block;margin-bottom:9px;text-transform:uppercase;letter-spacing:1px">Apna jawab likho:</label>
-    <textarea class="qa-ta${isL?' lng':''}" id="qaAns" placeholder="${isL?'Yahan apna detailed paragraph jawab likho...':'Yahan apna short jawab likho (2-3 lines)...'}" oninput="updWC(this)">${ev?ev.userAns||'':''}</textarea>
+    <textarea class="qa-ta${isL?' lng':''}" id="qaAns" placeholder="${isL?'Detailed paragraph jawab...':'Short jawab (2-3 lines)...'}" oninput="updWC(this)">${ev?ev.userAns||'':''}</textarea>
     <div class="wc" id="wc">0 words</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
       <button class="btn btn-p" onclick="evalAns()">🤖 AI se Check Karo</button>
@@ -1228,372 +920,218 @@ function renderQA(){
   ${ev?`<div style="text-align:center;margin-top:20px"><button class="btn btn-p" onclick="nextQA()">${S.qaIdx+1<S.qaData.length?'Agla Sawal →':'🏆 Results Dekho'}</button></div>`:''}`;
   if(ev?.userAns) updWC(document.getElementById('qaAns'));
 }
-
-function updWC(el){
-  const w=el.value.trim().split(/\s+/).filter(x=>x).length;
-  const wc=document.getElementById('wc');
-  if(wc) wc.textContent=`${w} words`;
-}
-
+function updWC(el){const w=el.value.trim().split(/\s+/).filter(x=>x).length;const wc=document.getElementById('wc');if(wc) wc.textContent=`${w} words`;}
 async function evalAns(){
   const ans=document.getElementById('qaAns')?.value?.trim();
   if(!ans||ans.length<5){alert('Pehle apna jawab likho!');return;}
   const q=S.qaData[S.qaIdx];
-  document.getElementById('evRes').innerHTML=loadHTML('AI check kar raha hai...','Thora intezaar karo');
-  const prompt=`Evaluate this student's answer for Pakistan board exam:
-Class: ${S.cls} | Subject: ${S.sub} | Board: ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'}
-Question: ${q.q}
-Key Points Expected: ${q.keyPoints.join('; ')}
-Total Marks: ${q.marks}
-Student's Answer: "${ans}"
-
-CRITICAL: Return ONLY valid JSON format.
-DO NOT use markdown like \`\`\`json. The structure must be EXACTLY this:
-{"score":${q.marks},"grade":"A","correct":["specific point correct"],"missing":["specific point missed"],"suggestions":"improvement tips in simple language","sampleAnswer":"ideal answer for this question"}`;
+  document.getElementById('evRes').innerHTML=loadHTML('AI check kar raha hai...');
+  const prompt=`Evaluate student answer for Class ${S.cls}, ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} Board, Subject ${S.sub}. Question: ${q.q}. Key Points: ${q.keyPoints.join('; ')}. Marks: ${q.marks}. Student Answer: "${ans}". Return JSON: {"score":${q.marks},"grade":"A","correct":["..."],"missing":["..."],"suggestions":"...","sampleAnswer":"..."}`;
   try{
     const txt=await ai(prompt,700);
-    const ev=JSON.parse(extractJ(txt));
-    ev.userAns=ans;
-    S.qaEvals[S.qaIdx]=ev;
+    const ev=JSON.parse(extractJ(txt));ev.userAns=ans;S.qaEvals[S.qaIdx]=ev;
     document.getElementById('evRes').innerHTML=renderEv(ev,q);
-    const existing=document.querySelector('#evRes + div');
-    if(!existing){
-      document.getElementById('evRes').insertAdjacentHTML('afterend',`<div style="text-align:center;margin-top:20px"><button class="btn btn-p" onclick="nextQA()">${S.qaIdx+1<S.qaData.length?'Agla Sawal →':'🏆 Results Dekho'}</button></div>`);
-    }
-    addXP(Math.max(2,Math.round((ev.score/q.marks)*15)));
-  }catch(e){
-    document.getElementById('evRes').innerHTML=errHTML('Evaluation nahi ho saki',evalAns);
-  }
+    document.getElementById('evRes').insertAdjacentHTML('afterend',
+      `<div style="text-align:center;margin-top:20px"><button class="btn btn-p" onclick="nextQA()">${S.qaIdx+1<S.qaData.length?'Agla Sawal →':'🏆 Results Dekho'}</button></div>`);
+    addXP(Math.max(2,Math.round((parseFloat(ev.score)/q.marks)*15)));
+  }catch(e){document.getElementById('evRes').innerHTML=errHTML('Evaluation nahi ho saki: '+e.message);}
 }
-
 function renderEv(ev,q){
-  const sc=parseFloat(ev.score)||0;
-  const max=q?q.marks:10;
+  const sc=parseFloat(ev.score)||0;const max=q?q.marks:10;
   return `<div class="aiev">
-    <div class="aiev-hdr">
-      <div><div style="font-size:11px;color:var(--s);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:4px">AI Evaluation</div>
-        <div class="aiev-sc">${sc}/${max} marks</div>
-      </div>
-      <div style="margin-left:auto"><span class="tag t-vi" style="font-size:15px;padding:8px 18px">Grade: ${ev.grade||'—'}</span></div>
-    </div>
-    ${ev.correct?.length?`<div class="evs"><div class="evs-t">✅ Kya Sahi Likha</div><ul class="evl">${ev.correct.map(p=>`<li>${p}</li>`).join('')}</ul></div>`:''}
+    <div class="aiev-hdr"><div><div style="font-size:11px;color:var(--s);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:4px">AI Evaluation</div><div class="aiev-sc">${sc}/${max} marks</div></div>
+      <div style="margin-left:auto"><span class="tag t-vi" style="font-size:15px;padding:8px 18px">Grade: ${ev.grade||'—'}</span></div></div>
+    ${ev.correct?.length?`<div class="evs"><div class="evs-t">✅ Kya Sahi</div><ul class="evl">${ev.correct.map(p=>`<li>${p}</li>`).join('')}</ul></div>`:''}
     ${ev.missing?.length?`<div class="evs"><div class="evs-t" style="color:var(--r)">❌ Kya Reh Gaya</div><ul class="evl">${ev.missing.map(p=>`<li>${p}</li>`).join('')}</ul></div>`:''}
     ${ev.suggestions?`<div class="evs"><div class="evs-t" style="color:var(--g)">💡 Suggestions</div><div style="font-size:14px;color:var(--t2);line-height:1.6">${ev.suggestions}</div></div>`:''}
     ${ev.sampleAnswer?`<div class="evs"><div class="evs-t" style="color:var(--p)">📖 Ideal Answer</div><div style="font-size:14px;color:var(--t2);line-height:1.7;padding:13px;background:var(--bg2);border-radius:10px;border:1px solid var(--b)">${ev.sampleAnswer}</div></div>`:''}
   </div>`;
 }
-
-function nextQA(){S.qaIdx++;renderQA();}
-function prevQA(){S.qaIdx=Math.max(0,S.qaIdx-1);renderQA();}
-function skipQA(){S.qaEvals[S.qaIdx]=null;nextQA();}
-
+function nextQA(){S.qaIdx++;renderQA();}function prevQA(){S.qaIdx=Math.max(0,S.qaIdx-1);renderQA();}function skipQA(){S.qaEvals[S.qaIdx]=null;nextQA();}
 function renderQARes(){
-  const tp=S.qaType;
-  const cont=document.getElementById(tp==='short'?'shCont':'lgCont');
+  const tp=S.qaType;const cont=document.getElementById(tp==='short'?'shCont':'lgCont');
   let tot=0,earned=0;
   S.qaData.forEach((q,i)=>{tot+=q.marks;if(S.qaEvals[i])earned+=parseFloat(S.qaEvals[i].score)||0;});
   const pct=tot>0?Math.round((earned/tot)*100):0;
-  cont.innerHTML=`<div class="res-hero">
-    <div class="res-sc">${earned}/${tot}</div>
-    <div class="res-lb">${pct}% marks earned</div>
-  </div>
+  cont.innerHTML=`<div class="res-hero"><div class="res-sc">${earned}/${tot}</div><div class="res-lb">${pct}% marks earned</div></div>
   <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:20px 0">
     <button class="btn btn-p" onclick="startQA('${tp}')">🔄 Naye Questions</button>
     <button class="btn btn-g" onclick="show('mode')">← Menu</button>
   </div>`;
 }
 
+// ─── SUMMARY ──────────────────────────────────────────────────────
 async function startSummary(){
   show('summary');
-  const chNm=getChNm();
-  const m=SMETA[S.sub]||{ic:'📚'};
-  document.getElementById('smTit').innerHTML=`${m.ic} ${chNm}`;
-  document.getElementById('smCont').innerHTML=loadHTML('AI summary bana raha hai...','Key points, formulas, aur exam tips tayyar ho rahe hain');
-  const prompt=`Create a comprehensive study summary for Pakistan board student:
-Class: ${S.cls} | Board: ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} | Subject: ${S.sub} | Chapter: ${chNm}
-CRITICAL: Return ONLY valid JSON format. NO markdown format, backticks or extra text.
-{"overview":"2-3 sentence chapter overview in simple language",
- "keyTopics":[{"topic":"topic name","desc":"1-2 line explanation"}],
- "formulas":["formula or key definition"],
- "memorize":["important fact to memorize"],
- "examTips":["board exam tip"],
- "commonMistakes":["common mistake students make"]}`;
+  document.getElementById('smTit').innerHTML=`${SMETA[S.sub]?.ic||'📚'} ${getChNm()}`;
+  document.getElementById('smCont').innerHTML=loadHTML('AI summary bana raha hai...');
+  const prompt=`Create summary for Class ${S.cls}, ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} Board, Subject ${S.sub}, Chapter ${getChNm()}. Return JSON: {"overview":"...","keyTopics":[{"topic":"...","desc":"..."}],"formulas":["..."],"memorize":["..."],"examTips":["..."],"commonMistakes":["..."]}`;
   try{
-    const txt=await ai(prompt,1500);
-    const d=JSON.parse(extractJ(txt));
-    renderSummary(d);
+    const txt=await ai(prompt,1500);const d=JSON.parse(extractJ(txt));
+    document.getElementById('smCont').innerHTML=`
+    <div class="sumb"><h3>📋 Overview</h3><p style="font-size:15px;line-height:1.7;color:var(--t2)">${d.overview}</p></div>
+    ${d.keyTopics?.length?`<div class="sumb"><h3>🎯 Key Topics</h3><ul class="suml">${d.keyTopics.map(t=>`<li><strong style="color:var(--t)">${t.topic}:</strong> ${t.desc}</li>`).join('')}</ul></div>`:''}
+    ${d.formulas?.length?`<div class="sumb"><h3>🔢 Formulas</h3><ul class="suml">${d.formulas.map(f=>`<li class="fm">${f}</li>`).join('')}</ul></div>`:''}
+    ${d.memorize?.length?`<div class="sumb"><h3>🧠 Yaad Rakho</h3><ul class="suml">${d.memorize.map(m=>`<li>⭐ ${m}</li>`).join('')}</ul></div>`:''}
+    ${d.examTips?.length?`<div class="sumb" style="border-color:rgba(0,212,170,.3);background:var(--pd)"><h3>📝 Board Exam Tips</h3><ul class="suml">${d.examTips.map((t,i)=>`<li>${i+1}. ${t}</li>`).join('')}</ul></div>`:''}
+    ${d.commonMistakes?.length?`<div class="sumb" style="border-color:rgba(239,68,68,.3);background:var(--rd)"><h3 style="color:var(--r)">⚠️ Common Mistakes</h3><ul class="suml">${d.commonMistakes.map(m=>`<li>${m}</li>`).join('')}</ul></div>`:''}
+    <button class="btn btn-g" onclick="show('mode')">← Menu</button>`;
     addXP(20);
-  }catch(e){
-    document.getElementById('smCont').innerHTML=errHTML('Summary nahi aa saki',startSummary);
-  }
+  }catch(e){document.getElementById('smCont').innerHTML=errHTML('Summary nahi aa saki: '+e.message,'startSummary');}
 }
 
-function renderSummary(d){
-  document.getElementById('smCont').innerHTML=`
-  <div class="sumb"><h3>📋 Overview</h3><p style="font-size:15px;line-height:1.7;color:var(--t2)">${d.overview}</p></div>
-  ${d.keyTopics?.length?`<div class="sumb"><h3>🎯 Key Topics</h3><ul class="suml">${d.keyTopics.map(t=>`<li><strong style="color:var(--t)">${t.topic}:</strong> ${t.desc}</li>`).join('')}</ul></div>`:''}
-  ${d.formulas?.length?`<div class="sumb"><h3>🔢 Formulas & Definitions</h3><ul class="suml">${d.formulas.map(f=>`<li class="fm">${f}</li>`).join('')}</ul></div>`:''}
-  ${d.memorize?.length?`<div class="sumb"><h3>🧠 Yaad Rakhne Wali Baatein</h3><ul class="suml">${d.memorize.map(m=>`<li>⭐ ${m}</li>`).join('')}</ul></div>`:''}
-  ${d.examTips?.length?`<div class="sumb" style="border-color:rgba(0,212,170,.3);background:var(--pd)"><h3>📝 Board Exam Tips</h3><ul class="suml">${d.examTips.map((t,i)=>`<li>${i+1}. ${t}</li>`).join('')}</ul></div>`:''}
-  ${d.commonMistakes?.length?`<div class="sumb" style="border-color:rgba(239,68,68,.3);background:var(--rd)"><h3 style="color:var(--r)">⚠️ Common Mistakes</h3><ul class="suml">${d.commonMistakes.map(m=>`<li>${m}</li>`).join('')}</ul></div>`:''}
-  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px">
-    <button class="btn btn-p" onclick="startSummary()">🔄 Refresh</button>
-    <button class="btn btn-g" onclick="show('mode')">← Menu</button>
+// ─── GUESS ────────────────────────────────────────────────────────
+async function startGuess(){
+  show('guess');
+  document.getElementById('gpTit').innerHTML=`${SMETA[S.sub]?.ic||'🎰'} ${S.sub} — Guess Paper`;
+  document.getElementById('gpCont').innerHTML=loadHTML('AI guess paper bana raha hai...');
+  const prompt=`Create guess paper for Class ${S.cls}, ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} Board, Subject ${S.sub}, Chapter ${getChNm()}. Return JSON: {"mcqs":[{"q":"...","opts":["A","B","C","D"],"likely":"high/medium"}],"shortQ":[{"q":"...","likely":"high/medium","marks":2}],"longQ":[{"q":"...","likely":"high/medium","marks":5}],"hotTopics":["..."],"tip":"..."}`;
+  try{
+    const txt=await ai(prompt,1800);const d=JSON.parse(extractJ(txt));
+    const lbl=l=>`<span class="likelihood" style="background:${l==='high'?'var(--okd)':'var(--gd)'};color:${l==='high'?'var(--ok)':'var(--g)'}">${l==='high'?'🔥 High Chance':'⭐ Medium'}</span>`;
+    const L=['A','B','C','D'];
+    document.getElementById('gpCont').innerHTML=`
+    ${d.hotTopics?.length?`<div class="gp-sec"><h3>🎯 Hot Topics</h3>${d.hotTopics.map(t=>`<div class="gp-q">🔥 ${t}</div>`).join('')}</div>`:''}
+    ${d.mcqs?.length?`<div class="gp-sec"><h3>📝 Likely MCQs</h3>${d.mcqs.map((q,i)=>`<div class="gp-q">${lbl(q.likely)}<div style="font-weight:600;margin:6px 0">Q${i+1}. ${q.q}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:13px;color:var(--t2)">${q.opts.map((o,j)=>`<div>${L[j]}. ${o}</div>`).join('')}</div></div>`).join('')}</div>`:''}
+    ${d.shortQ?.length?`<div class="gp-sec"><h3>✍️ Likely Short Qs</h3>${d.shortQ.map((q,i)=>`<div class="gp-q">${lbl(q.likely)} <span class="tag t-gd">${q.marks} Marks</span><div style="margin-top:6px;font-weight:600">Q${i+1}. ${q.q}</div></div>`).join('')}</div>`:''}
+    ${d.longQ?.length?`<div class="gp-sec"><h3>📖 Likely Long Qs</h3>${d.longQ.map((q,i)=>`<div class="gp-q">${lbl(q.likely)} <span class="tag t-gd">${q.marks} Marks</span><div style="margin-top:6px;font-weight:600">Q${i+1}. ${q.q}</div></div>`).join('')}</div>`:''}
+    ${d.tip?`<div class="sumb" style="border-color:rgba(0,212,170,.3);background:var(--pd)"><h3>💡 Exam Strategy</h3><p style="font-size:14px;color:var(--t2);line-height:1.6">${d.tip}</p></div>`:''}
+    <button class="btn btn-g" onclick="show('mode')">← Menu</button>`;
+    addXP(15);
+  }catch(e){document.getElementById('gpCont').innerHTML=errHTML('Guess paper nahi aa saka: '+e.message,'startGuess');}
+}
+
+// ─── NOTES & PAPERS ───────────────────────────────────────────────
+function renderNotes(){
+  document.getElementById('ntTit').textContent=`${S.sub} — Class ${S.cls} Notes`;
+  const c=S.cls;const s=S.sub;
+  const notes=[
+    {nm:`Class ${c} ${s} Notes — FreeIlm`,ds:'Free notes, MCQs',url:`https://www.freeilm.com/${c}th-class-notes/`,ic:'📄',tp:'web'},
+    {nm:'Punjab Textbook Board',ds:'Official PTB textbooks PDF',url:'https://ptb.gop.pk/',ic:'📗',tp:'pdf'},
+    {nm:`Freeilm.pk — Class ${c}`,ds:'Comprehensive notes',url:`https://freeilm.pk/class-${c}-notes/`,ic:'📋',tp:'web'},
+  ];
+  document.getElementById('ntCont').innerHTML=`
+  <div style="display:flex;flex-direction:column;gap:10px">
+    ${notes.map(l=>`<a href="${l.url}" target="_blank" class="rc"><span class="rc-ic">${l.ic}</span><div class="rc-inf"><h4>${l.nm}</h4><p>${l.ds}</p></div><span class="rc-tp tp-${l.tp}">${l.tp.toUpperCase()}</span></a>`).join('')}
+    <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(s+' class '+c+' urdu lecture')}" target="_blank" class="rc"><span class="rc-ic">▶️</span><div class="rc-inf"><h4>${s} Class ${c} YouTube Lectures</h4><p>Free Urdu lectures</p></div><span class="rc-tp tp-v">VIDEO</span></a>
+  </div>`;
+}
+function renderPapers(){
+  document.getElementById('ppTit').textContent=`Past Papers — ${S.sub} Class ${S.cls}`;
+  const yrs=['2024','2023','2022','2021','2020','2019'];
+  document.getElementById('ppCont').innerHTML=`<div style="display:flex;flex-direction:column;gap:10px">
+    ${yrs.map(y=>`<a href="https://www.freeilm.com/past-papers/" target="_blank" class="rc"><span class="rc-ic">📄</span><div class="rc-inf"><h4>${y} — ${S.sub} Class ${S.cls}</h4><p>Board exam paper</p></div><span class="rc-tp tp-p">PDF</span></a>`).join('')}
   </div>`;
 }
 
-async function startGuess(){
-  show('guess');
-  const chNm=getChNm();
-  const m=SMETA[S.sub]||{ic:'🎰'};
-  document.getElementById('gpTit').innerHTML=`${m.ic} ${S.sub} — Guess Paper`;
-  document.getElementById('gpCont').innerHTML=loadHTML('AI guess paper bana raha hai...','Board exam patterns analyze ho rahe hain');
-  const brdNm=BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab';
-  const prompt=`Create an AI guess paper for Pakistan board exam student:
-Class: ${S.cls} | Board: ${brdNm} | Subject: ${S.sub} | Chapter: ${chNm}
-Based on common patterns in ${brdNm} exams. Include likely questions with probability.
-CRITICAL: You MUST return ONLY a strictly valid JSON object. Do not include any markdown formatting, backticks, or intro/outro text.
-The response must start with { and end with }.
-{
-  "mcqs":[{"q":"MCQ question","opts":["A","B","C","D"],"likely":"high","reason":"why likely"}],
-  "shortQ":[{"q":"short question","likely":"high","marks":2}],
-  "longQ":[{"q":"long question","likely":"high","marks":5}],
-  "hotTopics":["topic likely to appear"],
-  "tip":"exam strategy tip"
-}
-Include 5 MCQs, 5 short questions, 3 long questions.`;
-  try{
-    const txt=await ai(prompt,1800);
-    const d=JSON.parse(extractJ(txt));
-    renderGuess(d);
-    addXP(15);
-  }catch(e){
-    document.getElementById('gpCont').innerHTML=errHTML('Guess paper nahi aa saka',startGuess);
-  }
-}
-
-function renderGuess(d){
-  const lbl=l=>`<span class="likelihood" style="background:${l==='high'?'var(--okd)':'var(--gd)'};color:${l==='high'?'var(--ok)':'var(--g)'}">${l==='high'?'🔥 High Chance':'⭐ Medium'}</span>`;
-  const L=['A','B','C','D'];
-  document.getElementById('gpCont').innerHTML=`
-  ${d.hotTopics?.length?`<div class="gp-sec"><h3>🎯 Hot Topics (Board mein aane ka zyada chance)</h3>${d.hotTopics.map(t=>`<div class="gp-q">🔥 ${t}</div>`).join('')}</div>`:''}
-  ${d.mcqs?.length?`<div class="gp-sec"><h3>📝 Likely MCQs</h3>${d.mcqs.map((q,i)=>`<div class="gp-q">${lbl(q.likely)}<div style="font-weight:600;margin:6px 0">Q${i+1}. ${q.q}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:13px;color:var(--t2)">${q.opts.map((o,j)=>`<div>${L[j]}. ${o}</div>`).join('')}</div></div>`).join('')}</div>`:''}
-  ${d.shortQ?.length?`<div class="gp-sec"><h3>✍️ Likely Short Questions</h3>${d.shortQ.map((q,i)=>`<div class="gp-q">${lbl(q.likely)}<span class="tag t-gd" style="margin-left:6px">${q.marks} Marks</span><div style="margin-top:6px;font-weight:600">Q${i+1}. ${q.q}</div></div>`).join('')}</div>`:''}
-  ${d.longQ?.length?`<div class="gp-sec"><h3>📖 Likely Long Questions</h3>${d.longQ.map((q,i)=>`<div class="gp-q">${lbl(q.likely)}<span class="tag t-gd" style="margin-left:6px">${q.marks} Marks</span><div style="margin-top:6px;font-weight:600">Q${i+1}. ${q.q}</div></div>`).join('')}</div>`:''}
-  ${d.tip?`<div class="sumb" style="border-color:rgba(0,212,170,.3);background:var(--pd)"><h3>💡 Exam Strategy</h3><p style="font-size:14px;color:var(--t2);line-height:1.6">${d.tip}</p></div>`:''}
-  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px"><button class="btn btn-p" onclick="startGuess()">🔄 New Guess</button><button class="btn btn-g" onclick="show('mode')">← Menu</button></div>`;
-}
-
-function renderNotes(){
-  document.getElementById('ntTit').textContent=`${S.sub} — Class ${S.cls} Notes`;
-  const c=S.cls; const s=S.sub;
-  const notes=[
-    {nm:`Class ${c} ${s} Notes — FreeIlm`,ds:'Free notes, MCQs, short & long questions',url:`https://www.freeilm.com/${c}th-class-notes/`,ic:'📄',tp:'web'},
-    {nm:`Punjab Textbook Board`,ds:'Official PTB textbooks PDF download',url:'https://ptb.gop.pk/',ic:'📗',tp:'pdf'},
-    {nm:`Freeilm.pk — Class ${c} Notes`,ds:'Comprehensive notes with solved exercises',url:`https://freeilm.pk/class-${c}-notes/`,ic:'📋',tp:'web'},
-    {nm:`FBISE Official`,ds:'Federal board notes and past papers',url:'https://fbise.edu.pk/',ic:'🏛️',tp:'web'},
-    {nm:`Khan Academy (Urdu)`,ds:'Free lessons in Urdu — math & science',url:'https://ur.khanacademy.org/',ic:'🎓',tp:'web'},
-  ];
-  const vids=[
-    {nm:`${s} Class ${c} — Pakistani YouTube Lectures`,ds:'Free lectures in Urdu on YouTube',url:`https://www.youtube.com/results?search_query=${encodeURIComponent(s+' class '+c+' pakistan urdu lecture')}`,ic:'▶️'},
-    {nm:`Last Minute Revision Videos`,ds:'Quick revision before exams',url:`https://www.youtube.com/results?search_query=${encodeURIComponent(s+' class '+c+' quick revision pakistan board')}`,ic:'⚡'},
-    {nm:`Concept Explanation`,ds:'Step-by-step concept videos',url:`https://www.youtube.com/results?search_query=${encodeURIComponent(s+' class '+c+' explain in urdu')}`,ic:'💡'},
-  ];
-  const refs=[
-    {nm:'FreeIlm.com',ds:"Pakistan's most popular free study site",url:'https://www.freeilm.com',ic:'🌐'},
-    {nm:'Freeilm.pk',ds:'Guess papers, past papers, pairing schemes',url:'https://freeilm.pk',ic:'📑'},
-    {nm:'FBISE Past Papers',ds:'Federal board previous year papers',url:'https://fbise.edu.pk/past-papers',ic:'📄'},
-    {nm:'PTB Textbooks',ds:'Official Punjab textbooks online',url:'https://ptb.gop.pk/',ic:'📚'},
-  ];
-  document.getElementById('ntCont').innerHTML=`
-  <div class="ntabs">
-    <div class="ntab on" onclick="swNTab(this,'nt-n')">📚 Notes & Books</div>
-    <div class="ntab" onclick="swNTab(this,'nt-v')">🎥 Video Lectures</div>
-    <div class="ntab" onclick="swNTab(this,'nt-r')">🔗 Reference Sites</div>
-  </div>
-  <div id="nt-n" style="display:flex;flex-direction:column;gap:10px">${notes.map(l=>`<a href="${l.url}" target="_blank" class="rc"><span class="rc-ic">${l.ic}</span><div class="rc-inf"><h4>${l.nm}</h4><p>${l.ds}</p></div><span class="rc-tp tp-${l.tp}">${l.tp.toUpperCase()}</span></a>`).join('')}</div>
-  <div id="nt-v" style="display:none;flex-direction:column;gap:10px">${vids.map(l=>`<a href="${l.url}" target="_blank" class="rc"><span class="rc-ic">${l.ic}</span><div class="rc-inf"><h4>${l.nm}</h4><p>${l.ds}</p></div><span class="rc-tp tp-v">VIDEO</span></a>`).join('')}</div>
-  <div id="nt-r" style="display:none;flex-direction:column;gap:10px">${refs.map(l=>`<a href="${l.url}" target="_blank" class="rc"><span class="rc-ic">${l.ic}</span><div class="rc-inf"><h4>${l.nm}</h4><p>${l.ds}</p></div><span class="rc-tp tp-w">SITE</span></a>`).join('')}</div>`;
-}
-
-function swNTab(el,id){
-  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
-  el.classList.add('on');
-  ['nt-n','nt-v','nt-r'].forEach(i=>{
-    const e=document.getElementById(i);
-    if(e) e.style.display=i===id?'flex':'none';
-  });
-}
-
-function renderPapers(){
-  document.getElementById('ppTit').textContent=`Past Papers — ${S.sub} Class ${S.cls}`;
-  const yrs=['2024','2023','2022','2021','2020','2019','2018'];
-  document.getElementById('ppCont').innerHTML=`
-  <p style="font-size:14px;color:var(--t2);margin-bottom:22px">Punjab, Federal board ke previous year papers — click karo download karne ke liye:</p>
-  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px">${yrs.map(y=>`<a href="https://www.freeilm.com/past-papers/" target="_blank" class="rc"><span class="rc-ic">📄</span><div class="rc-inf"><h4>${y} — ${S.sub} Class ${S.cls}</h4><p>Board exam paper ${y} • Punjab & Federal Board</p></div><span class="rc-tp tp-p">PDF</span></a>`).join('')}</div>
-  <div class="sumb"><h3>📌 Exam Prep Tips</h3><ul class="suml"><li>📝 2023 aur 2024 ke papers sabse pehle solve karo</li><li>⏱️ Timer laga ke real exam jaisi practice karo</li><li>📊 Objective aur subjective dono pe equal time do</li><li>🔄 Galtiyan review karo aur weak chapters dobara padho</li><li>✅ Pairing scheme dekho — kaunsa chapter kitna important hai</li></ul></div>`;
-}
-
-// ═══════════════════════════════════════════════════════════
-// CHAT & OCR LOGIC
-// ═══════════════════════════════════════════════════════════
+// ─── CHAT ─────────────────────────────────────────────────────────
 function toggleChat(){
   S.chatOpen=!S.chatOpen;
   document.getElementById('cpanel').classList.toggle('open',S.chatOpen);
   document.getElementById('ctog').textContent=S.chatOpen?'✕':'💬';
 }
-
 function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}
 function autoH(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
 
 async function sendChat(){
-  const inp=document.getElementById('cinp');
-  const msg=inp.value.trim();
+  const inp=document.getElementById('cinp');const msg=inp.value.trim();
   if(!msg) return;
   inp.value='';inp.style.height='auto';
-  addMsg('u',msg);
-  S.chatH.push({role:'user',content:msg});
+  addMsg('u',msg);S.chatH.push({role:'user',content:msg});
   const tyEl=addMsg('a','<span style="opacity:.6">●●●</span>');
-  const ctx=S.sub?`Student is studying: Class ${S.cls} ${S.sub}, Chapter: ${getChNm()}.`:'Student is on main page.';
-  const sys=`You are IlmAI, a friendly Pakistani study assistant for Class 9-12 students.
-${ctx}
-Help with Pakistan ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab Board'} curriculum.
-Understand and respond in same language as student (Roman Urdu like "kya ho raha hai" or English).
-Be friendly, encouraging, and give clear concise answers. Use simple language.`;
+  const ctx=S.sub?`Student studying: Class ${S.cls} ${S.sub}, Chapter: ${getChNm()}.`:'Student on main page.';
   try{
-    const txt=await ai(`[System: ${sys}]\n\nStudent: ${msg}`,700);
+    const txt=await ai(`[System: You are IlmAI, friendly Pakistani study tutor. ${ctx} Reply in student's language (Roman Urdu or English).]\nStudent: ${msg}`,700);
     tyEl.innerHTML=txt.replace(/\n/g,'<br>');
     S.chatH.push({role:'assistant',content:txt});
     if(S.chatH.length>20) S.chatH=S.chatH.slice(-20);
-  }catch(e){
-    tyEl.innerHTML='Maafi! Kuch masla ho gaya. Thori der baad try karo. 🙏';
-  }
+  }catch(e){tyEl.innerHTML='Maafi! Masla ho gaya, dobara try karo. 🙏';}
   document.getElementById('cmsgs').scrollTop=99999;
 }
 
 function addMsg(role,txt){
-  const d=document.createElement('div');
-  d.className=`cmsg ${role}`;
+  const d=document.createElement('div');d.className=`cmsg ${role}`;
   d.innerHTML=typeof txt==='string'?txt.replace(/\n/g,'<br>'):txt;
   document.getElementById('cmsgs').appendChild(d);
   document.getElementById('cmsgs').scrollTop=99999;
   return d;
 }
 
-// Update: OCR Integration
-async function handleOCR(el) {
-  if (!el.files.length) return;
-  const file = el.files[0];
-  el.value = ''; // Input clear karo taake dobara same pic aa sake
-  
-  if (!S.chatOpen) toggleChat();
-  
-  addMsg('u', `📸 Image upload ki: ${file.name}`);
-  const tyEl = addMsg('a', '<span style="opacity:.6">OCR text extract kar raha hai... 🔍</span>');
-  
-  const formData = new FormData();
-  formData.append("file", file);
-  
-  try {
-    // Cloudflare Worker ke OCR endpoint par bhejna
-    const ocrRes = await fetch(WORKER_URL + '/api/ocr', {
-      method: 'POST',
-      body: formData
-    });
-    
-    const ocrData = await ocrRes.json();
-    
-    if (ocrData.error) throw new Error(ocrData.error);
-    
-    let text = "";
-    if (ocrData.ParsedResults && ocrData.ParsedResults.length > 0) {
-        text = ocrData.ParsedResults[0].ParsedText.trim();
+// ─── CHAT IMAGE SCAN ─────────────────────────────────────────────
+let currentOcrFile=null;
+
+async function handleChatImg(e){
+  const file=e.target.files[0];
+  e.target.value='';
+  if(!file||!file.type.startsWith('image/')) return;
+  currentOcrFile=file;
+  // Show modal
+  const modal=document.getElementById('ocr-modal');
+  const preview=document.getElementById('ocr-preview');
+  const status=document.getElementById('ocr-status');
+  const textEl=document.getElementById('ocr-text');
+  preview.src=URL.createObjectURL(file);
+  textEl.value='';
+  status.textContent='⏳ Image scan ho rahi hai — OCR chal raha hai...';
+  status.style.color='var(--g)';
+  modal.classList.add('open');
+  try{
+    const text=await ocrFile(file);
+    if(!text||text.length<5){
+      status.textContent='⚠️ Text nahi mila. Saaf photo lo.';
+      status.style.color='var(--r)';
+      textEl.value='';
+    }else{
+      textEl.value=text;
+      status.textContent=`✅ ${text.split(/\s+/).filter(Boolean).length} words scan hue — review karo ya edit karo, phir "AI se Poochho"`;
+      status.style.color='var(--ok)';
     }
-    
-    if (!text) throw new Error("Image mein koi text clear nahi mila.");
-    
-    tyEl.innerHTML = `✅ <b>Extracted Text:</b><br><i style="color:var(--t2)">"${text}"</i><br><br><span style="opacity:.6">AI jawab tayyar kar raha hai... 🧠</span>`;
-    
-    // AI ko extract kiya hua text bhejna
-    S.chatH.push({role:'user',content:`Maine ek note ki tasveer upload ki hai jisme likha hai:\n\n${text}\n\nIs topic ko explain karo ya iska answer do.`});
-    
-    const ctx=S.sub?`Student is studying: Class ${S.cls} ${S.sub}.`:'';
-    const sys=`You are IlmAI, a helpful Pakistani study assistant. A student uploaded an image. The extracted text is provided. Answer it directly, accurately, and concisely in Roman Urdu or English depending on context. ${ctx}`;
-    
-    const aiRes = await ai(`[System: ${sys}]\n\nExtracted Text: ${text}`, 800);
-    
-    tyEl.innerHTML = aiRes.replace(/\n/g,'<br>');
-    S.chatH.push({role:'assistant',content:aiRes});
-    
-  } catch(err) {
-    tyEl.innerHTML = `❌ Error: ${err.message}`;
+  }catch(err){
+    status.textContent='❌ Scan fail: '+err.message;
+    status.style.color='var(--r)';
   }
+}
+
+function closeOcrModal(){
+  document.getElementById('ocr-modal').classList.remove('open');
+  currentOcrFile=null;
+}
+
+async function sendOcrToChat(){
+  const text=document.getElementById('ocr-text').value.trim();
+  if(!text){alert('Pehle scan karo ya text likho!');return;}
+  closeOcrModal();
+  if(!S.chatOpen) toggleChat();
+  // Show image in chat
+  if(currentOcrFile){
+    const imgMsg=addMsg('u','');
+    imgMsg.innerHTML=`<img class="cmsg-img" src="${URL.createObjectURL(currentOcrFile)}"><div style="font-size:12px;color:var(--t2);margin-top:4px">📷 Image uploaded</div>`;
+  }
+  addMsg('u',`📷 Scanned Text:\n${text.substring(0,300)}${text.length>300?'...':''}`);
+  const tyEl=addMsg('a','<span style="opacity:.6">●●●</span>');
+  const ctx=S.sub?`Student studying Class ${S.cls} ${S.sub}.`:'Student using IlmAI.';
+  try{
+    const prompt=`[System: You are IlmAI, Pakistani study tutor. ${ctx} Student uploaded an image and extracted this text via OCR. Help them understand it, answer questions, or create practice material. Reply in Roman Urdu or English based on student's preference.]\n\nScanned text from image:\n"${text.substring(0,1500)}"\n\nStudent wants help with this content.`;
+    const reply=await ai(prompt,800);
+    tyEl.innerHTML=reply.replace(/\n/g,'<br>');
+  }catch(e){tyEl.innerHTML='Maafi! AI response nahi aya. 🙏';}
   document.getElementById('cmsgs').scrollTop=99999;
 }
 
-// ═══════════════════════════════════════════════════════════
-// AI API — Groq via Cloudflare Worker (4-key failover)
-// ═══════════════════════════════════════════════════════════
-const WORKER_URL = 'https://rabi-groq-worker.noorhusnain791.workers.dev';
-
-async function ai(prompt, maxT=1000){
-  const res = await fetch(WORKER_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      messages: [{ role: 'user', content: prompt }],
-      max_tokens: maxT
-    })
+function copyOcrText(){
+  const text=document.getElementById('ocr-text').value;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=event.target;btn.textContent='✅ Copied!';setTimeout(()=>btn.textContent='📋 Copy Text',2000);
   });
-  if(!res.ok){
-    const err = await res.json().catch(()=>({}));
-    throw new Error('Worker error ' + res.status + ': ' + (err.error||''));
-  }
-  const d = await res.json();
-  return d.choices[0].message.content;
 }
 
-// Very Robust JSON Extractor
-function extractJ(txt){
-  try{
-    let c=txt.replace(/```json\s*/gi,'').replace(/```\s*/g,'').trim();
-    let s = c.indexOf('{');
-    let a = c.indexOf('[');
-    let start = -1;
-    if(s !== -1 && a !== -1) start = Math.min(s, a);
-    else if(s !== -1) start = s;
-    else if(a !== -1) start = a;
-    
-    let e1 = c.lastIndexOf('}');
-    let e2 = c.lastIndexOf(']');
-    let end = Math.max(e1, e2);
-    if(start !== -1 && end !== -1){
-      return c.substring(start, end+1);
-    }
-    return c;
-  }catch(e){ return txt; }
-}
+// Close modal on backdrop click
+document.getElementById('ocr-modal').addEventListener('click',function(e){if(e.target===this)closeOcrModal();});
 
-// ═══════════════════════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════════════════════
-function loadHTML(t,s=''){
-  return `<div class="ld"><div class="ldspin"></div><div><div class="ld-t">${t}</div>${s?`<div class="ld-s">${s}</div>`:''}</div></div>`;
-}
-function errHTML(msg,fn){
-  return `<div class="err"><div class="err-ic">😕</div><h3>Oops!</h3><p>${msg}</p>
-    ${fn?`<button class="btn btn-p" style="margin-top:18px" onclick="(${fn.toString()})()">🔄 Dobara Try Karo</button>`:''}
-  </div>`;
-}
-
-// ═══════════════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════════════
-renderLanding();
-show('landing');
-// Welcome message with streak
+// ─── INIT ─────────────────────────────────────────────────────────
+renderLanding();show('landing');
 if(S.prog.streak>1){
-  setTimeout(()=>addMsg('a',`Welcome back! 🎉 ${S.prog.streak} din ki streak — mashallah! Aaj bhi padh ke XP kamao! 💪`),1500);
+  setTimeout(()=>addMsg('a',`Welcome back! 🎉 ${S.prog.streak} din ki streak — aur yaad karo: 📷 image scan bhi try karo!`),1500);
 }
 </script>
 </body>
