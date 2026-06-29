@@ -368,8 +368,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     </div></div>
     <div class="fg"><label>Timer per question</label><div class="tg" id="tmrG">
       <button class="tb" onclick="setOpt('tmr',0,this)">Off</button>
+      <button class="tb on" onclick="setOpt('tmr',10,this)">⚡ 10s</button>
       <button class="tb" onclick="setOpt('tmr',30,this)">30s</button>
-      <button class="tb on" onclick="setOpt('tmr',60,this)">60s</button>
+      <button class="tb" onclick="setOpt('tmr',60,this)">60s</button>
       <button class="tb" onclick="setOpt('tmr',90,this)">90s</button>
     </div></div>
     <button class="btn btn-p btn-lg btn-w" onclick="startMCQ()">🚀 Quiz Shuru Karo!</button>
@@ -1132,7 +1133,7 @@ const MODES=[
 // ─── STATE ────────────────────────────────────────────────────────
 const S={
   cls:null,brd:null,grp:null,sub:null,ch:null,mode:null,
-  mcq:{cnt:10,dif:'medium',tmr:60},
+  mcq:{cnt:10,dif:'medium',tmr:10},
   qzData:[],qzIdx:0,qzAns:[],qzInterval:null,
   qaType:'short',qaData:[],qaIdx:0,qaEvals:[],
   chatH:[],chatOpen:false,
@@ -1157,6 +1158,19 @@ function show(id){
   if(el) el.classList.add('on');
   window.scrollTo({top:0,behavior:'instant'});
   updateHdr(id);
+  // ✅ Chat MCQ/Question pages pe hide karo
+  const noChat=['mcq-set','mcq-quiz','mcq-res','short','long'];
+  const cw=document.getElementById('cw');
+  if(cw){
+    cw.style.display=noChat.includes(id)?'none':'block';
+    // Agar chat open tha to band bhi karo
+    if(noChat.includes(id)&&S.chatOpen){
+      S.chatOpen=false;
+      document.getElementById('cpanel')?.classList.remove('open');
+      const ctog=document.getElementById('ctog');
+      if(ctog) ctog.textContent='💬';
+    }
+  }
 }
 function updateHdr(id){
   const parts=[];
