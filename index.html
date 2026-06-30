@@ -533,9 +533,6 @@ const SMETA={
   'Business Mathematics':{ic:'🔢',clr:'#8b5cf6',bg:'rgba(139,92,246,.13)'},
 };
 const CH={
-// ══════════════════════════════════════════════════════
-//  CLASS 9
-// ══════════════════════════════════════════════════════
 'Physics-9':[
   'Ch 1: Physical Quantities and Measurement',
   'Ch 2: Kinematics',
@@ -687,9 +684,6 @@ const CH={
   'Ch 7: Evaluation and Assessment',
   'Ch 8: Educational System of Pakistan',
 ],
-// ══════════════════════════════════════════════════════
-//  CLASS 10
-// ══════════════════════════════════════════════════════
 'Physics-10':[
   'Ch 10: Simple Harmonic Motion and Waves',
   'Ch 11: Sound',
@@ -840,9 +834,6 @@ const CH={
   'Ch 7: Research in Education',
   'Ch 8: Non-Formal Education',
 ],
-// ══════════════════════════════════════════════════════
-//  CLASS 11 (FSc First Year)
-// ══════════════════════════════════════════════════════
 'Physics-11':[
   'Ch 1: Measurements',
   'Ch 2: Vectors and Equilibrium',
@@ -980,9 +971,6 @@ const CH={
   'Ch 7: Foreign Policy',
   'Ch 8: National Security',
 ],
-// ══════════════════════════════════════════════════════
-//  CLASS 12 (FSc Second Year)
-// ══════════════════════════════════════════════════════
 'Physics-12':[
   'Ch 12: Electrostatics',
   'Ch 13: Current Electricity',
@@ -1158,12 +1146,10 @@ function show(id){
   if(el) el.classList.add('on');
   window.scrollTo({top:0,behavior:'instant'});
   updateHdr(id);
-  // ✅ Chat MCQ/Question pages pe hide karo
   const noChat=['mcq-set','mcq-quiz','mcq-res','short','long'];
   const cw=document.getElementById('cw');
   if(cw){
     cw.style.display=noChat.includes(id)?'none':'block';
-    // Agar chat open tha to band bhi karo
     if(noChat.includes(id)&&S.chatOpen){
       S.chatOpen=false;
       document.getElementById('cpanel')?.classList.remove('open');
@@ -1298,7 +1284,7 @@ function setOpt(tp,val,btn){
   S.mcq[tp]=val;
 }
 
-// ── WORKER URL ── ✅ FIXED
+// ── WORKER URL ──
 const WORKER_URL='https://check-ai.noorhusnain791.workers.dev';
 
 // ── AI helper ──────────────────────────────────────────────────────
@@ -1306,7 +1292,6 @@ async function ai(prompt,maxT=1000){
   const res=await fetch(WORKER_URL,{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    // ✅ llama-3.1-70b-versatile deprecated — using 3.3 now
     body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],max_tokens:maxT})
   });
   if(!res.ok){const t=await res.text();throw new Error(`Worker ${res.status}: ${t}`);}
@@ -1354,29 +1339,20 @@ async function ocrFile(file){
   return d.text||'';
 }
 
+// ✅ FIXED extractJ — handles markdown asterisks, prefixed text, bracket-matching
 function extractJ(txt){
-  // Remove markdown fences
-  let c=txt.replace(/```json\s*/gi,'').replace(/```\s*/g,'').trim();
-  // Remove asterisks and other markdown
-  c=c.replace(/\*+/g,'').trim();
-  // Try to extract array first, then object
-  const am=c.match(/\[[\s\S]*?\]/s);
-  const om=c.match(/\{[\s\S]*?\}/s);
-  const raw=am?am[0]:om?om[0]:c;
-  // Validate before returning
-  try{JSON.parse(raw);return raw;}catch(_){
-    // Last resort: find first { or [ and slice from there
-    const si=c.search(/[\[{]/);
-    if(si===-1) return c;
-    // Find matching closing bracket
-    const open=c[si];const close=open==='['?']':'}';
-    let depth=0,ei=-1;
-    for(let i=si;i<c.length;i++){
-      if(c[i]===open)depth++;
-      else if(c[i]===close){depth--;if(depth===0){ei=i;break;}}
-    }
-    return ei>-1?c.slice(si,ei+1):c.slice(si);
+  let c=txt.replace(/```json\s*/gi,'').replace(/```/g,'').trim();
+  c=c.replace(/\*\*/g,'').trim();
+  const si=c.search(/[\[{]/);
+  if(si===-1) return c;
+  const open=c[si];
+  const close=open==='['?']':'}';
+  let depth=0,ei=-1;
+  for(let i=si;i<c.length;i++){
+    if(c[i]===open) depth++;
+    else if(c[i]===close){depth--; if(depth===0){ei=i;break;}}
   }
+  return ei>-1 ? c.slice(si,ei+1) : c.slice(si);
 }
 function loadHTML(t,s=''){
   return `<div class="ld"><div class="ldspin"></div><div><div class="ld-t">${t}</div>${s?`<div class="ld-s">${s}</div>`:''}</div></div>`;
@@ -1387,7 +1363,6 @@ function errHTML(msg,fn=''){
 
 // ─── IMAGE SCAN MODE (sc-scan) ────────────────────────────────────
 function renderScanPage(){
-  const m=SMETA[S.sub]||{ic:'📷'};
   document.getElementById('scanTit').textContent=`📷 ${S.sub} — Image Scanner`;
   document.getElementById('scanResult').innerHTML='';
 }
@@ -1441,14 +1416,16 @@ async function scanAI(type){
   aiRes.innerHTML=loadHTML('AI process kar raha hai...','Thora intezaar karo');
   let prompt='';
   if(type==='mcq')
-    prompt=`From this text extracted from a Pakistan ${S.cls} class ${S.sub} textbook, generate 5 MCQs. Return ONLY JSON: [{"q":"...","opts":["A","B","C","D"],"correct":0,"exp":"..."}]\n\nText:\n${text.substring(0,2000)}`;
+    prompt=`From this text extracted from a Pakistan ${S.cls} class ${S.sub} textbook, generate 5 MCQs. Return ONLY raw JSON with no extra text, no markdown, no asterisks: [{"q":"...","opts":["A","B","C","D"],"correct":0,"exp":"..."}]\n\nText:\n${text.substring(0,2000)}`;
   else if(type==='summary')
-    prompt=`Create a concise study summary from this Pakistan ${S.cls} class ${S.sub} textbook text. Return JSON: {"overview":"...","keyTopics":[{"topic":"...","desc":"..."}],"formulas":["..."],"memorize":["..."]}\n\nText:\n${text.substring(0,2000)}`;
+    prompt=`Create a concise study summary from this Pakistan ${S.cls} class ${S.sub} textbook text. Return ONLY raw JSON with no extra text, no markdown, no asterisks: {"overview":"...","keyTopics":[{"topic":"...","desc":"..."}],"formulas":["..."],"memorize":["..."]}\n\nText:\n${text.substring(0,2000)}`;
   else if(type==='short')
-    prompt=`From this text, generate 4 important short questions (board exam style) for Pakistan Class ${S.cls} ${S.sub}. Return JSON: [{"q":"...","keyPoints":["..."],"marks":2}]\n\nText:\n${text.substring(0,2000)}`;
+    prompt=`From this text, generate 4 important short questions (board exam style) for Pakistan Class ${S.cls} ${S.sub}. Return ONLY raw JSON with no extra text, no markdown, no asterisks: [{"q":"...","keyPoints":["..."],"marks":2}]\n\nText:\n${text.substring(0,2000)}`;
   try{
     const resp=await ai(prompt,1500);
-    const d=JSON.parse(extractJ(resp));
+    let d;
+    try{d=JSON.parse(extractJ(resp));}
+    catch(je){aiRes.innerHTML=errHTML('AI ka response samajh nahi aaya, dobara try karo.');return;}
     if(type==='mcq'){S.qzData=d;S.qzIdx=0;S.qzAns=new Array(d.length).fill(null);show('mcq-quiz');renderQ();}
     else if(type==='summary') renderSummaryDirect(d,aiRes);
     else{S.qaData=d;S.qaType='short';S.qaIdx=0;S.qaEvals=new Array(d.length).fill(null);show('short');renderQA();}
@@ -1470,7 +1447,7 @@ function renderSummaryDirect(d,el){
 async function startMCQ(){
   show('mcq-quiz');
   document.getElementById('qzCont').innerHTML=loadHTML('MCQs generate ho rahe hain...','AI Pakistan curriculum se questions bana raha hai');
-  const prompt=`Generate exactly ${S.mcq.cnt} MCQs for Class ${S.cls}, ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} Board, Subject ${S.sub}, Chapter ${getChNm()}. Difficulty: ${S.mcq.dif}. Return ONLY JSON: [{"q":"question","opts":["A","B","C","D"],"correct":0,"exp":"explanation"}]`;
+  const prompt=`Generate exactly ${S.mcq.cnt} MCQs for Class ${S.cls}, ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} Board, Subject ${S.sub}, Chapter ${getChNm()}. Difficulty: ${S.mcq.dif}. Return ONLY raw JSON with no extra text, no markdown, no asterisks: [{"q":"question","opts":["A","B","C","D"],"correct":0,"exp":"explanation"}]`;
   try{
     const txt=await ai(prompt,Math.min(4000,S.mcq.cnt*120));
     S.qzData=JSON.parse(extractJ(txt));
@@ -1551,8 +1528,8 @@ async function startQA(tp){
   document.getElementById(tp==='short'?'shTit':'lgTit').textContent=`${tp==='short'?'Short':'Long'} Question Practice — ${S.sub}`;
   document.getElementById(tp==='short'?'shCont':'lgCont').innerHTML=loadHTML(`${tp==='short'?'Short':'Long'} questions generate ho rahe hain...`);
   const prompt=tp==='short'
-    ?`Generate ${cnt} important short questions for Pakistan ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} board, Class ${S.cls}, Subject ${S.sub}, Chapter ${getChNm()}. Return JSON: [{"q":"question","keyPoints":["point1","point2","point3"],"marks":2}]`
-    :`Generate ${cnt} important long questions for Pakistan ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} board, Class ${S.cls}, Subject ${S.sub}, Chapter ${getChNm()}. Return JSON: [{"q":"question","keyPoints":["point1","point2","point3","point4","point5"],"marks":5,"guide":"~150-200 words"}]`;
+    ?`Generate ${cnt} important short questions for Pakistan ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} board, Class ${S.cls}, Subject ${S.sub}, Chapter ${getChNm()}. Return ONLY raw JSON with no extra text, no markdown, no asterisks: [{"q":"question","keyPoints":["point1","point2","point3"],"marks":2}]`
+    :`Generate ${cnt} important long questions for Pakistan ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} board, Class ${S.cls}, Subject ${S.sub}, Chapter ${getChNm()}. Return ONLY raw JSON with no extra text, no markdown, no asterisks: [{"q":"question","keyPoints":["point1","point2","point3","point4","point5"],"marks":5,"guide":"~150-200 words"}]`;
   try{
     const txt=await ai(prompt,1200);
     S.qaData=JSON.parse(extractJ(txt));
@@ -1593,10 +1570,19 @@ async function evalAns(){
   if(!ans||ans.length<5){alert('Pehle apna jawab likho!');return;}
   const q=S.qaData[S.qaIdx];
   document.getElementById('evRes').innerHTML=loadHTML('AI check kar raha hai...');
-  const prompt=`Evaluate student answer for Class ${S.cls}, ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} Board, Subject ${S.sub}. Question: ${q.q}. Key Points: ${q.keyPoints.join('; ')}. Marks: ${q.marks}. Student Answer: "${ans}". Return JSON: {"score":${q.marks},"grade":"A","correct":["..."],"missing":["..."],"suggestions":"...","sampleAnswer":"..."}`;
+  const prompt=`Evaluate student answer for Class ${S.cls}, ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} Board, Subject ${S.sub}. Question: ${q.q}. Key Points: ${q.keyPoints.join('; ')}. Marks: ${q.marks}. Student Answer: "${ans}". Return ONLY raw JSON with no extra text, no markdown, no asterisks: {"score":${q.marks},"grade":"A","correct":["..."],"missing":["..."],"suggestions":"...","sampleAnswer":"..."}`;
   try{
     const txt=await ai(prompt,700);
-    let ev; try{ev=JSON.parse(extractJ(txt));} catch(je){   // Fallback: AI ne JSON nahi diya, manual object banao   ev={score:Math.floor(q.marks*0.5),grade:'C',correct:['Jawab diya'],       missing:['JSON parse nahi hua'],suggestions:txt.substring(0,300),sampleAnswer:''}; }ev.userAns=ans;S.qaEvals[S.qaIdx]=ev;
+    let ev;
+    try{
+      ev=JSON.parse(extractJ(txt));
+    }catch(je){
+      // ✅ Fallback agar AI ne strict JSON nahi diya
+      ev={score:Math.round(q.marks*0.5),grade:'C',correct:['Jawab submit hua'],
+          missing:['AI response format mein masla tha — dobara try karo for detailed feedback'],
+          suggestions:txt.substring(0,400),sampleAnswer:''};
+    }
+    ev.userAns=ans;S.qaEvals[S.qaIdx]=ev;
     document.getElementById('evRes').innerHTML=renderEv(ev,q);
     document.getElementById('evRes').insertAdjacentHTML('afterend',
       `<div style="text-align:center;margin-top:20px"><button class="btn btn-p" onclick="nextQA()">${S.qaIdx+1<S.qaData.length?'Agla Sawal →':'🏆 Results Dekho'}</button></div>`);
@@ -1632,9 +1618,12 @@ async function startSummary(){
   show('summary');
   document.getElementById('smTit').innerHTML=`${SMETA[S.sub]?.ic||'📚'} ${getChNm()}`;
   document.getElementById('smCont').innerHTML=loadHTML('AI summary bana raha hai...');
-  const prompt=`Create summary for Class ${S.cls}, ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} Board, Subject ${S.sub}, Chapter ${getChNm()}. Return JSON: {"overview":"...","keyTopics":[{"topic":"...","desc":"..."}],"formulas":["..."],"memorize":["..."],"examTips":["..."],"commonMistakes":["..."]}`;
+  const prompt=`Create summary for Class ${S.cls}, ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} Board, Subject ${S.sub}, Chapter ${getChNm()}. Return ONLY raw JSON with no extra text, no markdown, no asterisks: {"overview":"...","keyTopics":[{"topic":"...","desc":"..."}],"formulas":["..."],"memorize":["..."],"examTips":["..."],"commonMistakes":["..."]}`;
   try{
-    const txt=await ai(prompt,1500);const d=JSON.parse(extractJ(txt));
+    const txt=await ai(prompt,1500);
+    let d;
+    try{d=JSON.parse(extractJ(txt));}
+    catch(je){document.getElementById('smCont').innerHTML=errHTML('Summary format samajh nahi aaya, dobara try karo.','startSummary');return;}
     document.getElementById('smCont').innerHTML=`
     <div class="sumb"><h3>📋 Overview</h3><p style="font-size:15px;line-height:1.7;color:var(--t2)">${d.overview}</p></div>
     ${d.keyTopics?.length?`<div class="sumb"><h3>🎯 Key Topics</h3><ul class="suml">${d.keyTopics.map(t=>`<li><strong style="color:var(--t)">${t.topic}:</strong> ${t.desc}</li>`).join('')}</ul></div>`:''}
@@ -1652,9 +1641,12 @@ async function startGuess(){
   show('guess');
   document.getElementById('gpTit').innerHTML=`${SMETA[S.sub]?.ic||'🎰'} ${S.sub} — Guess Paper`;
   document.getElementById('gpCont').innerHTML=loadHTML('AI guess paper bana raha hai...');
-  const prompt=`Create guess paper for Class ${S.cls}, ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} Board, Subject ${S.sub}, Chapter ${getChNm()}. Return JSON: {"mcqs":[{"q":"...","opts":["A","B","C","D"],"likely":"high/medium"}],"shortQ":[{"q":"...","likely":"high/medium","marks":2}],"longQ":[{"q":"...","likely":"high/medium","marks":5}],"hotTopics":["..."],"tip":"..."}`;
+  const prompt=`Create guess paper for Class ${S.cls}, ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} Board, Subject ${S.sub}, Chapter ${getChNm()}. Return ONLY raw JSON with no extra text, no markdown, no asterisks: {"mcqs":[{"q":"...","opts":["A","B","C","D"],"likely":"high/medium"}],"shortQ":[{"q":"...","likely":"high/medium","marks":2}],"longQ":[{"q":"...","likely":"high/medium","marks":5}],"hotTopics":["..."],"tip":"..."}`;
   try{
-    const txt=await ai(prompt,1800);const d=JSON.parse(extractJ(txt));
+    const txt=await ai(prompt,1800);
+    let d;
+    try{d=JSON.parse(extractJ(txt));}
+    catch(je){document.getElementById('gpCont').innerHTML=errHTML('Guess paper format samajh nahi aaya, dobara try karo.','startGuess');return;}
     const lbl=l=>`<span class="likelihood" style="background:${l==='high'?'var(--okd)':'var(--gd)'};color:${l==='high'?'var(--ok)':'var(--g)'}">${l==='high'?'🔥 High Chance':'⭐ Medium'}</span>`;
     const L=['A','B','C','D'];
     document.getElementById('gpCont').innerHTML=`
@@ -1732,7 +1724,6 @@ async function handleChatImg(e){
   e.target.value='';
   if(!file||!file.type.startsWith('image/')) return;
   currentOcrFile=file;
-  // Show modal
   const modal=document.getElementById('ocr-modal');
   const preview=document.getElementById('ocr-preview');
   const status=document.getElementById('ocr-status');
@@ -1769,7 +1760,6 @@ async function sendOcrToChat(){
   if(!text){alert('Pehle scan karo ya text likho!');return;}
   closeOcrModal();
   if(!S.chatOpen) toggleChat();
-  // Show image in chat
   if(currentOcrFile){
     const imgMsg=addMsg('u','');
     imgMsg.innerHTML=`<img class="cmsg-img" src="${URL.createObjectURL(currentOcrFile)}"><div style="font-size:12px;color:var(--t2);margin-top:4px">📷 Image uploaded</div>`;
@@ -1792,7 +1782,6 @@ function copyOcrText(){
   });
 }
 
-// Close modal on backdrop click
 document.getElementById('ocr-modal').addEventListener('click',function(e){if(e.target===this)closeOcrModal();});
 
 // ─── INIT ─────────────────────────────────────────────────────────
