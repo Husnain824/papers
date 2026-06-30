@@ -1162,6 +1162,7 @@ const S={
   aiProvider:'groq',          // 'groq' | 'gemini'
   geminiModel:'gemini-2.5-flash', // 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-2.5-pro'
   ocrProvider:'ocrspace',     // 'ocrspace' (printed) | 'gemini' (handwritten)
+  lastAiFallback:false,       // true if last ai() call silently fell back from Gemini to Groq
 };
 try{
   const sv=JSON.parse(localStorage.getItem('ilmai_v3')||'{}');
@@ -1329,6 +1330,19 @@ const WORKER_URL='https://check-ai.noorhusnain791.workers.dev';
 // ── AI helper ──────────────────────────────────────────────────────
 async function ai(prompt,maxT=1000){
   const provider=S.aiProvider;
+  S.lastAiFallback=false; // reset before each call
+  if(provider==='gemini'){
+    try{
+      return await aiCall('gemini',prompt,maxT);
+    }catch(e){
+      // ✅ Gemini fail hua to silently Groq pe fallback karo, error user ko mat dikhao
+      S.lastAiFallback=true;
+      return await aiCall('groq',prompt,maxT);
+    }
+  }
+  return await aiCall('groq',prompt,maxT);
+}
+async function aiCall(provider,prompt,maxT){
   const body=provider==='gemini'
     ? {provider:'gemini',model:S.geminiModel,messages:[{role:'user',content:prompt}],max_tokens:maxT}
     : {model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],max_tokens:maxT};
@@ -1343,9 +1357,14 @@ async function ai(prompt,maxT=1000){
   if(!d.content?.[0]?.text) throw new Error('Invalid response: '+JSON.stringify(d));
   return d.content[0].text;
 }
+function fallbackNoteHTML(){
+  return S.lastAiFallback
+    ? `<div style="padding:9px 14px;background:var(--gd);border:1px solid rgba(245,200,66,.35);border-radius:10px;font-size:12px;color:var(--g);margin-bottom:14px">⚠️ Gemini abhi available nahi tha — Groq se jawab diya gaya hai.</div>`
+    : '';
+}
 
 // ── AI Provider Selector (reusable dropdown, shown on every AI feature) ──
-function aiSelectorHTML(id){
+function aiSelectorHTML(id,regenFn=''){
   const gOn=S.aiProvider==='gemini';
   return `<div class="aisel">
     <label>🤖 AI Engine</label>
@@ -1358,6 +1377,7 @@ function aiSelectorHTML(id){
       <option value="gemini-2.5-flash-lite" ${S.geminiModel==='gemini-2.5-flash-lite'?'selected':''}>Flash-Lite (Fastest)</option>
       <option value="gemini-2.5-pro" ${S.geminiModel==='gemini-2.5-pro'?'selected':''}>Pro (Most Accurate)</option>
     </select>
+    ${regenFn?`<button class="btn btn-s" style="padding:7px 14px;font-size:13px;margin-left:auto" onclick="${regenFn}">🔄 Dobara Banao</button>`:''}
   </div>`;
 }
 function setAiProvider(id,val){
@@ -1505,6 +1525,7 @@ async function scanAI(type){
 
 function renderSummaryDirect(d,el){
   el.innerHTML=`
+  ${fallbackNoteHTML()}
   <div class="sumb"><h3>📋 Overview</h3><p style="font-size:14px;line-height:1.7;color:var(--t2)">${d.overview}</p></div>
   ${d.keyTopics?.length?`<div class="sumb"><h3>🎯 Key Topics</h3><ul class="suml">${d.keyTopics.map(t=>`<li><strong>${t.topic}:</strong> ${t.desc}</li>`).join('')}</ul></div>`:''}
   ${d.formulas?.length?`<div class="sumb"><h3>🔢 Formulas</h3><ul class="suml">${d.formulas.map(f=>`<li class="fm">${f}</li>`).join('')}</ul></div>`:''}
@@ -1531,6 +1552,7 @@ function renderQ(){
   const q=S.qzData[S.qzIdx];const tot=S.qzData.length;const cur=S.qzIdx+1;
   const L=['A','B','C','D'];
   document.getElementById('qzCont').innerHTML=`
+  ${S.qzIdx===0?fallbackNoteHTML():''}
   <div class="qhdr">
     <div><div style="font-size:13px;color:var(--t2)">Question</div><div style="font-size:22px;font-weight:800">${cur}<span style="font-size:15px;color:var(--t2)"> / ${tot}</span></div></div>
     <div style="display:flex;gap:10px;align-items:center">
@@ -1615,6 +1637,7 @@ function renderQA(){
   const q=S.qaData[S.qaIdx];const ev=S.qaEvals[S.qaIdx];const isL=tp==='long';
   cont.innerHTML=`
   ${aiSelectorHTML('qaAiSel')}
+  ${S.qaIdx===0?fallbackNoteHTML():''}
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
     <span style="font-size:14px;color:var(--t2)">Question ${S.qaIdx+1} of ${S.qaData.length}</span>
     <div style="display:flex;gap:8px"><span class="tag t-gd">${q.marks} Marks</span>${q.guide?`<span class="tag t-vi">${q.guide}</span>`:''}</div>
@@ -1653,7 +1676,7 @@ async function evalAns(){
           suggestions:txt.substring(0,400),sampleAnswer:''};
     }
     ev.userAns=ans;S.qaEvals[S.qaIdx]=ev;
-    document.getElementById('evRes').innerHTML=renderEv(ev,q);
+    document.getElementById('evRes').innerHTML=fallbackNoteHTML()+renderEv(ev,q);
     document.getElementById('evRes').insertAdjacentHTML('afterend',
       `<div style="text-align:center;margin-top:20px"><button class="btn btn-p" onclick="nextQA()">${S.qaIdx+1<S.qaData.length?'Agla Sawal →':'🏆 Results Dekho'}</button></div>`);
     addXP(Math.max(2,Math.round((parseFloat(ev.score)/q.marks)*15)));
@@ -1695,7 +1718,8 @@ async function startSummary(){
     try{d=JSON.parse(extractJ(txt));}
     catch(je){document.getElementById('smCont').innerHTML=aiSelectorHTML('smAiSel')+errHTML('Summary format samajh nahi aaya, dobara try karo.','startSummary');return;}
     document.getElementById('smCont').innerHTML=`
-    ${aiSelectorHTML('smAiSel')}
+    ${aiSelectorHTML('smAiSel','startSummary()')}
+    ${fallbackNoteHTML()}
     <div class="sumb"><h3>📋 Overview</h3><p style="font-size:15px;line-height:1.7;color:var(--t2)">${d.overview}</p></div>
     ${d.keyTopics?.length?`<div class="sumb"><h3>🎯 Key Topics</h3><ul class="suml">${d.keyTopics.map(t=>`<li><strong style="color:var(--t)">${t.topic}:</strong> ${t.desc}</li>`).join('')}</ul></div>`:''}
     ${d.formulas?.length?`<div class="sumb"><h3>🔢 Formulas</h3><ul class="suml">${d.formulas.map(f=>`<li class="fm">${f}</li>`).join('')}</ul></div>`:''}
@@ -1721,7 +1745,8 @@ async function startGuess(){
     const lbl=l=>`<span class="likelihood" style="background:${l==='high'?'var(--okd)':'var(--gd)'};color:${l==='high'?'var(--ok)':'var(--g)'}">${l==='high'?'🔥 High Chance':'⭐ Medium'}</span>`;
     const L=['A','B','C','D'];
     document.getElementById('gpCont').innerHTML=`
-    ${aiSelectorHTML('gpAiSel')}
+    ${aiSelectorHTML('gpAiSel','startGuess()')}
+    ${fallbackNoteHTML()}
     ${d.hotTopics?.length?`<div class="gp-sec"><h3>🎯 Hot Topics</h3>${d.hotTopics.map(t=>`<div class="gp-q">🔥 ${t}</div>`).join('')}</div>`:''}
     ${d.mcqs?.length?`<div class="gp-sec"><h3>📝 Likely MCQs</h3>${d.mcqs.map((q,i)=>`<div class="gp-q">${lbl(q.likely)}<div style="font-weight:600;margin:6px 0">Q${i+1}. ${q.q}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:13px;color:var(--t2)">${q.opts.map((o,j)=>`<div>${L[j]}. ${o}</div>`).join('')}</div></div>`).join('')}</div>`:''}
     ${d.shortQ?.length?`<div class="gp-sec"><h3>✍️ Likely Short Qs</h3>${d.shortQ.map((q,i)=>`<div class="gp-q">${lbl(q.likely)} <span class="tag t-gd">${q.marks} Marks</span><div style="margin-top:6px;font-weight:600">Q${i+1}. ${q.q}</div></div>`).join('')}</div>`:''}
@@ -1773,7 +1798,8 @@ async function sendChat(){
   const ctx=S.sub?`Student studying: Class ${S.cls} ${S.sub}, Chapter: ${getChNm()}.`:'Student on main page.';
   try{
     const txt=await ai(`[System: You are IlmAI, friendly Pakistani study tutor. ${ctx} Reply in student's language (Roman Urdu or English).]\nStudent: ${msg}`,700);
-    tyEl.innerHTML=txt.replace(/\n/g,'<br>');
+    const note=S.lastAiFallback?`<div style="font-size:11px;color:var(--g);margin-bottom:6px">⚠️ Gemini available nahi tha — Groq se jawab diya gaya</div>`:'';
+    tyEl.innerHTML=note+txt.replace(/\n/g,'<br>');
     S.chatH.push({role:'assistant',content:txt});
     if(S.chatH.length>20) S.chatH=S.chatH.slice(-20);
   }catch(e){tyEl.innerHTML='Maafi! Masla ho gaya, dobara try karo. 🙏';}
