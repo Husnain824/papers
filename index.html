@@ -263,6 +263,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .scan-drop-s{font-size:13px;color:var(--t2)}
 .scan-result{background:var(--card);border:1px solid var(--b);border-radius:var(--rad2);padding:20px;margin-top:20px}
 /* ── Guess paper ── */
+/* ── AI Provider Selector ── */
+.aisel{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;padding:12px 14px;background:var(--card);border:1px solid var(--b);border-radius:var(--rad);font-size:13px}
+.aisel label{font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:1px;font-size:11px;flex-shrink:0}
+.aisel select{background:var(--bg2);color:var(--t);border:1.5px solid var(--b2);border-radius:9px;padding:7px 12px;font-family:var(--fn);font-size:13px;font-weight:600;cursor:pointer}
+.aisel select:focus{outline:none;border-color:var(--p)}
 .gp-sec{background:var(--card);border:1px solid var(--b);border-radius:var(--rad2);padding:20px;margin-bottom:18px}
 .gp-sec h3{font-size:15px;font-weight:700;color:var(--t);margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .gp-q{padding:12px 14px;border-radius:10px;background:var(--bg2);border:1px solid var(--b);font-size:14px;line-height:1.5;margin-bottom:8px}
@@ -353,6 +358,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <button class="bk" onclick="show('mode')">← Wapas</button>
   <div class="ey">MCQ Practice</div><h2 class="h1">Quiz settings</h2><p class="sub">Apne hisaab se customize karo</p>
   <div class="sf">
+    <div id="mcqAiSel"></div>
     <div class="fg"><label>Kitne MCQs?</label><div class="tg" id="cntG">
       <button class="tb" onclick="setOpt('cnt',5,this)">5</button>
       <button class="tb on" onclick="setOpt('cnt',10,this)">10</button>
@@ -421,6 +427,14 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <h2 class="h1" id="scanTit">Textbook Image Scan</h2>
   <p class="sub">Photo lo ya upload karo — AI scan kar ke MCQs / Summary banayega</p>
 
+  <div class="aisel">
+    <label>📝 Text Type</label>
+    <select id="scanOcrProvider" onchange="S.ocrProvider=this.value">
+      <option value="ocrspace" selected>🖨️ Printed (Textbook)</option>
+      <option value="gemini">✍️ Handwritten Notes (Gemini Vision)</option>
+    </select>
+  </div>
+
   <!-- Drop zone -->
   <div class="scan-drop" id="scanDrop" onclick="document.getElementById('scanFileIn').click()"
        ondragover="scanDrag(event,true)" ondragleave="scanDrag(event,false)" ondrop="scanDropFile(event)">
@@ -442,6 +456,14 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="ocr-box">
     <h3>📷 Image Scan</h3>
     <img id="ocr-preview" src="" alt="Preview">
+    <div class="aisel" style="margin-bottom:12px">
+      <label>📝 Text Type</label>
+      <select id="chatOcrProvider" onchange="S.ocrProvider=this.value">
+        <option value="ocrspace" selected>🖨️ Printed (Textbook)</option>
+        <option value="gemini">✍️ Handwritten Notes (Gemini Vision)</option>
+      </select>
+      <button class="btn btn-s" style="padding:6px 12px;font-size:12px" onclick="rescanChatImg()">🔄 Rescan</button>
+    </div>
     <div style="font-size:12px;color:var(--t2);margin-bottom:10px" id="ocr-status">Scan ho raha hai...</div>
     <textarea class="ocr-text-box" id="ocr-text" placeholder="Scanned text yahan aayega..."></textarea>
     <div class="ocr-actions">
@@ -462,6 +484,17 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         <div class="chd-st">● Online — Roman Urdu / English / 📷 Image</div>
       </div>
       <button id="ccls" onclick="toggleChat()">✕</button>
+    </div>
+    <div style="padding:8px 14px;border-bottom:1px solid var(--b);display:flex;gap:6px;align-items:center">
+      <select id="chatProvider" onchange="setAiProvider('chat',this.value)" style="background:var(--card);color:var(--t);border:1.5px solid var(--b2);border-radius:8px;padding:4px 8px;font-family:var(--fn);font-size:11px;font-weight:600;cursor:pointer">
+        <option value="groq" selected>⚡ Groq</option>
+        <option value="gemini">✨ Gemini</option>
+      </select>
+      <select id="chat-gmodel" style="display:none;background:var(--card);color:var(--t);border:1.5px solid var(--b2);border-radius:8px;padding:4px 8px;font-family:var(--fn);font-size:11px;font-weight:600;cursor:pointer" onchange="S.geminiModel=this.value">
+        <option value="gemini-2.5-flash" selected>Flash</option>
+        <option value="gemini-2.5-flash-lite">Flash-Lite</option>
+        <option value="gemini-2.5-pro">Pro</option>
+      </select>
     </div>
     <div class="cmsgs" id="cmsgs">
       <div class="cmsg a">Assalam-o-Alaikum! 👋 Main hoon tumhara AI tutor.<br>📷 <strong>Nayi feature:</strong> Camera icon se textbook ki photo upload karo — main scan kar ke jawab dunga! 📚</div>
@@ -1126,6 +1159,9 @@ const S={
   qaType:'short',qaData:[],qaIdx:0,qaEvals:[],
   chatH:[],chatOpen:false,
   prog:{streak:0,xp:0,lastDate:null},
+  aiProvider:'groq',          // 'groq' | 'gemini'
+  geminiModel:'gemini-2.5-flash', // 'gemini-2.5-flash' | 'gemini-2.5-flash-lite' | 'gemini-2.5-pro'
+  ocrProvider:'ocrspace',     // 'ocrspace' (printed) | 'gemini' (handwritten)
 };
 try{
   const sv=JSON.parse(localStorage.getItem('ilmai_v3')||'{}');
@@ -1266,7 +1302,10 @@ function renderModes(){
 }
 function selMode(id){
   S.mode=id;
-  if(id==='mcq') show('mcq-set');
+  if(id==='mcq'){
+    show('mcq-set');
+    document.getElementById('mcqAiSel').innerHTML=aiSelectorHTML('mcqAiSel');
+  }
   else if(id==='short') startQA('short');
   else if(id==='long')  startQA('long');
   else if(id==='summary') startSummary();
@@ -1289,15 +1328,42 @@ const WORKER_URL='https://check-ai.noorhusnain791.workers.dev';
 
 // ── AI helper ──────────────────────────────────────────────────────
 async function ai(prompt,maxT=1000){
+  const provider=S.aiProvider;
+  const body=provider==='gemini'
+    ? {provider:'gemini',model:S.geminiModel,messages:[{role:'user',content:prompt}],max_tokens:maxT}
+    : {model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],max_tokens:maxT};
   const res=await fetch(WORKER_URL,{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],max_tokens:maxT})
+    body:JSON.stringify(body)
   });
   if(!res.ok){const t=await res.text();throw new Error(`Worker ${res.status}: ${t}`);}
   const d=await res.json();
+  if(d.error) throw new Error(d.error+(d.details?': '+d.details:''));
   if(!d.content?.[0]?.text) throw new Error('Invalid response: '+JSON.stringify(d));
   return d.content[0].text;
+}
+
+// ── AI Provider Selector (reusable dropdown, shown on every AI feature) ──
+function aiSelectorHTML(id){
+  const gOn=S.aiProvider==='gemini';
+  return `<div class="aisel">
+    <label>🤖 AI Engine</label>
+    <select id="${id}-provider" onchange="setAiProvider('${id}',this.value)">
+      <option value="groq" ${!gOn?'selected':''}>⚡ Groq (Llama 3.3 — Fast, Default)</option>
+      <option value="gemini" ${gOn?'selected':''}>✨ Gemini</option>
+    </select>
+    <select id="${id}-gmodel" style="${gOn?'':'display:none'}" onchange="S.geminiModel=this.value">
+      <option value="gemini-2.5-flash" ${S.geminiModel==='gemini-2.5-flash'?'selected':''}>Flash (Balanced)</option>
+      <option value="gemini-2.5-flash-lite" ${S.geminiModel==='gemini-2.5-flash-lite'?'selected':''}>Flash-Lite (Fastest)</option>
+      <option value="gemini-2.5-pro" ${S.geminiModel==='gemini-2.5-pro'?'selected':''}>Pro (Most Accurate)</option>
+    </select>
+  </div>`;
+}
+function setAiProvider(id,val){
+  S.aiProvider=val;
+  const gSel=document.getElementById(id==='chat'?'chat-gmodel':`${id}-gmodel`);
+  if(gSel) gSel.style.display=val==='gemini'?'':'none';
 }
 
 // ── OCR helper ──────────────────────────────────────────────────────
@@ -1324,14 +1390,15 @@ async function compressImg(file){
   });
 }
 
-async function ocrFile(file){
+async function ocrFile(file,provider=null){
   const comp=await compressImg(file);
   if(!comp) throw new Error('Image compress nahi hua');
   if(comp.size>4*1024*1024) throw new Error('Image bari hai — 4MB se choti honi chahiye');
+  const useProvider=provider||S.ocrProvider;
   const res=await fetch(WORKER_URL,{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({action:'ocr',imageBase64:comp.base64,mimeType:comp.mimeType})
+    body:JSON.stringify({action:'ocr',imageBase64:comp.base64,mimeType:comp.mimeType,provider:useProvider})
   });
   if(!res.ok){const t=await res.text();throw new Error(`OCR error ${res.status}: ${t}`);}
   const d=await res.json();
@@ -1365,6 +1432,8 @@ function errHTML(msg,fn=''){
 function renderScanPage(){
   document.getElementById('scanTit').textContent=`📷 ${S.sub} — Image Scanner`;
   document.getElementById('scanResult').innerHTML='';
+  const sel=document.getElementById('scanOcrProvider');
+  if(sel){sel.value='ocrspace';S.ocrProvider='ocrspace';}
 }
 function scanDrag(e,on){e.preventDefault();document.getElementById('scanDrop').classList.toggle('drag',on);}
 function scanDropFile(e){
@@ -1526,7 +1595,7 @@ async function startQA(tp){
   const cnt=tp==='short'?5:3;
   show(tp);
   document.getElementById(tp==='short'?'shTit':'lgTit').textContent=`${tp==='short'?'Short':'Long'} Question Practice — ${S.sub}`;
-  document.getElementById(tp==='short'?'shCont':'lgCont').innerHTML=loadHTML(`${tp==='short'?'Short':'Long'} questions generate ho rahe hain...`);
+  document.getElementById(tp==='short'?'shCont':'lgCont').innerHTML=aiSelectorHTML('qaAiSel')+loadHTML(`${tp==='short'?'Short':'Long'} questions generate ho rahe hain...`);
   const prompt=tp==='short'
     ?`Generate ${cnt} important short questions for Pakistan ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} board, Class ${S.cls}, Subject ${S.sub}, Chapter ${getChNm()}. Return ONLY raw JSON with no extra text, no markdown, no asterisks: [{"q":"question","keyPoints":["point1","point2","point3"],"marks":2}]`
     :`Generate ${cnt} important long questions for Pakistan ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} board, Class ${S.cls}, Subject ${S.sub}, Chapter ${getChNm()}. Return ONLY raw JSON with no extra text, no markdown, no asterisks: [{"q":"question","keyPoints":["point1","point2","point3","point4","point5"],"marks":5,"guide":"~150-200 words"}]`;
@@ -1545,6 +1614,7 @@ function renderQA(){
   if(S.qaIdx>=S.qaData.length){renderQARes();return;}
   const q=S.qaData[S.qaIdx];const ev=S.qaEvals[S.qaIdx];const isL=tp==='long';
   cont.innerHTML=`
+  ${aiSelectorHTML('qaAiSel')}
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
     <span style="font-size:14px;color:var(--t2)">Question ${S.qaIdx+1} of ${S.qaData.length}</span>
     <div style="display:flex;gap:8px"><span class="tag t-gd">${q.marks} Marks</span>${q.guide?`<span class="tag t-vi">${q.guide}</span>`:''}</div>
@@ -1617,14 +1687,15 @@ function renderQARes(){
 async function startSummary(){
   show('summary');
   document.getElementById('smTit').innerHTML=`${SMETA[S.sub]?.ic||'📚'} ${getChNm()}`;
-  document.getElementById('smCont').innerHTML=loadHTML('AI summary bana raha hai...');
+  document.getElementById('smCont').innerHTML=aiSelectorHTML('smAiSel')+loadHTML('AI summary bana raha hai...');
   const prompt=`Create summary for Class ${S.cls}, ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} Board, Subject ${S.sub}, Chapter ${getChNm()}. Return ONLY raw JSON with no extra text, no markdown, no asterisks: {"overview":"...","keyTopics":[{"topic":"...","desc":"..."}],"formulas":["..."],"memorize":["..."],"examTips":["..."],"commonMistakes":["..."]}`;
   try{
     const txt=await ai(prompt,1500);
     let d;
     try{d=JSON.parse(extractJ(txt));}
-    catch(je){document.getElementById('smCont').innerHTML=errHTML('Summary format samajh nahi aaya, dobara try karo.','startSummary');return;}
+    catch(je){document.getElementById('smCont').innerHTML=aiSelectorHTML('smAiSel')+errHTML('Summary format samajh nahi aaya, dobara try karo.','startSummary');return;}
     document.getElementById('smCont').innerHTML=`
+    ${aiSelectorHTML('smAiSel')}
     <div class="sumb"><h3>📋 Overview</h3><p style="font-size:15px;line-height:1.7;color:var(--t2)">${d.overview}</p></div>
     ${d.keyTopics?.length?`<div class="sumb"><h3>🎯 Key Topics</h3><ul class="suml">${d.keyTopics.map(t=>`<li><strong style="color:var(--t)">${t.topic}:</strong> ${t.desc}</li>`).join('')}</ul></div>`:''}
     ${d.formulas?.length?`<div class="sumb"><h3>🔢 Formulas</h3><ul class="suml">${d.formulas.map(f=>`<li class="fm">${f}</li>`).join('')}</ul></div>`:''}
@@ -1633,23 +1704,24 @@ async function startSummary(){
     ${d.commonMistakes?.length?`<div class="sumb" style="border-color:rgba(239,68,68,.3);background:var(--rd)"><h3 style="color:var(--r)">⚠️ Common Mistakes</h3><ul class="suml">${d.commonMistakes.map(m=>`<li>${m}</li>`).join('')}</ul></div>`:''}
     <button class="btn btn-g" onclick="show('mode')">← Menu</button>`;
     addXP(20);
-  }catch(e){document.getElementById('smCont').innerHTML=errHTML('Summary nahi aa saki: '+e.message,'startSummary');}
+  }catch(e){document.getElementById('smCont').innerHTML=aiSelectorHTML('smAiSel')+errHTML('Summary nahi aa saki: '+e.message,'startSummary');}
 }
 
 // ─── GUESS ────────────────────────────────────────────────────────
 async function startGuess(){
   show('guess');
   document.getElementById('gpTit').innerHTML=`${SMETA[S.sub]?.ic||'🎰'} ${S.sub} — Guess Paper`;
-  document.getElementById('gpCont').innerHTML=loadHTML('AI guess paper bana raha hai...');
+  document.getElementById('gpCont').innerHTML=aiSelectorHTML('gpAiSel')+loadHTML('AI guess paper bana raha hai...');
   const prompt=`Create guess paper for Class ${S.cls}, ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} Board, Subject ${S.sub}, Chapter ${getChNm()}. Return ONLY raw JSON with no extra text, no markdown, no asterisks: {"mcqs":[{"q":"...","opts":["A","B","C","D"],"likely":"high/medium"}],"shortQ":[{"q":"...","likely":"high/medium","marks":2}],"longQ":[{"q":"...","likely":"high/medium","marks":5}],"hotTopics":["..."],"tip":"..."}`;
   try{
     const txt=await ai(prompt,1800);
     let d;
     try{d=JSON.parse(extractJ(txt));}
-    catch(je){document.getElementById('gpCont').innerHTML=errHTML('Guess paper format samajh nahi aaya, dobara try karo.','startGuess');return;}
+    catch(je){document.getElementById('gpCont').innerHTML=aiSelectorHTML('gpAiSel')+errHTML('Guess paper format samajh nahi aaya, dobara try karo.','startGuess');return;}
     const lbl=l=>`<span class="likelihood" style="background:${l==='high'?'var(--okd)':'var(--gd)'};color:${l==='high'?'var(--ok)':'var(--g)'}">${l==='high'?'🔥 High Chance':'⭐ Medium'}</span>`;
     const L=['A','B','C','D'];
     document.getElementById('gpCont').innerHTML=`
+    ${aiSelectorHTML('gpAiSel')}
     ${d.hotTopics?.length?`<div class="gp-sec"><h3>🎯 Hot Topics</h3>${d.hotTopics.map(t=>`<div class="gp-q">🔥 ${t}</div>`).join('')}</div>`:''}
     ${d.mcqs?.length?`<div class="gp-sec"><h3>📝 Likely MCQs</h3>${d.mcqs.map((q,i)=>`<div class="gp-q">${lbl(q.likely)}<div style="font-weight:600;margin:6px 0">Q${i+1}. ${q.q}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:13px;color:var(--t2)">${q.opts.map((o,j)=>`<div>${L[j]}. ${o}</div>`).join('')}</div></div>`).join('')}</div>`:''}
     ${d.shortQ?.length?`<div class="gp-sec"><h3>✍️ Likely Short Qs</h3>${d.shortQ.map((q,i)=>`<div class="gp-q">${lbl(q.likely)} <span class="tag t-gd">${q.marks} Marks</span><div style="margin-top:6px;font-weight:600">Q${i+1}. ${q.q}</div></div>`).join('')}</div>`:''}
@@ -1657,7 +1729,7 @@ async function startGuess(){
     ${d.tip?`<div class="sumb" style="border-color:rgba(0,212,170,.3);background:var(--pd)"><h3>💡 Exam Strategy</h3><p style="font-size:14px;color:var(--t2);line-height:1.6">${d.tip}</p></div>`:''}
     <button class="btn btn-g" onclick="show('mode')">← Menu</button>`;
     addXP(15);
-  }catch(e){document.getElementById('gpCont').innerHTML=errHTML('Guess paper nahi aa saka: '+e.message,'startGuess');}
+  }catch(e){document.getElementById('gpCont').innerHTML=aiSelectorHTML('gpAiSel')+errHTML('Guess paper nahi aa saka: '+e.message,'startGuess');}
 }
 
 // ─── NOTES & PAPERS ───────────────────────────────────────────────
@@ -1724,6 +1796,17 @@ async function handleChatImg(e){
   e.target.value='';
   if(!file||!file.type.startsWith('image/')) return;
   currentOcrFile=file;
+  document.getElementById('chatOcrProvider').value='ocrspace';
+  S.ocrProvider='ocrspace';
+  await runChatOcr(file);
+}
+
+async function rescanChatImg(){
+  if(!currentOcrFile) return;
+  await runChatOcr(currentOcrFile);
+}
+
+async function runChatOcr(file){
   const modal=document.getElementById('ocr-modal');
   const preview=document.getElementById('ocr-preview');
   const status=document.getElementById('ocr-status');
@@ -1736,7 +1819,7 @@ async function handleChatImg(e){
   try{
     const text=await ocrFile(file);
     if(!text||text.length<5){
-      status.textContent='⚠️ Text nahi mila. Saaf photo lo.';
+      status.textContent='⚠️ Text nahi mila. Saaf photo lo ya dusra engine try karo.';
       status.style.color='var(--r)';
       textEl.value='';
     }else{
