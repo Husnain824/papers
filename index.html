@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IlmAI — Pakistan's Smartest Study Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -227,6 +226,10 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 #ctog:hover{transform:scale(1.1)}
 #cpanel{position:absolute;bottom:66px;right:0;width:360px;max-width:calc(100vw - 42px);background:var(--bg2);border:1px solid var(--b);border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.75);display:none;flex-direction:column;max-height:520px}
 #cpanel.open{display:flex;animation:fu .25s ease}
+#cpanel.fullscreen{position:fixed!important;inset:0!important;bottom:0!important;right:0!important;width:100vw!important;max-width:100vw!important;max-height:100vh!important;border-radius:0!important;z-index:1002}
+#cpanel.fullscreen .cmsgs{flex:1;max-height:none!important}
+.cfull{background:none;border:none;color:var(--t2);cursor:pointer;font-size:15px;padding:4px 6px;transition:var(--tr);line-height:1}
+.cfull:hover{color:var(--t)}
 .chd{padding:15px 18px;background:linear-gradient(90deg,var(--pd),var(--sd));border-bottom:1px solid var(--b);display:flex;align-items:center;gap:11px}
 .chd-av{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--p),var(--s));display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 .chd-nm{font-size:14px;font-weight:700}
@@ -291,6 +294,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     </div>
     <nav class="bc" id="bc"></nav>
     <div class="hdr-r">
+      <a href="pharmaPlus" class="spl" style="color:var(--p);border-color:rgba(0,212,170,.35);text-decoration:none">💊 PharmaPlus</a>
       <div class="spl fir" id="stk">🔥 0</div>
       <div class="spl gld" id="xps">⭐ 0 XP</div>
     </div>
@@ -421,6 +425,17 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <h2 class="h1" id="ppTit">Past Papers</h2><div id="ppCont"></div>
 </div></div>
 
+<!-- ── FULL TEST ─────────────────────────────────────────── -->
+<div class="sc" id="sc-test-set"><div class="pw-sm">
+  <button class="bk" onclick="show('mode')">← Wapas</button>
+  <div class="ey">📋 Full Test</div>
+  <h2 class="h1" id="testSetTit">Full Paper Test</h2>
+  <p class="sub">Board pattern ya custom — poora paper likho</p>
+  <div id="testSetCont"></div>
+</div></div>
+<div class="sc" id="sc-test-paper"><div class="pw-sm"><div id="testPaperCont"></div></div></div>
+<div class="sc" id="sc-test-result"><div class="pw-sm"><div id="testResultCont"></div></div></div>
+
 <!-- ── IMAGE SCAN PAGE ────────────────────────────────── -->
 <div class="sc" id="sc-scan"><div class="pw-sm">
   <button class="bk" onclick="show('mode')">← Wapas</button>
@@ -484,6 +499,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         <div class="chd-nm">IlmAI Tutor</div>
         <div class="chd-st">● Online — Roman Urdu / English / 📷 Image</div>
       </div>
+      <button class="cfull" id="cfulbtn" onclick="toggleChatFull()" title="Fullscreen">⛶</button>
       <button id="ccls" onclick="toggleChat()">✕</button>
     </div>
     <div style="padding:8px 14px;border-bottom:1px solid var(--b);display:flex;gap:6px;align-items:center">
@@ -1147,6 +1163,7 @@ const MODES=[
   {id:'long', em:'📝',nm:'Long Questions',  bx:'Board Pattern',mc:'rgba(245,200,66,.14)'},
   {id:'summary',em:'🧠',nm:'AI Summary',    bx:'Smart Revision',mc:'rgba(236,72,153,.14)'},
   {id:'guess',em:'🎰',nm:'AI Guess Paper',  bx:'Exam Prep',   mc:'rgba(59,130,246,.14)'},
+  {id:'test', em:'📋',nm:'Full Test',        bx:'Board Paper',  mc:'rgba(239,68,68,.16)'},
   {id:'scan', em:'📷',nm:'Image Scanner',   bx:'OCR + AI',    mc:'rgba(0,212,170,.14)'},
   {id:'notes',em:'📚',nm:'Notes & Books',   bx:'Free PDF',    mc:'rgba(0,212,170,.12)'},
   {id:'papers',em:'📄',nm:'Past Papers',    bx:'Board Exam',  mc:'rgba(239,68,68,.12)'},
@@ -1312,6 +1329,7 @@ function selMode(id){
   else if(id==='long')  startQA('long');
   else if(id==='summary') startSummary();
   else if(id==='guess') startGuess();
+  else if(id==='test')  {renderTestSetup();show('test-set');}
   else if(id==='scan')  {renderScanPage();show('scan');}
   else if(id==='notes') {renderNotes();show('notes');}
   else if(id==='papers'){renderPapers();show('papers');}
@@ -1374,9 +1392,9 @@ function aiSelectorHTML(id,regenFn=''){
       <option value="gemini" ${gOn?'selected':''}>✨ Gemini</option>
     </select>
     <select id="${id}-gmodel" style="${gOn?'':'display:none'}" onchange="S.geminiModel=this.value">
-      <option value="gemini-2.5-flash" ${S.geminiModel==='gemini-2.5-flash-lite'?'selected':''}>Flash (Balanced)</option>
+      <option value="gemini-2.5-flash" ${S.geminiModel==='gemini-2.5-flash'?'selected':''}>Flash (Balanced)</option>
       <option value="gemini-2.5-flash-lite" ${S.geminiModel==='gemini-2.5-flash-lite'?'selected':''}>Flash-Lite (Fastest)</option>
-      <option value="gemini-2.5-pro" ${S.geminiModel==='gemini-2.5-flash-lite'?'selected':''}>Pro (Most Accurate)</option>
+      <option value="gemini-2.5-pro" ${S.geminiModel==='gemini-2.5-pro'?'selected':''}>Pro (Most Accurate)</option>
     </select>
     ${regenFn?`<button class="btn btn-s" style="padding:7px 14px;font-size:13px;margin-left:auto" onclick="${regenFn}">🔄 Dobara Banao</button>`:''}
   </div>`;
@@ -1787,6 +1805,13 @@ function toggleChat(){
   document.getElementById('cpanel').classList.toggle('open',S.chatOpen);
   document.getElementById('ctog').textContent=S.chatOpen?'✕':'💬';
 }
+function toggleChatFull(){
+  const p=document.getElementById("cpanel");
+  const isFs=p.classList.toggle("fullscreen");
+  const btn=document.getElementById("cfulbtn");
+  btn.title=isFs?"Exit Fullscreen":"Fullscreen";
+  btn.style.color=isFs?"var(--p)":"";
+}
 function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}
 function autoH(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
 
@@ -1893,6 +1918,418 @@ function copyOcrText(){
 }
 
 document.getElementById('ocr-modal').addEventListener('click',function(e){if(e.target===this)closeOcrModal();});
+
+
+// ─── SCAN IN SHORT/LONG QUESTIONS ────────────────────────────────
+
+// Scan button inject karo answer box ke neeche
+function qaAnsScanBtn(tp){
+  return `<div style="margin-top:10px">
+    <input type="file" id="qaImgIn" accept="image/*" style="display:none" onchange="handleQaAnswerScan(event,'${tp}')">
+    <button class="btn btn-s" style="padding:7px 14px;font-size:13px" onclick="document.getElementById('qaImgIn').click()">📷 Answer Scan Karo</button>
+    <span style="font-size:12px;color:var(--t2);margin-left:8px">Handwritten jawab ki photo lo</span>
+  </div>`;
+}
+
+// Question scan karo aur QA mode mein start karo
+async function qaQuestionScan(tp){
+  const inp=document.createElement('input');
+  inp.type='file';inp.accept='image/*';
+  inp.onchange=async(e)=>{
+    const file=e.target.files[0];if(!file)return;
+    const cont=document.getElementById(tp==='short'?'shCont':'lgCont');
+    cont.innerHTML=loadHTML('📷 Question scan ho raha hai...');
+    try{
+      const text=await ocrFile(file);
+      if(!text||text.length<5){cont.innerHTML=errHTML('Image mein text nahi mila — saaf photo lo');return;}
+      // AI se questions generate karo scanned text se
+      const prompt=tp==='short'
+        ?`From this scanned question/text, generate 3-5 short questions for Pakistan board exam style. Return ONLY raw JSON: [{"q":"...","keyPoints":["..."],"marks":2}]\n\nText: ${text.substring(0,2000)}`
+        :`From this scanned question/text, generate 2-3 long questions for Pakistan board exam style. Return ONLY raw JSON: [{"q":"...","keyPoints":["..."],"marks":5,"guide":"~150 words"}]\n\nText: ${text.substring(0,2000)}`;
+      const resp=await ai(prompt,1000);
+      let d;
+      try{d=JSON.parse(extractJ(resp));}
+      catch(je){cont.innerHTML=errHTML('AI response parse nahi hua, dobara try karo');return;}
+      S.qaData=d;S.qaType=tp;S.qaIdx=0;S.qaEvals=new Array(d.length).fill(null);
+      renderQA();
+    }catch(er){cont.innerHTML=errHTML('Scan fail: '+er.message);}
+  };
+  inp.click();
+}
+
+// Answer scan karo aur answer box mein daal do
+async function handleQaAnswerScan(e,tp){
+  const file=e.target.files[0];if(!file)return;
+  const ansEl=document.getElementById('qaAns');
+  if(ansEl){ansEl.value='Scan ho raha hai... ⏳';ansEl.disabled=true;}
+  try{
+    const text=await ocrFile(file);
+    if(ansEl){
+      ansEl.value=text||'';
+      ansEl.disabled=false;
+      updWC(ansEl);
+    }
+  }catch(er){
+    if(ansEl){ansEl.value='';ansEl.disabled=false;}
+    alert('Scan fail: '+er.message);
+  }
+  e.target.value='';
+}
+
+// renderQA mein scan button add karo — override karenge
+const _origRenderQA=renderQA;
+function renderQA(){
+  _origRenderQA();
+  // Answer box ke baad scan button inject karo
+  const wc=document.getElementById('wc');
+  if(wc){
+    const tp=S.qaType;
+    const div=document.createElement('div');
+    div.innerHTML=qaAnsScanBtn(tp);
+    wc.parentNode.insertBefore(div,wc.nextSibling);
+  }
+}
+
+// startQA mein question scan button bhi dikhao
+const _origStartQA=startQA;
+async function startQA(tp){
+  S.qaType=tp;S.qaIdx=0;S.qaData=[];S.qaEvals=[];
+  const cont=document.getElementById(tp==='short'?'shCont':'lgCont');
+  // Pehle scan option dikhao, phir normal flow
+  document.getElementById(tp==='short'?'shTit':'lgTit').textContent=`${tp==='short'?'Short':'Long'} Question Practice — ${S.sub}`;
+  show(tp);
+  cont.innerHTML=`${aiSelectorHTML('qaAiSel')}
+  <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap">
+    <button class="btn btn-p" onclick="startQANormal('${tp}')">🤖 AI se Questions Banao</button>
+    <button class="btn btn-s" onclick="qaQuestionScan('${tp}')">📷 Image Scan se Questions</button>
+  </div>
+  <p style="font-size:13px;color:var(--t2)">Ya seedha AI se ${tp==='short'?'short':'long'} questions generate karo, ya textbook/paper ki photo upload karo.</p>`;
+}
+
+async function startQANormal(tp){
+  const cnt=tp==='short'?5:3;
+  const cont=document.getElementById(tp==='short'?'shCont':'lgCont');
+  cont.innerHTML=aiSelectorHTML('qaAiSel')+loadHTML(`${tp==='short'?'Short':'Long'} questions generate ho rahe hain...`);
+  const prompt=tp==='short'
+    ?`Generate ${cnt} important short questions for Pakistan ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} board, Class ${S.cls}, Subject ${S.sub}, Chapter ${getChNm()}. Return ONLY raw JSON with no extra text, no markdown, no asterisks: [{"q":"question","keyPoints":["point1","point2","point3"],"marks":2}]`
+    :`Generate ${cnt} important long questions for Pakistan ${BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab'} board, Class ${S.cls}, Subject ${S.sub}, Chapter ${getChNm()}. Return ONLY raw JSON with no extra text, no markdown, no asterisks: [{"q":"question","keyPoints":["point1","point2","point3","point4","point5"],"marks":5,"guide":"~150-200 words"}]`;
+  try{
+    const txt=await ai(prompt,1200);
+    S.qaData=JSON.parse(extractJ(txt));
+    if(!Array.isArray(S.qaData)||!S.qaData.length) throw new Error();
+    S.qaEvals=new Array(S.qaData.length).fill(null);
+    renderQA();
+  }catch(e){
+    cont.innerHTML=errHTML('Questions load nahi ho sake: '+e.message);
+  }
+}
+
+// ─── FULL TEST MODE ───────────────────────────────────────────────
+
+// Board paper patterns per class
+const BOARD_PATTERNS={
+  '9': {mcq:15,short:6,long:3,totalMarks:75,time:180},
+  '10':{mcq:15,short:6,long:3,totalMarks:75,time:180},
+  '11':{mcq:20,short:8,long:4,totalMarks:100,time:195},
+  '12':{mcq:20,short:8,long:4,totalMarks:100,time:195},
+};
+
+function renderTestSetup(){
+  const m=SMETA[S.sub]||{ic:'📋'};
+  document.getElementById('testSetTit').innerHTML=`${m.ic} ${S.sub} — Full Test`;
+  const pat=BOARD_PATTERNS[S.cls]||BOARD_PATTERNS['10'];
+  document.getElementById('testSetCont').innerHTML=`
+  ${aiSelectorHTML('testAiSel')}
+  <div class="crd" style="margin-bottom:18px">
+    <div class="ey">📋 Pattern Select Karo</div>
+    <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+      <button class="tb on" id="patBoardBtn" onclick="selPattern('board')">🏫 Board Pattern</button>
+      <button class="tb" id="patCustomBtn" onclick="selPattern('custom')">⚙️ Custom</button>
+    </div>
+    <div id="patBoard">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+        <div class="rs"><div class="rs-n" style="color:var(--p)">${pat.mcq}</div><div class="rs-l">MCQs (1 mark)</div></div>
+        <div class="rs"><div class="rs-n" style="color:var(--s)">${pat.short}</div><div class="rs-l">Short Q (3-5 marks)</div></div>
+        <div class="rs"><div class="rs-n" style="color:var(--g)">${pat.long}</div><div class="rs-l">Long Q (8-10 marks)</div></div>
+      </div>
+      <div style="font-size:13px;color:var(--t2);margin-bottom:16px">⏱ Time: ${pat.time} min | 📊 Total: ${pat.totalMarks} marks</div>
+    </div>
+    <div id="patCustom" style="display:none">
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:16px">
+        <div class="fg"><label>MCQs (1 mark each)</label>
+          <div class="tg"><button class="tb on" onclick="setTestOpt('tmcq',10,this)">10</button><button class="tb" onclick="setTestOpt('tmcq',15,this)">15</button><button class="tb" onclick="setTestOpt('tmcq',20,this)">20</button><button class="tb" onclick="setTestOpt('tmcq',0,this)">None</button></div>
+        </div>
+        <div class="fg"><label>Short Questions</label>
+          <div class="tg"><button class="tb on" onclick="setTestOpt('tshort',4,this)">4</button><button class="tb" onclick="setTestOpt('tshort',6,this)">6</button><button class="tb" onclick="setTestOpt('tshort',8,this)">8</button><button class="tb" onclick="setTestOpt('tshort',0,this)">None</button></div>
+        </div>
+        <div class="fg"><label>Long Questions</label>
+          <div class="tg"><button class="tb on" onclick="setTestOpt('tlong',2,this)">2</button><button class="tb" onclick="setTestOpt('tlong',3,this)">3</button><button class="tb" onclick="setTestOpt('tlong',4,this)">4</button><button class="tb" onclick="setTestOpt('tlong',0,this)">None</button></div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-p btn-lg btn-w" onclick="startFullTest()">📋 Test Shuru Karo</button>
+  </div>`;
+  S.testPattern='board';
+  S.testOpts={tmcq:pat.mcq,tshort:pat.short,tlong:pat.long};
+}
+
+function selPattern(type){
+  S.testPattern=type;
+  document.getElementById('patBoardBtn').classList.toggle('on',type==='board');
+  document.getElementById('patCustomBtn').classList.toggle('on',type==='custom');
+  document.getElementById('patBoard').style.display=type==='board'?'':'none';
+  document.getElementById('patCustom').style.display=type==='custom'?'':'none';
+}
+
+function setTestOpt(key,val,btn){
+  const map={tmcq:'cntG-t',tshort:'shG-t',tlong:'lgG-t'};
+  S.testOpts=S.testOpts||{};
+  S.testOpts[key]=val;
+  btn.closest('.tg').querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+async function startFullTest(){
+  const pat=S.testPattern==='board'
+    ? (BOARD_PATTERNS[S.cls]||BOARD_PATTERNS['10'])
+    : {mcq:S.testOpts?.tmcq??10,short:S.testOpts?.tshort??4,long:S.testOpts?.tlong??2,totalMarks:null,time:null};
+
+  show('test-paper');
+  document.getElementById('testPaperCont').innerHTML=loadHTML('AI poora paper bana raha hai...','MCQs + Short + Long Questions generate ho rahe hain');
+
+  const boardNm=BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab Board';
+  const prompt=`Generate a complete exam paper for Class ${S.cls}, ${boardNm}, Subject ${S.sub}, Chapter ${getChNm()}.
+Include:
+- ${pat.mcq} MCQs (1 mark each)
+- ${pat.short} Short Questions (vary marks 2-5)
+- ${pat.long} Long Questions (vary marks 5-10)
+Return ONLY raw JSON:
+{
+  "title":"${S.sub} — Class ${S.cls} — ${boardNm}",
+  "totalMarks":${pat.totalMarks||'null'},
+  "timeAllowed":${pat.time||120},
+  "mcqs":[{"q":"...","opts":["A","B","C","D"],"correct":0,"exp":"..."}],
+  "shortQs":[{"q":"...","marks":3,"keyPoints":["..."]}],
+  "longQs":[{"q":"...","marks":8,"keyPoints":["..."],"guide":"~200 words"}]
+}`;
+
+  try{
+    const txt=await ai(prompt,4000);
+    let d;
+    try{d=JSON.parse(extractJ(txt));}
+    catch(je){document.getElementById('testPaperCont').innerHTML=errHTML('Paper generate nahi hua, dobara try karo.','startFullTest');return;}
+    S.testData=d;S.testAnswers={mcq:[],short:[],long:[]};S.testEvals=null;
+    renderTestPaper(d);
+  }catch(e){
+    document.getElementById('testPaperCont').innerHTML=errHTML('Paper nahi aaya: '+e.message,'startFullTest');
+  }
+}
+
+function renderTestPaper(d){
+  const L=['A','B','C','D'];
+  let html=`
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+    <div>
+      <div class="ey">📋 Full Test</div>
+      <h2 class="h1" style="margin-bottom:4px">${d.title||S.sub+' Paper'}</h2>
+      <div style="font-size:13px;color:var(--t2)">
+        ${d.totalMarks?`📊 Total Marks: <strong style="color:var(--p)">${d.totalMarks}</strong> &nbsp;`:''}
+        ${d.timeAllowed?`⏱ Time: <strong style="color:var(--g)">${d.timeAllowed} min</strong>`:''}
+      </div>
+    </div>
+    <button class="btn btn-g" onclick="show('test-set')">← Wapas</button>
+  </div>`;
+
+  // MCQs
+  if(d.mcqs?.length){
+    html+=`<div class="sumb"><h3>📝 Section A — MCQs</h3>`;
+    d.mcqs.forEach((q,i)=>{
+      html+=`<div style="margin-bottom:18px">
+        <div style="font-weight:600;margin-bottom:8px;font-size:15px">Q${i+1}. ${q.q}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          ${q.opts.map((o,j)=>`<label style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:9px;background:var(--bg2);border:1px solid var(--b);cursor:pointer;font-size:14px">
+            <input type="radio" name="mcq${i}" value="${j}" onchange="S.testAnswers.mcq[${i}]=${j}" style="accent-color:var(--p)"> ${L[j]}. ${o}
+          </label>`).join('')}
+        </div>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  // Short Questions
+  if(d.shortQs?.length){
+    html+=`<div class="sumb"><h3>✍️ Section B — Short Questions</h3>`;
+    d.shortQs.forEach((q,i)=>{
+      html+=`<div style="margin-bottom:20px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+          <div style="font-weight:600;font-size:15px">Q${i+1}. ${q.q}</div>
+          <span class="tag t-gd">${q.marks} Marks</span>
+        </div>
+        <textarea class="qa-ta" placeholder="Apna jawab yahan likho..." oninput="S.testAnswers.short[${i}]=this.value;updWC(this)" style="min-height:90px"></textarea>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+          <div class="wc" style="margin-top:0">0 words</div>
+          <input type="file" id="tsImgIn${i}" accept="image/*" style="display:none" onchange="handleTestAnswerScan(event,'short',${i})">
+          <button class="btn btn-s" style="padding:5px 12px;font-size:12px" onclick="document.getElementById('tsImgIn${i}').click()">📷 Scan</button>
+        </div>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  // Long Questions
+  if(d.longQs?.length){
+    html+=`<div class="sumb"><h3>📖 Section C — Long Questions</h3>`;
+    d.longQs.forEach((q,i)=>{
+      html+=`<div style="margin-bottom:20px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+          <div style="font-weight:600;font-size:15px">Q${i+1}. ${q.q}</div>
+          <span class="tag t-gd">${q.marks} Marks</span>
+        </div>
+        ${q.guide?`<div style="font-size:12px;color:var(--s);margin-bottom:6px">💡 ${q.guide}</div>`:''}
+        <textarea class="qa-ta lng" placeholder="Detailed jawab likho..." oninput="S.testAnswers.long[${i}]=this.value" style="min-height:150px"></textarea>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+          <input type="file" id="tlImgIn${i}" accept="image/*" style="display:none" onchange="handleTestAnswerScan(event,'long',${i})">
+          <button class="btn btn-s" style="padding:5px 12px;font-size:12px" onclick="document.getElementById('tlImgIn${i}').click()">📷 Scan</button>
+        </div>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  html+=`<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+    <button class="btn btn-p btn-lg" onclick="submitTest()">✅ Test Submit Karo</button>
+    <button class="btn btn-g" onclick="show('test-set')">← Dobara Setup</button>
+  </div>`;
+
+  document.getElementById('testPaperCont').innerHTML=html;
+}
+
+// Answer scan for test sections
+async function handleTestAnswerScan(e,section,idx){
+  const file=e.target.files[0];if(!file)return;
+  const taId=section==='short'?`tsImgIn${idx}`:`tlImgIn${idx}`;
+  // Find the textarea before the scan button
+  const inp=e.target;
+  const ta=inp.closest('div').previousElementSibling;
+  if(ta&&ta.tagName==='TEXTAREA'){ta.value='Scan ho raha hai... ⏳';ta.disabled=true;}
+  try{
+    const text=await ocrFile(file);
+    if(ta){ta.value=text||'';ta.disabled=false;}
+    if(section==='short') S.testAnswers.short[idx]=text;
+    else S.testAnswers.long[idx]=text;
+  }catch(er){
+    if(ta){ta.value='';ta.disabled=false;}
+    alert('Scan fail: '+er.message);
+  }
+  e.target.value='';
+}
+
+async function submitTest(){
+  const d=S.testData;if(!d)return;
+  show('test-result');
+  document.getElementById('testResultCont').innerHTML=loadHTML('AI test check kar raha hai...','Saare answers evaluate ho rahe hain');
+
+  // MCQ auto-check
+  let mcqCorrect=0,mcqTotal=d.mcqs?.length||0;
+  d.mcqs?.forEach((q,i)=>{if(S.testAnswers.mcq[i]===q.correct)mcqCorrect++;});
+
+  // Short + Long AI evaluation
+  let shortEvals=[],longEvals=[];
+  const boardNm=BOARDS.find(b=>b.id===S.brd)?.nm||'Punjab';
+
+  for(let i=0;i<(d.shortQs?.length||0);i++){
+    const q=d.shortQs[i];const ans=S.testAnswers.short[i]||'(No answer)';
+    try{
+      const p=`Evaluate: Class ${S.cls} ${S.sub} short question. Q: ${q.q}. Key: ${q.keyPoints?.join('; ')||''}. Marks: ${q.marks}. Answer: "${ans}". Return ONLY raw JSON: {"score":${q.marks},"grade":"A","feedback":"..."}`;
+      const r=await ai(p,400);
+      let ev;try{ev=JSON.parse(extractJ(r));}catch(je){ev={score:0,grade:'?',feedback:r.substring(0,100)};}
+      shortEvals.push(ev);
+    }catch(e){shortEvals.push({score:0,grade:'?',feedback:'Evaluation fail'});}
+  }
+  for(let i=0;i<(d.longQs?.length||0);i++){
+    const q=d.longQs[i];const ans=S.testAnswers.long[i]||'(No answer)';
+    try{
+      const p=`Evaluate: Class ${S.cls} ${S.sub} long question. Q: ${q.q}. Key: ${q.keyPoints?.join('; ')||''}. Marks: ${q.marks}. Answer: "${ans}". Return ONLY raw JSON: {"score":${q.marks},"grade":"A","feedback":"..."}`;
+      const r=await ai(p,500);
+      let ev;try{ev=JSON.parse(extractJ(r));}catch(je){ev={score:0,grade:'?',feedback:r.substring(0,100)};}
+      longEvals.push(ev);
+    }catch(e){longEvals.push({score:0,grade:'?',feedback:'Evaluation fail'});}
+  }
+
+  const shortTotal=d.shortQs?.reduce((a,q)=>a+q.marks,0)||0;
+  const longTotal=d.longQs?.reduce((a,q)=>a+q.marks,0)||0;
+  const shortEarned=shortEvals.reduce((a,e)=>a+parseFloat(e.score||0),0);
+  const longEarned=longEvals.reduce((a,e)=>a+parseFloat(e.score||0),0);
+  const totalEarned=mcqCorrect+shortEarned+longEarned;
+  const totalMax=mcqTotal+shortTotal+longTotal;
+  const pct=totalMax?Math.round((totalEarned/totalMax)*100):0;
+  let grade='F';
+  if(pct>=90)grade='A+';else if(pct>=80)grade='A';else if(pct>=70)grade='B+';else if(pct>=60)grade='B';else if(pct>=50)grade='C';
+
+  const L=['A','B','C','D'];
+  let html=`
+  <button class="bk" onclick="show('test-set')">← Wapas</button>
+  <div class="res-hero">
+    <div class="res-sc">${pct}%</div>
+    <div class="res-lb">${totalEarned.toFixed(1)} / ${totalMax} marks</div>
+    <div class="res-gr" style="background:var(--pd);color:var(--p);border:1.5px solid rgba(0,212,170,.4)">Grade: ${grade}</div>
+  </div>
+  <div class="res-stats">
+    <div class="rs"><div class="rs-n" style="color:var(--p)">${mcqCorrect}/${mcqTotal}</div><div class="rs-l">MCQs</div></div>
+    <div class="rs"><div class="rs-n" style="color:var(--s)">${shortEarned.toFixed(1)}/${shortTotal}</div><div class="rs-l">Short Qs</div></div>
+    <div class="rs"><div class="rs-n" style="color:var(--g)">${longEarned.toFixed(1)}/${longTotal}</div><div class="rs-l">Long Qs</div></div>
+  </div>`;
+
+  // MCQ Review
+  if(d.mcqs?.length){
+    html+=`<div class="sumb"><h3>📝 MCQ Review</h3>`;
+    d.mcqs.forEach((q,i)=>{
+      const userAns=S.testAnswers.mcq[i];const ok=userAns===q.correct;
+      html+=`<div style="margin-bottom:14px;padding:12px;border-radius:10px;background:var(--bg2);border:1px solid ${ok?'rgba(34,197,94,.4)':'rgba(239,68,68,.35)'}">
+        <div style="font-size:13px;font-weight:600;margin-bottom:4px">${ok?'✅':'❌'} Q${i+1}. ${q.q}</div>
+        <div style="font-size:12px;color:var(--t2)">Tumhara: <strong>${userAns>=0?L[userAns]:'—'}</strong> | Sahi: <strong style="color:var(--ok)">${L[q.correct]}</strong></div>
+        ${!ok&&q.exp?`<div style="font-size:12px;color:var(--t2);margin-top:4px">💡 ${q.exp}</div>`:''}
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  // Short Q Review
+  if(d.shortQs?.length){
+    html+=`<div class="sumb"><h3>✍️ Short Question Review</h3>`;
+    d.shortQs.forEach((q,i)=>{
+      const ev=shortEvals[i]||{};
+      html+=`<div style="margin-bottom:16px;padding:14px;border-radius:10px;background:var(--bg2);border:1px solid var(--b2)">
+        <div style="font-weight:600;margin-bottom:6px">Q${i+1}. ${q.q}</div>
+        <div style="display:flex;gap:8px;margin-bottom:6px"><span class="tag t-vi">Grade: ${ev.grade||'?'}</span><span class="tag t-gd">${ev.score||0}/${q.marks}</span></div>
+        ${ev.feedback?`<div style="font-size:13px;color:var(--t2);line-height:1.5">${ev.feedback}</div>`:''}
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  // Long Q Review
+  if(d.longQs?.length){
+    html+=`<div class="sumb"><h3>📖 Long Question Review</h3>`;
+    d.longQs.forEach((q,i)=>{
+      const ev=longEvals[i]||{};
+      html+=`<div style="margin-bottom:16px;padding:14px;border-radius:10px;background:var(--bg2);border:1px solid var(--b2)">
+        <div style="font-weight:600;margin-bottom:6px">Q${i+1}. ${q.q}</div>
+        <div style="display:flex;gap:8px;margin-bottom:6px"><span class="tag t-vi">Grade: ${ev.grade||'?'}</span><span class="tag t-gd">${ev.score||0}/${q.marks}</span></div>
+        ${ev.feedback?`<div style="font-size:13px;color:var(--t2);line-height:1.5">${ev.feedback}</div>`:''}
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  html+=`<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+    <button class="btn btn-p" onclick="startFullTest()">🔄 Naya Test</button>
+    <button class="btn btn-g" onclick="show('mode')">← Menu</button>
+  </div>`;
+
+  document.getElementById('testResultCont').innerHTML=html;
+  addXP(Math.round(totalEarned*2));
+}
 
 // ─── INIT ─────────────────────────────────────────────────────────
 renderLanding();show('landing');
